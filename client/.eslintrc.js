@@ -26,7 +26,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: 'tsconfig.json',
   },
-  ignorePatterns: [".eslintrc.js"],
+  ignorePatterns: [".eslintrc.js", "./build"],
   rules: {
     'linebreak-style': 'off',
     'prettier/prettier': [
