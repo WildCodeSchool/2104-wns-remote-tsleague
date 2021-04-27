@@ -10,7 +10,7 @@
     "prod": "tsc && node ./build/src/server.js",
     "debug": "tsc && node --inspect ./build/src/server.js",
     "lint:fix": "tsc --noEmit && npx eslint --fix src/**/*.ts",
-    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+    "lint": "npm run format && tsc --noEmit && eslint --fix src/**/*.ts{,x}",
     "format": "prettier --write src/**/*.ts"
   },
   "dependencies": {
