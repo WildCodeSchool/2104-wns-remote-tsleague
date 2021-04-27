@@ -1,0 +1,13 @@
+{
+  "name": "2104-wns-remote-tsleague",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/WildCodeSchool/2104-wns-remote-tsleague.git",
+  "author": "auxb <auxence.blondel@gmail.com>",
+  "license": "MIT0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ]
+}
