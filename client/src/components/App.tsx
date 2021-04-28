@@ -1,13 +1,18 @@
 // REACT
 import React from 'react';
+// STYLE
+import './App.css';
 // PHASER
 import { IonPhaser } from '@ion-phaser/react';
 import PixeLearnScene from '../phaser/pixeLearnScene';
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: '100%',
+  height: '100%',
+  scale: {
+    mode: Phaser.Scale.ENVELOP,
+  },
   physics: {
     default: 'arcade',
     arcade: {
