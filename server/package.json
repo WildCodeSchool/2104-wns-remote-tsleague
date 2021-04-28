@@ -9,8 +9,7 @@
     "dev": "ts-node-dev --transpile-only --respawn  ./src/server.ts",
     "prod": "tsc && node ./build/src/server.js",
     "debug": "tsc && node --inspect ./build/src/server.js",
-    "lint:fix": "tsc --noEmit && npx eslint --fix src/**/*.ts",
-    "lint": "npm run format && tsc --noEmit && eslint src/**/*.ts{,x}",
+    "lint": "tsc --noEmit && eslint --fix src/**/*.ts{,x}",
     "format": "prettier --write src/**/*.ts"
   },
   "dependencies": {
