@@ -1,24 +1,30 @@
+// REACT
 import React from 'react';
-import './App.css';
+// PHASER
+import { IonPhaser } from '@ion-phaser/react';
+import PixeLearnScene from '../phaser/pixeLearnScene';
+
+const config = {
+  type: Phaser.AUTO,
+  width: 800,
+  height: 600,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 0 },
+      debug: false,
+    },
+  },
+  scene: [PixeLearnScene],
+};
 
 function App(): JSX.Element {
+  const game = config;
+  const initialize = true;
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <IonPhaser game={game} initialize={initialize} />
     </div>
   );
 }
