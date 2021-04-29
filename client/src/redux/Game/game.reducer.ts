@@ -6,7 +6,14 @@ const initialGameState = {
   studentModal: false,
 };
 
-const gameReducer = (state = initialGameState, action: { type: string }) => {
+type State = {
+  studentModal: boolean;
+};
+
+const gameReducer = (
+  state = initialGameState,
+  action: { type: string }
+): State => {
   switch (action.type) {
     case STUDENT_MODAL_TOGGLE: {
       return { ...state, studentModal: !state.studentModal };

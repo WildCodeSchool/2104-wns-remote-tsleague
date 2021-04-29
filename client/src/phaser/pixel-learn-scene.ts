@@ -5,10 +5,10 @@ import GAME_ACTIONS from '../redux/Game/game.types';
 const { STUDENT_MODAL_TOGGLE } = GAME_ACTIONS;
 
 export default class PixeLearnScene extends Scene {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   cursors: any;
 
-  // walls: any;
-
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   player: any;
 
   preload = (): void => {
