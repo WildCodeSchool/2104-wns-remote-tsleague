@@ -1,5 +1,8 @@
 import { Scene } from 'phaser';
-import path from 'path';
+import store from '../redux/store';
+import GAME_ACTIONS from '../redux/Game/game.types';
+
+const { STUDENT_MODAL_TOGGLE } = GAME_ACTIONS;
 
 export default class PixeLearnScene extends Scene {
   cursors: any;
@@ -30,7 +33,13 @@ export default class PixeLearnScene extends Scene {
     walls.create(11, 300, 'wall_side'); // Left
     walls.create(789, 300, 'wall_side'); // Right
 
-    this.player = this.physics.add.sprite(100, 400, 'dude');
+    this.player = this.physics.add
+      .sprite(100, 400, 'dude')
+      .setInteractive({ useHandCursor: true });
+
+    this.player.on('pointerup', () => {
+      store.dispatch({ type: STUDENT_MODAL_TOGGLE });
+    });
 
     this.player.setCollideWorldBounds(true); // Stops player from walking off the canvas
 
