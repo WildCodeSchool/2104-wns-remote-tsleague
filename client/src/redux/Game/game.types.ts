@@ -1,0 +1,5 @@
+const GAME_ACTIONS = {
+  STUDENT_MODAL_TOGGLE: 'STUDENT_MODAL_TOGGLE',
+};
+
+export default GAME_ACTIONS;
