@@ -7,6 +7,7 @@ import './App.css';
 // PHASER
 import { IonPhaser } from '@ion-phaser/react';
 import config from '../phaser/config ';
+import MenuInGame from './MenuInGame';
 
 type PropsType = {
   studentModalProps: boolean;
@@ -23,7 +24,7 @@ function App({ studentModalProps }: PropsType): JSX.Element {
 
   return (
     <div className="App">
-      {studentModalProps && <h1>HELLOOOOOOOOOOOOOOOOOOOO</h1>}
+      {studentModalProps && <MenuInGame />}
       <IonPhaser game={game} initialize={initialize} />
     </div>
   );
