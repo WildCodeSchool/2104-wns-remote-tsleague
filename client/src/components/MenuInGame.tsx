@@ -1,7 +1,7 @@
 import React from 'react';
 import { Classes, Icon, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 
-function MenuIngame(): JSX.Element {
+function MenuInGame(): JSX.Element {
   return (
     <div style={{ width: '1px'}}>
       <Menu className={Classes.ELEVATION_1}>
@@ -25,4 +25,4 @@ function MenuIngame(): JSX.Element {
   );
 }
 
-export default MenuIngame;
+export default MenuInGame;
