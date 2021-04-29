@@ -4,24 +4,7 @@ import React from 'react';
 import './App.css';
 // PHASER
 import { IonPhaser } from '@ion-phaser/react';
-import PixeLearnScene from '../phaser/pixeLearnScene';
-
-const config = {
-  type: Phaser.AUTO,
-  width: '100%',
-  height: '100%',
-  scale: {
-    mode: Phaser.Scale.ENVELOP,
-  },
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 0 },
-      debug: false,
-    },
-  },
-  scene: [PixeLearnScene],
-};
+import config from '../phaser/config ';
 
 function App(): JSX.Element {
   const game = config;
