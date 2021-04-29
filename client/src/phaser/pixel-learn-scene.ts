@@ -21,14 +21,14 @@ export default class PixeLearnScene extends Scene {
   };
 
   create = (): void => {
-    this.add.image(400, 300, 'floor'); // Add background texture
+    this.add.tileSprite(0, 0, 4000, 4000, 'floor'); // Add background texture
 
     const walls = this.physics.add.staticGroup();
 
     walls.create(400, 48, 'wall_top').body.setSize(760, 60, 0, 15); // body.setSize() permits us to change the size of the collision box
-    walls.create(400, 591, 'wall_bottom'); // https://phaser.io/examples/v2/arcade-physics/offset-bounding-box
+    walls.create(400, window.innerHeight - 11, 'wall_bottom'); // https://phaser.io/examples/v2/arcade-physics/offset-bounding-box
     walls.create(11, 300, 'wall_side'); // Left
-    walls.create(789, 300, 'wall_side'); // Right
+    walls.createMultiple({ key: 'wall_side', repeat: 10 }); // Right
 
     this.player = this.physics.add.sprite(100, 400, 'dude');
 
