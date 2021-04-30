@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, Position, Card, Button } from '@blueprintjs/core';
+import { Drawer, Position, Card, Button, Icon } from '@blueprintjs/core';
 import Notification from './Notification';
 
 export type NotificationsProps = {
@@ -27,30 +27,39 @@ function Sidebar() {
     { message: 'nouveau dossier' },
     { message: 'nouveau dossier' },
     { message: 'nouveau fichier' },
+    { message: 'nouveau dossier' },
+    { message: 'nouveau dossier' },
+    { message: 'nouveau fichier' },
+    { message: 'nouveau dossier' },
+    { message: 'nouveau dossier' },
+    { message: 'nouveau fichier' },
   ];
 
   return (
     <div>
-      <button type="button" onClick={() => setHandleSidebar(!handleSidebar)}>
-        open sidebar
-      </button>
+      <Icon
+        icon="caret-right"
+        iconSize={32}
+        onClick={() => setHandleSidebar(!handleSidebar)}
+      />
+
       {handleSidebar && (
         <Drawer isOpen size={Drawer.SIZE_SMALL} position={Position.LEFT}>
           <div
             style={{
               height: '100vh',
-              backgroundColor: '#137CBD',
               textAlign: 'center',
+              backgroundColor: '#137CBD',
               color: 'white',
             }}
           >
-            <button
-              type="button"
-              onClick={() => setHandleSidebar(!handleSidebar)}
-            >
-              close sidebar
-            </button>
-
+            <div style={{ display: 'flex', justifyContent: 'end' }}>
+              <Icon
+                icon="caret-left"
+                iconSize={32}
+                onClick={() => setHandleSidebar(!handleSidebar)}
+              />
+            </div>
             <div>
               <h2>PIXELEARN</h2>
               <img
@@ -70,7 +79,7 @@ function Sidebar() {
               }}
             >
               <h3>FLUX DE NOTIFICATION</h3>
-              <div style={{ height: '45vh', color: 'black' }}>
+              <div style={{ height: '45vh', color: 'black', overflow: 'auto' }}>
                 {notifications.map((Element: NotificationsProps) => (
                   <Notification message={Element.message} />
                 ))}
@@ -80,7 +89,7 @@ function Sidebar() {
               type="button"
               fill
               style={{
-                height: '9vh',
+                height: '7vh',
               }}
             >
               Déconnexion
