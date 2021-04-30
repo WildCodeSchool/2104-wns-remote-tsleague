@@ -12,31 +12,49 @@ export default class PixeLearnScene extends Scene {
   player: any;
 
   preload = (): void => {
-    this.load.image('floor', 'floor.png');
-    this.load.image('wall_bottom', 'wall_bottom.png');
-    this.load.image('wall_side', 'wall_side.png');
-    this.load.image('wall_top', 'wall_top.png');
+    this.load.tilemapTiledJSON(
+      'map',
+      'assets/tiles-configs/pixelearn-map.json'
+    );
+    this.load.image(
+      'tiles_classroom',
+      'assets/interiors/5_Classroom_and_library_48x48.png'
+    );
+    this.load.image(
+      'tiles_room_builder',
+      'assets/interiors/Room_Builder_48x48.png'
+    );
 
-    this.load.spritesheet('dude', 'dude.png', {
-      frameWidth: 32,
-      frameHeight: 48,
+    this.load.spritesheet('dude', 'assets/characters/Bruce_run_48x48.png', {
+      frameWidth: 48,
+      frameHeight: 96,
     });
   };
 
   create = (): void => {
-    this.add.image(400, 300, 'floor'); // Add background texture
+    // create map
+    const map = this.make.tilemap({ key: 'map' });
 
-    const walls = this.physics.add.staticGroup();
+    // assign name of the tiles to the map
+    const tilesClassroom = map.addTilesetImage('tiles_classroom');
+    const tilesRoomBuilder = map.addTilesetImage('tiles_room_builder');
 
-    walls.create(400, 48, 'wall_top').body.setSize(760, 60, 0, 15); // body.setSize() permits us to change the size of the collision box
-    walls.create(400, 591, 'wall_bottom'); // https://phaser.io/examples/v2/arcade-physics/offset-bounding-box
-    walls.create(11, 300, 'wall_side'); // Left
-    walls.create(789, 300, 'wall_side'); // Right
+    // add layers
+    const floorLayer = map
+      .createLayer('floor', tilesRoomBuilder, 0, 0)
+      .setDepth(-1);
+    const wallsLayer = map.createLayer('walls', tilesRoomBuilder, 0, 0);
+    const furnitureLayer = map.createLayer('furniture', tilesClassroom, 0, 0);
+
+    // set collision according to the property in tiled
+    furnitureLayer.setCollisionByProperty({ isSolid: true });
+    wallsLayer.setCollisionByProperty({ isSolid: true });
 
     this.player = this.physics.add
       .sprite(100, 400, 'dude')
-      .setInteractive({ useHandCursor: true });
-
+      .setInteractive({ useHandCursor: true })
+      .setSize(20, 50);
+    this.player.setOffset(15, 35);
     this.player.on('pointerup', () => {
       store.dispatch({ type: STUDENT_MODAL_TOGGLE });
     });
@@ -45,43 +63,64 @@ export default class PixeLearnScene extends Scene {
 
     this.anims.create({
       key: 'left',
-      frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+      frames: this.anims.generateFrameNumbers('dude', { start: 12, end: 17 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: 'right',
+      frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 5 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: 'up',
+      frames: this.anims.generateFrameNumbers('dude', { start: 6, end: 11 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: 'down',
+      frames: this.anims.generateFrameNumbers('dude', { start: 18, end: 23 }),
       frameRate: 10,
       repeat: -1,
     });
 
     this.anims.create({
       key: 'turn',
-      frames: [{ key: 'dude', frame: 4 }],
-      frameRate: 20,
-    });
-
-    this.anims.create({
-      key: 'right',
-      frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-      frameRate: 10,
-      repeat: -1,
+      frames: [{ key: 'dude', frame: 14 }],
     });
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.physics.add.collider(this.player, walls);
+    this.physics.world.setBounds(0, 0, 2400, 2400);
+    //  set camera to the world size
+    this.cameras.main.setBounds(0, 0, 2400, 2400);
+    // target player
+    this.cameras.main.startFollow(this.player);
+
+    this.physics.add.collider(this.player, furnitureLayer);
+    this.physics.add.collider(this.player, wallsLayer);
   };
 
   update = (): void => {
-    if (this.cursors.up.isDown && this.cursors.right.isDown) {
-      this.player.setVelocityX(160);
-      this.player.setVelocityY(-160);
-    } else if (this.cursors.up.isDown && this.cursors.left.isDown) {
-      this.player.setVelocityX(-160);
-      this.player.setVelocityY(-160);
-    } else if (this.cursors.down.isDown && this.cursors.right.isDown) {
-      this.player.setVelocityX(160);
-      this.player.setVelocityY(160);
-    } else if (this.cursors.down.isDown && this.cursors.left.isDown) {
-      this.player.setVelocityX(-160);
-      this.player.setVelocityY(160);
-    } else if (this.cursors.left.isDown) {
+    // if (this.cursors.up.isDown && this.cursors.right.isDown) {
+    //   this.player.setVelocityX(160);
+    //   this.player.setVelocityY(-160);
+    // } else if (this.cursors.up.isDown && this.cursors.left.isDown) {
+    //   this.player.setVelocityX(-160);
+    //   this.player.setVelocityY(-160);
+    // } else if (this.cursors.down.isDown && this.cursors.right.isDown) {
+    //   this.player.setVelocityX(160);
+    //   this.player.setVelocityY(160);
+    // } else if (this.cursors.down.isDown && this.cursors.left.isDown) {
+    //   this.player.setVelocityX(-160);
+    //   this.player.setVelocityY(160);
+
+    if (this.cursors.left.isDown) {
       this.player.setVelocityX(-160);
       this.player.setVelocityY(0); // Prevents unintentional diagonal movement
 
@@ -94,9 +133,11 @@ export default class PixeLearnScene extends Scene {
     } else if (this.cursors.up.isDown) {
       this.player.setVelocityY(-160);
       this.player.setVelocityX(0); // Prevents unintentional diagonal movement
+      this.player.anims.play('up', true);
     } else if (this.cursors.down.isDown) {
       this.player.setVelocityY(160);
       this.player.setVelocityX(0); // Prevents unintentional diagonal movement
+      this.player.anims.play('down', true);
     } else {
       this.player.setVelocityX(0);
       this.player.setVelocityY(0);
