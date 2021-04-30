@@ -1,14 +1,31 @@
 import React from 'react';
 import { Classes, Icon, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
+import { connect } from 'react-redux';
 
-function MenuInGame(): JSX.Element {
+type PropsType = {
+  studentGamePosition: {
+    positionX: string;
+    positionY: string;
+  };
+};
+
+type State = {
+  gameToggle: {
+    studentGamePosition: {
+      positionX: string;
+      positionY: string;
+    };
+  };
+};
+
+function MenuInGame({ studentGamePosition }: PropsType): JSX.Element {
   return (
     <Menu
       style={{
         position: 'absolute',
-        top: '50%',
-        transform: 'translate(-50%, -50%)',
-        left: '50%',
+        top: `${studentGamePosition.positionY}px`,
+        transform: 'translate(5%, -110%)',
+        left: `${studentGamePosition.positionX}px`,
       }}
     >
       <MenuDivider />
@@ -30,4 +47,8 @@ function MenuInGame(): JSX.Element {
   );
 }
 
-export default MenuInGame;
+const mapStateToProps = (state: State) => ({
+  studentGamePosition: state.gameToggle.studentGamePosition,
+});
+
+export default connect(mapStateToProps)(MenuInGame);

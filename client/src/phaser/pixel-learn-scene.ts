@@ -2,7 +2,7 @@ import { Scene } from 'phaser';
 import store from '../redux/store';
 import GAME_ACTIONS from '../redux/Game/game.types';
 
-const { STUDENT_MODAL_TOGGLE } = GAME_ACTIONS;
+const { STUDENT_MODAL_TOGGLE, STUDENT_GAME_POSITION } = GAME_ACTIONS;
 
 export default class PixeLearnScene extends Scene {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -103,5 +103,12 @@ export default class PixeLearnScene extends Scene {
 
       this.player.anims.play('turn');
     }
+    store.dispatch({
+      type: STUDENT_GAME_POSITION,
+      payload: {
+        positionX: this.player.x.toString(),
+        positionY: this.player.y.toString(),
+      },
+    });
   };
 }

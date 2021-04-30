@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import './App.css';
 // PHASER
 import { IonPhaser } from '@ion-phaser/react';
-import config from '../phaser/config ';
 import MenuInGame from './MenuInGame';
+import config from '../phaser/config ';
 
 type PropsType = {
   studentModalProps: boolean;
