@@ -22,14 +22,13 @@ function App({ studentModalProps }: PropsType): JSX.Element {
   const initialize = true;
 
   return (
-    <div className="App">
-      {studentModalProps && <MenuInGame />}
-      <IonPhaser game={game} initialize={initialize} />
+    <>
       <Sidebar />
-      <div>
-        <MenuInGame />
+      <div className="App">
+        <IonPhaser game={game} initialize={initialize} />
+        {studentModalProps && <MenuInGame />}
       </div>
-    </div>
+    </>
   );
 }
 

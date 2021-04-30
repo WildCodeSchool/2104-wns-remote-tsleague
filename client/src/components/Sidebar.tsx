@@ -36,7 +36,7 @@ function Sidebar() {
   ];
 
   return (
-    <div>
+    <>
       <Icon
         icon="caret-right"
         iconSize={32}
@@ -97,7 +97,7 @@ function Sidebar() {
           </div>
         </Drawer>
       )}
-    </div>
+    </>
   );
 }
 
