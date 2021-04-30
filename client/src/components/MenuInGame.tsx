@@ -1,5 +1,5 @@
 import React from 'react';
-import { Classes, Icon, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
+import { Icon, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 
 function MenuInGame(): JSX.Element {
   return (

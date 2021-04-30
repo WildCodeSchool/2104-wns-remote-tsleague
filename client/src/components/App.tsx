@@ -1,13 +1,12 @@
-// REACT
 import React from 'react';
-// REDUX
 import { connect } from 'react-redux';
-// STYLE
-import './App.css';
-// PHASER
 import { IonPhaser } from '@ion-phaser/react';
+
+import Sidebar from './Sidebar';
 import config from '../phaser/config ';
 import MenuInGame from './MenuInGame';
+
+import './App.css';
 
 type PropsType = {
   studentModalProps: boolean;
@@ -26,6 +25,10 @@ function App({ studentModalProps }: PropsType): JSX.Element {
     <div className="App">
       {studentModalProps && <MenuInGame />}
       <IonPhaser game={game} initialize={initialize} />
+      <Sidebar />
+      <div>
+        <MenuInGame />
+      </div>
     </div>
   );
 }
