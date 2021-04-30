@@ -3,16 +3,23 @@ import { Scene } from 'phaser';
 export default class PixeLearnScene extends Scene {
   cursors: any;
 
-  // walls: any;
-
   player: any;
 
   preload = (): void => {
-    this.load.tilemapTiledJSON('map', 'pixelearn.json');
-    this.load.image('tiles_classroom', '5_Classroom_and_library_48x48.png');
-    this.load.image('tiles_room_builder', 'Room_Builder_48x48.png');
+    this.load.tilemapTiledJSON(
+      'map',
+      'assets/tiles-configs/pixelearn-map.json'
+    );
+    this.load.image(
+      'tiles_classroom',
+      'assets/interiors/5_Classroom_and_library_48x48.png'
+    );
+    this.load.image(
+      'tiles_room_builder',
+      'assets/interiors/Room_Builder_48x48.png'
+    );
 
-    this.load.spritesheet('dude', 'Bruce_run_48x48.png', {
+    this.load.spritesheet('dude', 'assets/characters/Bruce_run_48x48.png', {
       frameWidth: 48,
       frameHeight: 96,
     });
@@ -100,6 +107,7 @@ export default class PixeLearnScene extends Scene {
     // } else if (this.cursors.down.isDown && this.cursors.left.isDown) {
     //   this.player.setVelocityX(-160);
     //   this.player.setVelocityY(160);
+
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-160);
       this.player.setVelocityY(0); // Prevents unintentional diagonal movement
