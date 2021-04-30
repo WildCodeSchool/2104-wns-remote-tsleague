@@ -3,7 +3,7 @@ import { Classes, Icon, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 
 function MenuInGame(): JSX.Element {
   return (
-    <div style={{ width: '1px'}}>
+    <div style={{ width: '1px' }}>
       <Menu className={Classes.ELEVATION_1}>
         <MenuDivider />
         <MenuItem icon="timeline-events" text="Agenda" />
