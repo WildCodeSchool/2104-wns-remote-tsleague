@@ -1,42 +1,94 @@
-import React from 'react';
-import { Drawer } from '@blueprintjs/core';
+import React, { useState } from 'react';
+import { Drawer, Position, Card, Button } from '@blueprintjs/core';
 import Notification from './Notification';
 
+export type NotificationsProps = {
+  message: string;
+};
+
+export type User = {
+  firstName: string;
+  lastName: string;
+  classroom: string;
+  picture: string;
+};
+
 function Sidebar() {
-  const user = {
+  const [handleSidebar, setHandleSidebar] = useState(false);
+
+  const user: User = {
     firstName: 'Jake',
     lastName: 'Mike',
     classroom: 'WnS - Remote',
     picture: 'https://randomuser.me/api/portraits/men/80.jpg',
   };
 
-  // const notifications = [
-  //   { message: 'nouveau dossier' },
-  //   { message: 'nouveau dossier' },
-  //   { message: 'nouveau fichier' },
-  // ];
+  const notifications: NotificationsProps[] = [
+    { message: 'nouveau dossier' },
+    { message: 'nouveau dossier' },
+    { message: 'nouveau fichier' },
+  ];
+
   return (
-    <Drawer isOpen size={Drawer.SIZE_SMALL}>
-      <div style={{ height: '100vh', backgroundColor: 'lightblue' }}>
-        <div>
-          <h3>PIXELEARN</h3>
-          <img src={user.picture} alt="profile" />
-          <h2>
-            {user.firstName} {user.lastName}{' '}
-          </h2>
-          <h2>{user.classroom}</h2>
-        </div>
-        <div>
-          <h2>FLUX</h2>
-          <div>
-            <Notification />
-            <Notification />
-            <Notification />
+    <div>
+      <button type="button" onClick={() => setHandleSidebar(!handleSidebar)}>
+        open sidebar
+      </button>
+      {handleSidebar && (
+        <Drawer isOpen size={Drawer.SIZE_SMALL} position={Position.LEFT}>
+          <div
+            style={{
+              height: '100vh',
+              backgroundColor: '#137CBD',
+              textAlign: 'center',
+              color: 'white',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setHandleSidebar(!handleSidebar)}
+            >
+              close sidebar
+            </button>
+
+            <div>
+              <h2>PIXELEARN</h2>
+              <img
+                src={user.picture}
+                alt="profile"
+                style={{ width: '50%', height: '45%', borderRadius: '50%' }}
+              />
+              <h3>
+                {user.firstName} {user.lastName}{' '}
+              </h3>
+              <h3>{user.classroom}</h3>
+            </div>
+            <Card
+              style={{
+                backgroundColor: 'lightblue',
+                width: '100%',
+              }}
+            >
+              <h3>FLUX DE NOTIFICATION</h3>
+              <div style={{ height: '45vh', color: 'black' }}>
+                {notifications.map((Element: NotificationsProps) => (
+                  <Notification message={Element.message} />
+                ))}
+              </div>
+            </Card>
+            <Button
+              type="button"
+              fill
+              style={{
+                height: '9vh',
+              }}
+            >
+              Déconnexion
+            </Button>
           </div>
-        </div>
-        <button type="button">Déconnexion</button>
-      </div>
-    </Drawer>
+        </Drawer>
+      )}
+    </div>
   );
 }
 

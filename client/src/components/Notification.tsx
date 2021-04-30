@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card, Elevation } from '@blueprintjs/core';
 
-function Notification() {
+function Notification({ message }: { message: string }) {
   return (
     <Card interactive elevation={Elevation.TWO}>
-      <p>Card content</p>
+      <p>{message}</p>
     </Card>
   );
 }
