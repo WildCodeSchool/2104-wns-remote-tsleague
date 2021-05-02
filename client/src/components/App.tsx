@@ -24,7 +24,7 @@ function App({ studentModalProps }: PropsType): JSX.Element {
   return (
     <>
       <Sidebar />
-      <div className="App">
+      <div className="game">
         <IonPhaser game={game} initialize={initialize} />
         {studentModalProps && <MenuInGame />}
       </div>

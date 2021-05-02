@@ -1,6 +1,6 @@
 import { Scene } from 'phaser';
 import store from '../redux/store';
-import GAME_ACTIONS from '../redux/Game/game.types';
+import GAME_ACTIONS from '../redux/game/game.types';
 
 const { STUDENT_MODAL_TOGGLE, STUDENT_GAME_POSITION } = GAME_ACTIONS;
 

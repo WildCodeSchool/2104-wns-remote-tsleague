@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import gameReducer from './Game/game.reducer';
+import gameReducer from './game/game.reducer';
 
 const rootReducer = combineReducers({
   gameToggle: gameReducer,

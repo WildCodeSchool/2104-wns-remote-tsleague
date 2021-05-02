@@ -10,12 +10,7 @@ type PropsType = {
 };
 
 type State = {
-  gameToggle: {
-    studentGamePosition: {
-      positionX: string;
-      positionY: string;
-    };
-  };
+  gameToggle: PropsType;
 };
 
 function MenuInGame({ studentGamePosition }: PropsType): JSX.Element {
