@@ -17,11 +17,8 @@
   },
   "lint-staged": {
     "*.ts{,x}": [
-      "yarn workspace client lint",
-      "yarn workspace client format",
-      "yarn workspace server lint",
-      "yarn workspace server format",
-      "git add"
+      "yarn workspace client TIMING=1 eslint --fix",
+      "yarn workspace server eslint --debug --fix"
     ]
   }
 }
