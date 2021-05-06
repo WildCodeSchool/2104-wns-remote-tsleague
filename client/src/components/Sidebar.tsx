@@ -36,7 +36,7 @@ function Sidebar() {
   ];
 
   return (
-    <div>
+    <>
       <Icon
         icon="caret-right"
         iconSize={32}
@@ -53,7 +53,12 @@ function Sidebar() {
               color: 'white',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'end' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'end',
+              }}
+            >
               <Icon
                 icon="caret-left"
                 iconSize={32}
@@ -97,7 +102,7 @@ function Sidebar() {
           </div>
         </Drawer>
       )}
-    </div>
+    </>
   );
 }
 
