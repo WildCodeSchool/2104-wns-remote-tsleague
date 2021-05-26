@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 
-import UserResolver from './UserResolver';
 import { ApolloServer } from 'apollo-server';
+import UserResolver from './UserResolver';
 
 const port = process.env.PORT || 5000;
 

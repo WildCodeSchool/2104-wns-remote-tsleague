@@ -2,7 +2,7 @@ import { ObjectType, Field, ID } from 'type-graphql';
 
 @ObjectType()
 class User {
-  @Field((type) => ID)
+  @Field(() => ID)
   id: number = 0;
 
   @Field()
