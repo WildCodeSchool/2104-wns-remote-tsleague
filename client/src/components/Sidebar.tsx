@@ -34,6 +34,9 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
     { message: 'nouveau dossier' },
     { message: 'nouveau dossier' },
     { message: 'nouveau fichier' },
+    { message: 'nouveau fichier' },
+    { message: 'nouveau fichier' },
+    { message: 'nouveau fichier' },
     { message: 'nouveau dossier' },
     { message: 'nouveau dossier' },
     { message: 'nouveau fichier' },
@@ -67,10 +70,12 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
         </div>
         <SidebarNotificationFeed>
           <h3>FLUX DE NOTIFICATION</h3>
-          <div>
-            {notifications.map((Element: NotificationsProps) => (
-              <Notification message={Element.message} />
-            ))}
+          <div className="notification-feed">
+            <div>
+              {notifications.map((Element: NotificationsProps) => (
+                <Notification message={Element.message} />
+              ))}
+            </div>
           </div>
         </SidebarNotificationFeed>
         <Button>Déconnexion</Button>

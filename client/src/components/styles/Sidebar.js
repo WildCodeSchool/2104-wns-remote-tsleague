@@ -36,19 +36,22 @@ export const SidebarNotificationFeed = styled.div`
   background-color: ${colors.secondary};
   color: ${colors.white};
 
-  div {
+  .notification-feed {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    overflow: scroll;
-    height: 45vh;
+    overflow-y: scroll;
+
+    div {
+      height: 45vh;
+    }
   }
 `;
 
 export const NotificationItem = styled.span`
   margin: 10px 0;
-  padding: 30px;
+  padding: 10px;
 
   /* Center the content */
   align-items: center;
