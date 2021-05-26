@@ -1,6 +1,7 @@
 import React from 'react';
-import { Icon, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 import { connect } from 'react-redux';
+
+import { Menu, MenuItem } from './styles/MenuInGame';
 
 type PropsType = {
   studentGamePosition: {
@@ -8,7 +9,6 @@ type PropsType = {
     positionY: string;
   };
 };
-
 type State = {
   gameToggle: PropsType;
 };
@@ -23,21 +23,14 @@ function MenuInGame({ studentGamePosition }: PropsType): JSX.Element {
         left: `${studentGamePosition.positionX}px`,
       }}
     >
-      <MenuDivider />
-      <MenuItem icon="timeline-events" text="Agenda" />
-      <MenuItem icon="learning" text="Classe" />
-      <MenuItem icon="folder-open" text="Mes documents">
-        <MenuItem icon="annotation" text="Mes notes" />
-        <MenuItem icon="video" text="Mes videos" />
-        <MenuItem icon="link" text="Mes ressources" />
-      </MenuItem>
-      <MenuDivider />
-      <MenuItem
-        icon="cog"
-        labelElement={<Icon icon="share" />}
-        text="Paramètres"
-      />
-      <MenuItem icon="log-out" text="Déconnecter" />
+      <MenuItem>Agenda</MenuItem>
+      <MenuItem>Classe</MenuItem>
+      <MenuItem>Mes documents</MenuItem>
+      <MenuItem>Mes notes</MenuItem>
+      <MenuItem>Mes videos</MenuItem>
+      <MenuItem>Mes ressources</MenuItem>
+      <MenuItem>Paramètres</MenuItem>
+      <MenuItem>Déconnecter</MenuItem>
     </Menu>
   );
 }
