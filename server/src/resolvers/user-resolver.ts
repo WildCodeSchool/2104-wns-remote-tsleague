@@ -1,5 +1,6 @@
-import { Resolver, Query } from 'type-graphql';
-import User from './User';
+/* eslint-disable class-methods-use-this */
+import { Args, Resolver, Query } from 'type-graphql';
+import { User } from '../models/user-model';
 
 const users = [
   {
@@ -33,14 +34,14 @@ const users = [
 
 @Resolver(User)
 class UserResolver {
-  @Query((returns) => User)
-  getUser(args: any) {
+  @Query(() => User)
+  getUserById(@Args('id')) {
     const { id } = args;
     console.log(users.filter((user) => user.id === id)[0]);
     return users.filter((user) => user.id === id)[0];
   }
 
-  @Query((returns) => [User])
+  @Query(() => [User])
   getAllUsers(args: any) {
     if (args?.role) return users.filter((user) => user.role === args.role)[0];
     return users;
