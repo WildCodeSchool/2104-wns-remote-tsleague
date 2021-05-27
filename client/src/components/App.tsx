@@ -7,6 +7,7 @@ import MenuInGame from './MenuInGame';
 import config from '../phaser/config ';
 
 import './App.css';
+import AccountBox from './login';
 
 type PropsType = {
   studentModalProps: boolean;
@@ -28,6 +29,7 @@ function App({ studentModalProps }: PropsType): JSX.Element {
         <IonPhaser game={game} initialize={initialize} />
         {studentModalProps && <MenuInGame />}
       </div>
+      <AccountBox />
     </>
   );
 }
