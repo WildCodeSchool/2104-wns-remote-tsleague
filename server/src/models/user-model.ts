@@ -4,11 +4,11 @@ import { ObjectType, Field, ID } from 'type-graphql';
 @ObjectType()
 export class User {
   @Field(() => ID)
-  readonly id = 0;
+  readonly id!: string;
 
   @Property({ required: true })
   @Field()
-  name!: string;
+  lastname!: string;
 
   @Property({ required: true })
   @Field()

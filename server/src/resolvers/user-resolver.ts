@@ -1,11 +1,11 @@
 /* eslint-disable class-methods-use-this */
-import { Args, Resolver, Query } from 'type-graphql';
+import { ArgsType, Resolver, Query } from 'type-graphql';
 import { User } from '../models/user-model';
 
 const users = [
   {
     id: 1,
-    name: 'Dupont',
+    lastname: 'Dupont',
     firstname: 'Louis',
     birthday: '20/04/1995',
     mail: 'louisdupont@gmail.com',
@@ -14,7 +14,7 @@ const users = [
   },
   {
     id: 2,
-    name: 'Dupont',
+    lastname: 'Dupont',
     firstname: 'Louis',
     birthday: '20/04/1995',
     mail: 'louisdupont@gmail.com',
@@ -23,7 +23,7 @@ const users = [
   },
   {
     id: 3,
-    name: 'Dupont',
+    lastname: 'Dupont',
     firstname: 'Louis',
     birthday: '20/04/1995',
     mail: 'louisdupont@gmail.com',
@@ -35,14 +35,12 @@ const users = [
 @Resolver(User)
 class UserResolver {
   @Query(() => User)
-  getUserById(@Args('id')) {
-    const { id } = args;
-    console.log(users.filter((user) => user.id === id)[0]);
-    return users.filter((user) => user.id === id)[0];
+  getUserById(id: string) {
+    return users.filter((user) => user.id === parseInt(id, 10))[0];
   }
 
   @Query(() => [User])
-  getAllUsers(args: any) {
+  getAllUsers(args: User) {
     if (args?.role) return users.filter((user) => user.role === args.role)[0];
     return users;
   }
