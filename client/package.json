@@ -14,8 +14,8 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.16",
     "graphql": "^15.5.0",
-    "phaser": "^3.54.0",
     "normalize.css": "^8.0.1",
+    "phaser": "^3.54.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
@@ -29,7 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@toolz/allow-react)/\" --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "tsc --noEmit && eslint --fix src/**/*.ts{,x}",
     "format": "prettier --write src/**/*.ts{,x}"
@@ -53,8 +53,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.14.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "babel-jest": "^27.0.1",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-airbnb-typescript": "^12.3.1",
@@ -65,6 +67,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "jest-canvas-mock": "^2.3.1",
     "prettier": "^2.2.1"
   }
 }
