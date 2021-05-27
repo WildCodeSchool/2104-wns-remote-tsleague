@@ -26,7 +26,7 @@ function App({ studentModalProps }: PropsType): JSX.Element {
   const initialize = true;
 
   return (
-    <>
+    <div data-testid="app">
       {handleSidebar ? (
         <Sidebar handleSidebar={() => setHandleSidebar(!handleSidebar)} />
       ) : (
@@ -38,7 +38,7 @@ function App({ studentModalProps }: PropsType): JSX.Element {
         <IonPhaser game={game} initialize={initialize} />
       </div>
       {studentModalProps && <MenuInGame />}
-    </>
+    </div>
   );
 }
 
