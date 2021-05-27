@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 import { colors } from './globals';
 
-const Button = styled.button`
+const Btn = styled.button`
   text-transform: uppercase;
   margin: 10px 0;
+  cursor: pointer;
 
   /* Colors */
-  background-color: ${colors.primary};
-  color: ${colors.white};
+  background-color: ${(props) =>
+    props.reverse ? colors.white : colors.primary};
+  color: ${(props) => (props.reverse ? colors.primary : colors.white)};
 
   /* Rounded border */
   border: none;
@@ -16,4 +18,4 @@ const Button = styled.button`
   width: 200px;
 `;
 
-export default Button;
+export default Btn;

@@ -30,18 +30,20 @@ export const SidebarContainer = styled.div`
 
 export const SidebarNotificationFeed = styled.div`
   width: 360px;
-  padding: 20px 0;
+  padding-top: 20px;
 
   /* Colors */
   background-color: ${colors.secondary};
   color: ${colors.white};
 
   .notification-feed {
+    padding-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     overflow-y: scroll;
+    background-color: ${colors.white};
 
     div {
       height: 45vh;

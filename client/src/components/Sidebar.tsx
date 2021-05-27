@@ -6,7 +6,7 @@ import {
   SidebarNotificationFeed,
   IconRight,
 } from './styles/Sidebar';
-import Button from './styles/Button';
+import Button from './common/Button';
 
 export type NotificationsProps = {
   message: string;
@@ -78,7 +78,10 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
             </div>
           </div>
         </SidebarNotificationFeed>
-        <Button>Déconnexion</Button>
+        <Button
+          text="Déconnexion"
+          handleClick={() => console.log('Déconnexion')}
+        />
       </div>
     </SidebarContainer>
   );
