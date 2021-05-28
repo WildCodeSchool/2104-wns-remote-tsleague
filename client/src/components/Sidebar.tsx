@@ -2,9 +2,9 @@ import React from 'react';
 import Notification from './Notification';
 
 import {
-  SidebarContainer,
-  SidebarNotificationFeed,
-  IconRight,
+  StyledSidebarContainer,
+  StyledSidebarNotificationFeed,
+  StyledIconRight,
 } from './styles/Sidebar';
 import Button from './common/Button';
 
@@ -43,7 +43,7 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
   ];
 
   return (
-    <SidebarContainer>
+    <StyledSidebarContainer>
       <div
         style={{
           height: '100vh',
@@ -58,7 +58,7 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
             justifyContent: 'end',
           }}
         >
-          <IconRight onClick={handleSidebar} />
+          <StyledIconRight onClick={handleSidebar} />
         </div>
         <div>
           <h2>PIXELEARN</h2>
@@ -68,7 +68,7 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
           </h3>
           <h3>{user.classroom}</h3>
         </div>
-        <SidebarNotificationFeed>
+        <StyledSidebarNotificationFeed>
           <h3>FLUX DE NOTIFICATION</h3>
           <div className="notification-feed">
             <div>
@@ -77,13 +77,13 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
               ))}
             </div>
           </div>
-        </SidebarNotificationFeed>
+        </StyledSidebarNotificationFeed>
         <Button
           text="Déconnexion"
           handleClick={() => console.log('Déconnexion')}
         />
       </div>
-    </SidebarContainer>
+    </StyledSidebarContainer>
   );
 }
 

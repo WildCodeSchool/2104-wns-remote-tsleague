@@ -1,5 +1,5 @@
 import React from 'react';
-import Btn from '../styles/Button';
+import StyledButton from '../styles/Button';
 
 export type ButtonProps = {
   text: string;
@@ -9,9 +9,9 @@ export type ButtonProps = {
 
 function Button({ text, handleClick, reverse }: ButtonProps) {
   return (
-    <Btn reverse={reverse} onClick={handleClick} data-testid="btn">
+    <StyledButton reverse={reverse} onClick={handleClick} data-testid="btn">
       {text}
-    </Btn>
+    </StyledButton>
   );
 }
 

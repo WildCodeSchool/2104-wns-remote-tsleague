@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { colors } from './globals';
 
-export const SidebarContainer = styled.div`
+export const StyledSidebarContainer = styled.div`
   position: fixed;
   width: 360px;
   height: '100vh',
@@ -28,7 +28,7 @@ export const SidebarContainer = styled.div`
   }
 `;
 
-export const SidebarNotificationFeed = styled.div`
+export const StyledSidebarNotificationFeed = styled.div`
   width: 360px;
   padding-top: 20px;
 
@@ -51,7 +51,7 @@ export const SidebarNotificationFeed = styled.div`
   }
 `;
 
-export const NotificationItem = styled.span`
+export const StyledNotificationItem = styled.span`
   margin: 10px 0;
   padding: 10px;
 
@@ -73,7 +73,7 @@ export const NotificationItem = styled.span`
   }
 `;
 
-export const IconRight = styled.span`
+export const StyledIconRight = styled.span`
   display: block;
   width: 0;
   height: 0;
@@ -83,7 +83,7 @@ export const IconRight = styled.span`
   margin: 5px;
 `;
 
-export const IconLeft = styled.span`
+export const StyledIconLeft = styled.span`
   display: block;
   width: 0;
   height: 0;

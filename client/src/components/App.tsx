@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { IonPhaser } from '@ion-phaser/react';
 
-import { IconLeft } from './styles/Sidebar';
+import { StyledIconLeft } from './styles/Sidebar';
 
 import Sidebar from './Sidebar';
 import MenuInGame from './MenuInGame';
@@ -31,7 +31,7 @@ function App({ studentModalProps }: PropsType): JSX.Element {
         <Sidebar handleSidebar={() => setHandleSidebar(!handleSidebar)} />
       ) : (
         <div>
-          <IconLeft onClick={() => setHandleSidebar(!handleSidebar)} />
+          <StyledIconLeft onClick={() => setHandleSidebar(!handleSidebar)} />
         </div>
       )}
       <div className="game">
