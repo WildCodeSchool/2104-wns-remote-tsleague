@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { colors } from './globals';
 
-const Btn = styled.button`
+const StyledButton = styled.button`
   text-transform: uppercase;
   margin: 10px 0;
   cursor: pointer;
@@ -18,4 +18,4 @@ const Btn = styled.button`
   width: 200px;
 `;
 
-export default Btn;
+export default StyledButton;

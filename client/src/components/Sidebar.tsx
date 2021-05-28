@@ -2,9 +2,9 @@ import React from 'react';
 import Notification from './Notification';
 
 import {
-  SidebarContainer,
-  SidebarNotificationFeed,
-  IconRight,
+  StyledSidebar,
+  StyledSidebarNotificationFeed,
+  StyledIconRight,
 } from './styles/Sidebar';
 import Button from './common/Button';
 
@@ -43,22 +43,13 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
   ];
 
   return (
-    <SidebarContainer>
-      <div
-        style={{
-          height: '100vh',
-          textAlign: 'center',
-          backgroundColor: '#137CBD',
-          color: 'white',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
-          <IconRight data-testid="sidebar-icon-right" onClick={handleSidebar} />
+    <StyledSidebar>
+      <div className="sidebar-container">
+        <div className="sidebar-btn">
+          <StyledIconRight
+            data-testid="sidebar-icon-right"
+            onClick={handleSidebar}
+          />
         </div>
         <div>
           <h2>PIXELEARN</h2>
@@ -68,7 +59,7 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
           </h3>
           <h3>{user.classroom}</h3>
         </div>
-        <SidebarNotificationFeed>
+        <StyledSidebarNotificationFeed>
           <h3>FLUX DE NOTIFICATION</h3>
           <div className="notification-feed">
             <div>
@@ -77,13 +68,13 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
               ))}
             </div>
           </div>
-        </SidebarNotificationFeed>
+        </StyledSidebarNotificationFeed>
         <Button
           text="Déconnexion"
           handleClick={() => console.log('Déconnexion')}
         />
       </div>
-    </SidebarContainer>
+    </StyledSidebar>
   );
 }
 

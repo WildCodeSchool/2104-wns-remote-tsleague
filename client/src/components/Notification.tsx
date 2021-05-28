@@ -1,11 +1,11 @@
 import React from 'react';
-import { NotificationItem } from './styles/Sidebar';
+import { StyledNotificationItem } from './styles/Sidebar';
 
 function Notification({ message }: { message: string }) {
   return (
-    <NotificationItem>
+    <StyledNotificationItem>
       <p>{message}</p>
-    </NotificationItem>
+    </StyledNotificationItem>
   );
 }
 export default Notification;

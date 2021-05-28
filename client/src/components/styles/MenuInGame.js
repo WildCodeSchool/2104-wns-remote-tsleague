@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Menu = styled.div`
+export const StyledMenu = styled.div`
   background: #ffffff;
   border-radius: 3px;
   color: #182026;
@@ -11,7 +11,7 @@ export const Menu = styled.div`
   text-align: left;
 `;
 
-export const MenuItem = styled.li`
+export const StyledMenuItem = styled.li`
   display: flex;
   flex-direction: row;
   align-items: flex-start;

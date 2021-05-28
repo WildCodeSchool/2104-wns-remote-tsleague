@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Menu, MenuItem } from './styles/MenuInGame';
+import { StyledMenu, StyledMenuItem } from './styles/MenuInGame';
 
 type PropsType = {
   studentGamePosition: {
@@ -15,7 +15,8 @@ type State = {
 
 function MenuInGame({ studentGamePosition }: PropsType): JSX.Element {
   return (
-    <Menu
+    // TODO: fix la propriété style, et mettre le style dans le styled component
+    <StyledMenu
       style={{
         position: 'absolute',
         top: `${studentGamePosition.positionY}px`,
@@ -23,15 +24,15 @@ function MenuInGame({ studentGamePosition }: PropsType): JSX.Element {
         left: `${studentGamePosition.positionX}px`,
       }}
     >
-      <MenuItem>Agenda</MenuItem>
-      <MenuItem>Classe</MenuItem>
-      <MenuItem>Mes documents</MenuItem>
-      <MenuItem>Mes notes</MenuItem>
-      <MenuItem>Mes videos</MenuItem>
-      <MenuItem>Mes ressources</MenuItem>
-      <MenuItem>Paramètres</MenuItem>
-      <MenuItem>Déconnecter</MenuItem>
-    </Menu>
+      <StyledMenuItem>Agenda</StyledMenuItem>
+      <StyledMenuItem>Classe</StyledMenuItem>
+      <StyledMenuItem>Mes documents</StyledMenuItem>
+      <StyledMenuItem>Mes notes</StyledMenuItem>
+      <StyledMenuItem>Mes videos</StyledMenuItem>
+      <StyledMenuItem>Mes ressources</StyledMenuItem>
+      <StyledMenuItem>Paramètres</StyledMenuItem>
+      <StyledMenuItem>Déconnecter</StyledMenuItem>
+    </StyledMenu>
   );
 }
 
