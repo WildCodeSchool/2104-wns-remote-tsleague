@@ -1,25 +1,31 @@
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
+import mongoose from 'mongoose';
 
 import { ApolloServer } from 'apollo-server';
 import UserResolver from './resolvers/user-resolver';
 
-import mocks from './mocks/users';
-
-const port = process.env.PORT || 5000;
-
-async function start() {
+export async function startServer(config: any): Promise<ApolloServer> {
   const schema = await buildSchema({ resolvers: [UserResolver] });
 
   const server = new ApolloServer({
-    mocks,
     schema,
     playground: true,
   });
 
-  server.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-  });
+  try {
+    await server.listen(config.apolloPort);
+    console.log(
+      `Apollo server started at: http://localhost:${config.apolloPort}/`,
+    );
+  } catch (error) {
+    throw new Error(`Unable to start Apollo server: ${error.message}`);
+  }
+
+  await mongoose.connect(config.uri, config.options);
+
+  if (config.verbose) console.log('mongodb started at uri: ', config.uri);
+  return server;
 }
 
-start();
+export default startServer;

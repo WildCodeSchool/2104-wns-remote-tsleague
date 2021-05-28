@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { ArgsType, Resolver, Query } from 'type-graphql';
+import { Resolver, Query, Arg } from 'type-graphql';
 import { User } from '../models/user-model';
 
 const users = [
@@ -40,9 +40,15 @@ class UserResolver {
   }
 
   @Query(() => [User])
-  getAllUsers(args: User) {
-    if (args?.role) return users.filter((user) => user.role === args.role)[0];
+  getAllUsers() {
     return users;
+  }
+
+  @Query(() => [User])
+  getAllUsersByRole(@Arg('role', () => String) role: string) {
+    const usersFind = users.filter((user) => user.role === role);
+    if (usersFind.length > 0) return usersFind;
+    return null;
   }
 }
 
