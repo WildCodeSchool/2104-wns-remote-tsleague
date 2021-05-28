@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter} from 'react-router-dom';
+import Router from './components/Router';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import 'normalize.css';
-import '@blueprintjs/core/lib/css/blueprint.css';
-import '@blueprintjs/icons/lib/css/blueprint-icons.css';
-import Router from './components/Router';
 
 ReactDOM.render(
   <React.StrictMode>

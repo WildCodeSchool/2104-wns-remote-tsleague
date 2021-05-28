@@ -1,6 +1,7 @@
 import React from 'react';
-import { Icon, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 import { connect } from 'react-redux';
+
+import { StyledMenu, StyledMenuItem } from './styles/MenuInGame';
 
 type PropsType = {
   studentGamePosition: {
@@ -8,14 +9,14 @@ type PropsType = {
     positionY: string;
   };
 };
-
 type State = {
   gameToggle: PropsType;
 };
 
 function MenuInGame({ studentGamePosition }: PropsType): JSX.Element {
   return (
-    <Menu
+    // TODO: fix la propriété style, et mettre le style dans le styled component
+    <StyledMenu
       style={{
         position: 'absolute',
         top: `${studentGamePosition.positionY}px`,
@@ -23,22 +24,15 @@ function MenuInGame({ studentGamePosition }: PropsType): JSX.Element {
         left: `${studentGamePosition.positionX}px`,
       }}
     >
-      <MenuDivider />
-      <MenuItem icon="timeline-events" text="Agenda" />
-      <MenuItem icon="learning" text="Classe" />
-      <MenuItem icon="folder-open" text="Mes documents">
-        <MenuItem icon="annotation" text="Mes notes" />
-        <MenuItem icon="video" text="Mes videos" />
-        <MenuItem icon="link" text="Mes ressources" />
-      </MenuItem>
-      <MenuDivider />
-      <MenuItem
-        icon="cog"
-        labelElement={<Icon icon="share" />}
-        text="Paramètres"
-      />
-      <MenuItem icon="log-out" text="Déconnecter" />
-    </Menu>
+      <StyledMenuItem>Agenda</StyledMenuItem>
+      <StyledMenuItem>Classe</StyledMenuItem>
+      <StyledMenuItem>Mes documents</StyledMenuItem>
+      <StyledMenuItem>Mes notes</StyledMenuItem>
+      <StyledMenuItem>Mes videos</StyledMenuItem>
+      <StyledMenuItem>Mes ressources</StyledMenuItem>
+      <StyledMenuItem>Paramètres</StyledMenuItem>
+      <StyledMenuItem>Déconnecter</StyledMenuItem>
+    </StyledMenu>
   );
 }
 

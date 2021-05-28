@@ -17,5 +17,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
-  "exclude": [".eslintrc.js", "test"]
+  "exclude": [".eslintrc.js", "src/test"]
 }
