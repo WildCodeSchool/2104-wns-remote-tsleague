@@ -8,7 +8,11 @@ import {
 } from './styles/Sidebar';
 import Button from './common/Button';
 
+import userData from '../mocks/user';
+import notificationsData from '../mocks/notifications';
+
 export type NotificationsProps = {
+  id: string;
   message: string;
 };
 
@@ -20,27 +24,8 @@ export type User = {
 };
 
 function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
-  const user: User = {
-    firstName: 'Jake',
-    lastName: 'Mike',
-    classroom: 'WnS - Remote',
-    picture: 'https://randomuser.me/api/portraits/men/80.jpg',
-  };
-
-  const notifications: NotificationsProps[] = [
-    { message: 'nouveau dossier' },
-    { message: 'nouveau dossier' },
-    { message: 'nouveau fichier' },
-    { message: 'nouveau dossier' },
-    { message: 'nouveau dossier' },
-    { message: 'nouveau fichier' },
-    { message: 'nouveau fichier' },
-    { message: 'nouveau fichier' },
-    { message: 'nouveau fichier' },
-    { message: 'nouveau dossier' },
-    { message: 'nouveau dossier' },
-    { message: 'nouveau fichier' },
-  ];
+  const user: User = userData;
+  const notifications: NotificationsProps[] = notificationsData;
 
   return (
     <StyledSidebar>
@@ -52,7 +37,7 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
           />
         </div>
         <div>
-          <h2>PIXELEARN</h2>
+          <h2 data-testid="sidebar-title">PIXELEARN</h2>
           <img src={user.picture} alt="profile" />
           <h3>
             {user.firstName} {user.lastName}
@@ -64,7 +49,7 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
           <div className="notification-feed">
             <div>
               {notifications.map((Element: NotificationsProps) => (
-                <Notification message={Element.message} />
+                <Notification key={Element.id} message={Element.message} />
               ))}
             </div>
           </div>
