@@ -1,20 +1,11 @@
 import React from 'react';
-import { Card, Elevation } from '@blueprintjs/core';
+import { StyledNotificationItem } from './styles/Sidebar';
 
 function Notification({ message }: { message: string }) {
   return (
-    <Card
-      interactive
-      elevation={Elevation.TWO}
-      style={{
-        marginBottom: '10px',
-        borderRadius: '10px',
-        backgroundColor: '#137CBD',
-        color: 'white',
-      }}
-    >
+    <StyledNotificationItem>
       <p>{message}</p>
-    </Card>
+    </StyledNotificationItem>
   );
 }
 export default Notification;
