@@ -15,6 +15,7 @@ type State = {
 
 function MenuInGame({ studentGamePosition }: PropsType): JSX.Element {
   return (
+    // TODO: fix la propriété style, et mettre le style dans le styled component
     <StyledMenu
       style={{
         position: 'absolute',

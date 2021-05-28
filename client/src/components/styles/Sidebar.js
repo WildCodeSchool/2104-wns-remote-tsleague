@@ -1,30 +1,41 @@
 import styled from 'styled-components';
 import { colors } from './globals';
 
-export const StyledSidebarContainer = styled.div`
+export const StyledSidebar = styled.div`
   position: fixed;
   width: 360px;
-  height: '100vh',
-  textAlign: 'center',
+  height: 100vh;
+  text-align: center;
 
   /* Colors */
   background-color: ${colors.primary};
   color: ${colors.white};
 
-  h2{
+  h2 {
     text-transform: uppercase;
-        margin: 10px 0;
-
-  }
-
-    h3{
     margin: 10px 0;
   }
 
-  img{
+  h3 {
+    margin: 10px 0;
+  }
+
+  img {
     width: 50%;
     height: 45%;
     border-radius: 50%;
+  }
+
+  .sidebar-container {
+    height: 100vh;
+    text-align: center;
+    background-color: #137cbd;
+    color: white;
+  }
+
+  .sidebar-btn {
+    display: flex;
+    justify-content: end;
   }
 `;
 

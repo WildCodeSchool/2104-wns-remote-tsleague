@@ -2,7 +2,7 @@ import React from 'react';
 import Notification from './Notification';
 
 import {
-  StyledSidebarContainer,
+  StyledSidebar,
   StyledSidebarNotificationFeed,
   StyledIconRight,
 } from './styles/Sidebar';
@@ -43,21 +43,9 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
   ];
 
   return (
-    <StyledSidebarContainer>
-      <div
-        style={{
-          height: '100vh',
-          textAlign: 'center',
-          backgroundColor: '#137CBD',
-          color: 'white',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
+    <StyledSidebar>
+      <div className="sidebar-container">
+        <div className="sidebar-btn">
           <StyledIconRight onClick={handleSidebar} />
         </div>
         <div>
@@ -83,7 +71,7 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
           handleClick={() => console.log('Déconnexion')}
         />
       </div>
-    </StyledSidebarContainer>
+    </StyledSidebar>
   );
 }
 
