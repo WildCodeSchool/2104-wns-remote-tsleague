@@ -31,7 +31,10 @@ function App({ studentModalProps }: PropsType): JSX.Element {
         <Sidebar handleSidebar={() => setHandleSidebar(!handleSidebar)} />
       ) : (
         <div>
-          <IconLeft onClick={() => setHandleSidebar(!handleSidebar)} />
+          <IconLeft
+            data-testid="sidebar-icon-left"
+            onClick={() => setHandleSidebar(!handleSidebar)}
+          />
         </div>
       )}
       <div className="game">

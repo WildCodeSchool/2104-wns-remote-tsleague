@@ -58,13 +58,13 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
             justifyContent: 'end',
           }}
         >
-          <IconRight onClick={handleSidebar} />
+          <IconRight data-testid="sidebar-icon-right" onClick={handleSidebar} />
         </div>
         <div>
           <h2>PIXELEARN</h2>
           <img src={user.picture} alt="profile" />
           <h3>
-            {user.firstName} {user.lastName}{' '}
+            {user.firstName} {user.lastName}
           </h3>
           <h3>{user.classroom}</h3>
         </div>

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { colors } from './globals';
 
 export const Menu = styled.div`
   background: #ffffff;
