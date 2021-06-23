@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { colors } from './globals';
 
-const StyledButton = styled.button`
+interface StyledButtonProps {
+  reverse?: boolean;
+}
+const StyledButton = styled.button<StyledButtonProps>`
   text-transform: uppercase;
   margin: 10px 0;
   cursor: pointer;

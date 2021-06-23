@@ -54,14 +54,9 @@
     ]
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "@babel/preset-env": "^7.14.2",
-    "@babel/preset-react": "^7.13.13",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.9",
-=======
     "@babel/plugin-transform-modules-commonjs": "^7.14.0",
->>>>>>> dca481718954e319e06ab6c95b1dea0ae2975fed
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "babel-jest": "^27.0.1",
@@ -75,13 +70,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^1.7.0",
-<<<<<<< HEAD
-    "jest": "^27.0.1",
-    "prettier": "^2.2.1",
-    "react-test-renderer": "^17.0.2"
-=======
     "jest-canvas-mock": "^2.3.1",
     "prettier": "^2.2.1"
->>>>>>> dca481718954e319e06ab6c95b1dea0ae2975fed
   }
 }

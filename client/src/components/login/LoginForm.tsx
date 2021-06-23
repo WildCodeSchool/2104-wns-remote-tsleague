@@ -1,27 +1,27 @@
 import React from 'react';
-import BoxContainer, {
-  StyledLoginFormContainer,
-  StyledLoginInput,
-  StyledLoginMutedLink,
-  StyledLoginSubmitButton,
+import {
+  BoldLink,
+  BoxContainer,
+  FormContainer,
+  Input,
+  MutedLink,
+  SubmitButton,
 } from './Common';
 import Marginer from './marginer/Marginer';
+import AccountContext from './AccountContext';
 
 function LoginForm(): JSX.Element {
   return (
     <BoxContainer>
-      <StyledLoginFormContainer>
-        <StyledLoginInput type="email" placeholder="E-mail" />
-        <StyledLoginInput type="password" placeholder="Mot de passe" />
-        <Marginer direction="vertical" margin={5} />
-        <StyledLoginMutedLink href="#">
-          Mot de passe oublié?
-        </StyledLoginMutedLink>
-        <Marginer direction="vertical" margin="1em" />
-        <StyledLoginSubmitButton type="submit" id="loginBtn">
-          Connectez-vous
-        </StyledLoginSubmitButton>
-      </StyledLoginFormContainer>
+      <FormContainer>
+        <Input type="email" placeholder="  Mail" />
+        <Input type="password" placeholder="   Mot de passe" />
+      </FormContainer>
+      <Marginer direction="vertical" margin={10} />
+      <MutedLink href="#">Vous avez oublié votre mot de passe ?</MutedLink>
+      <Marginer direction="vertical" margin="1.6em" />
+      <SubmitButton type="submit">Connectez-vous</SubmitButton>
+      <Marginer direction="vertical" margin="1em" />
     </BoxContainer>
   );
 }

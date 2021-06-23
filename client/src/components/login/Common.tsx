@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledLoginBoxContainer = styled.div`
+export const BoxContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -8,34 +8,37 @@ const StyledLoginBoxContainer = styled.div`
   margin-top: 10px;
 `;
 
-export const StyledLoginFormContainer = styled.form`
+export const FormContainer = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
+  box-shadow: 0px 0px 2.5px rgba(15, 15, 15, 0.19);
 `;
 
-export const StyledLoginMutedLink = styled.a`
-  font-size: 12px;
+export const MutedLink = styled.a`
+  font-size: 11px;
   color: rgba(200, 200, 200, 0.8);
   font-weight: 500;
   text-decoration: none;
 `;
 
-export const StyledLoginBoldLink = styled.a`
-  font-size: 12px;
+export const BoldLink = styled.a`
+  font-size: 11px;
   color: rgb(137, 130, 255);
   font-weight: 500;
   text-decoration: none;
+  margin: 0 4px;
 `;
 
-export const StyledLoginInput = styled.input`
+export const Input = styled.input`
+  width: auto;
+  height: 52px;
   outline: none;
-  height: 45px;
-  width: 100%;
-  border: 1px solid rgba(200, 200, 200, 0.3);
-  padding: 0px 10px;
+  border: none;
   border-bottom: 1.4px solid transparent;
-  &:placeholder {
+  transition: all 200ms ease-in-out;
+  font-size: 12px;
+  &::placeholder {
     color: rgba(200, 200, 200, 1);
   }
   &:not(:last-of-type) {
@@ -47,17 +50,24 @@ export const StyledLoginInput = styled.input`
   }
 `;
 
-export const StyledLoginSubmitButton = styled.button`
+export const SubmitButton = styled.button`
   width: 100%;
-  padding: 10px 30%;
+  padding: 11px 20%;
   color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  background: rgb(137, 130, 255);
+  font-size: 15px;
+  font-weight: 600;
   border: none;
   border-radius: 100px 100px 100px 100px;
   cursor: pointer;
-  transition: all, 250ms ease-in-out;
+  white-space: nowrap;
+  transition: all, 240ms ease-in-out;
+  background: rgb(137, 130, 255);
+  background: linear-gradient(
+    60deg,
+    rgba(137, 130, 255, 1) 20%,
+    rgba(92, 92, 237, 1) 100%
+  );
+  &:hover {
+    filter: brightness(1.1);
+  }
 `;
-
-export default StyledLoginBoxContainer;

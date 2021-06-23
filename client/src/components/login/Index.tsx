@@ -3,15 +3,27 @@ import styled from 'styled-components';
 import LoginForm from './LoginForm';
 
 const BoxContainer = styled.div`
-  width: 280px;
+  position: absolute;
+  transform: translate(-0%, 25%);
+  width: 480px;
   min-height: 550px;
   display: flex;
   flex-direction: column;
-  border-radius: 20px;
+  border-radius: 19px;
   background-color: #fff;
   box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
   position: relative;
   overflow: hidden;
+`;
+
+const TopContainer = styled.div`
+  width: 80%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 1.8em;
+  padding-bottom: 10em;
 `;
 
 const BackDrop = styled.div`
@@ -20,26 +32,16 @@ const BackDrop = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  border-radius: 50%;
-  top: -300px;
-  left: -80px;
-  transform: rotate(60deg);
+  border-radius: 70%;
+  transform: rotate(164deg);
+  top: -290px;
+  left: -70px;
   background: rgb(137, 130, 255);
   background: linear-gradient(
     60deg,
     rgba(137, 130, 255, 1) 20%,
     rgba(92, 92, 237, 1) 100%
   );
-`;
-
-const TopContainer = styled.div`
-  width: 100%;
-  height: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 1.8em;
-  padding-bottom: 8em;
 `;
 
 const HeaderContainer = styled.div`
@@ -55,7 +57,6 @@ const HeaderText = styled.h2`
   color: #fff;
   z-index: 10;
   margin: 0;
-  margin-top: 10px;
 `;
 
 const SmallText = styled.h5`
@@ -64,13 +65,30 @@ const SmallText = styled.h5`
   font-size: 11px;
   z-index: 10;
   margin: 0;
+  margin-top: 7px;
 `;
 
 const InnerContainer = styled.div`
-  width: 100%;
+  width: 90%;
   display: flex;
   flex-direction: column;
+  padding: 0 1.8em;
 `;
+
+const backdropVariants = {
+  expanded: {
+    width: '233%',
+    height: '1050px',
+    borderRadius: '20%',
+    transform: 'rotate(60deg)',
+  },
+  collapsed: {
+    width: '160%',
+    height: '550px',
+    borderRadius: '50%',
+    transform: 'rotate(60deg)',
+  },
+};
 
 function AccountBox(): JSX.Element {
   return (
