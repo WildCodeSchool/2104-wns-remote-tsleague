@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { createTestClient } from 'apollo-server-testing';
 import { ApolloServer } from 'apollo-server';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import config from '../../config/server-config';
+import config from '../config/server-config';
 import { startServer } from '../server';
 
 const GET_ALL_USERS = gql`

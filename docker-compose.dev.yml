@@ -1,0 +1,15 @@
+services:
+    client:
+        build: ./client
+        ports:
+            - 8080:3000
+        volumes: 
+            - ./client/src:/app/src
+    server:
+        build: ./server
+        ports:
+            - 5050:4000
+        command: npm run dev
+        volumes: 
+            - ./server/src:/server/src
+        

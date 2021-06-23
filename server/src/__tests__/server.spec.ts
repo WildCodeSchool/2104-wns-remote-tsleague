@@ -1,7 +1,7 @@
 import { buildSchema } from 'type-graphql';
 import { ApolloServer } from 'apollo-server';
 import { startServer } from '../server';
-import config from '../../config/server-config';
+import config from '../config/server-config';
 
 describe('src/server', () => {
   afterEach(async () => {});

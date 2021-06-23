@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 
 import { ApolloServer } from 'apollo-server';
 import UserResolver from './resolvers/user-resolver';
+import configServer from './config/server-config';
 
 export async function startServer(config: any): Promise<ApolloServer> {
   const schema = await buildSchema({ resolvers: [UserResolver] });
@@ -16,9 +17,9 @@ export async function startServer(config: any): Promise<ApolloServer> {
   try {
     await server.listen(config.apolloPort);
     console.log(
-      `Apollo server started at: http://localhost:${config.apolloPort}/`,
+      `Apollo server started at: http://localhost:${config.apolloPort}/`
     );
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(`Unable to start Apollo server: ${error.message}`);
   }
 
@@ -27,5 +28,7 @@ export async function startServer(config: any): Promise<ApolloServer> {
   if (config.verbose) console.log('mongodb started at uri: ', config.uri);
   return server;
 }
+
+startServer(configServer.prod);
 
 export default startServer;
