@@ -38,11 +38,15 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
         </div>
         <div>
           <h2 data-testid="sidebar-title">PIXELEARN</h2>
-          <img src={user.picture} alt="profile" />
-          <h3>
+          <img
+            src={user.picture}
+            alt="profile"
+            data-testid="sidebar-user-picture"
+          />
+          <h3 data-testid="sidebar-user-name">
             {user.firstName} {user.lastName}
           </h3>
-          <h3>{user.classroom}</h3>
+          <h3 data-testid="sidebar-user-classroom">{user.classroom}</h3>
         </div>
         <StyledSidebarNotificationFeed>
           <h3>FLUX DE NOTIFICATION</h3>
@@ -55,6 +59,7 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
           </div>
         </StyledSidebarNotificationFeed>
         <Button
+          data-testid="sidebar-btn-disconnection"
           text="Déconnexion"
           handleClick={() => console.log('Déconnexion')}
         />

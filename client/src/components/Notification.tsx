@@ -4,7 +4,7 @@ import { StyledNotificationItem } from './styles/Sidebar';
 function Notification({ message }: { message: string }) {
   return (
     <StyledNotificationItem>
-      <p>{message}</p>
+      <p data-testid="notifiaction-message">{message}</p>
     </StyledNotificationItem>
   );
 }
