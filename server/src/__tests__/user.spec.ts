@@ -22,10 +22,10 @@ const GET_USERS_BY_ROLE = gql`
       lastname
       firstname
       mail
+      role
     }
   }
 `;
-
 const GET_USER = gql`
   {
     getUserById {
@@ -59,8 +59,10 @@ describe('src/resolvers/user =>', () => {
     const res = await query({ query: GET_ALL_USERS });
 
     const expectedProperty = ['id', 'lastname', 'firstname'];
-    expect(res.data).toBeDefined();
     const properties = Object.keys(res.data.getAllUsers[0]);
+
+    expect(res.data).toBeDefined();
+
     properties.forEach((property, index) => {
       expect(property).toEqual(expectedProperty[index]);
     });
@@ -72,14 +74,15 @@ describe('src/resolvers/user =>', () => {
       query: GET_USERS_BY_ROLE,
       variables: { role: 'admin' },
     });
-    expect(res.data).toBeDefined();
+    expect(res.data.getAllUsersByRole).toBeDefined();
+    expect(res.data.getAllUsersByRole[0]).toHaveProperty('role', 'admin');
   });
 
   it('should return null in case there are no user found with a specific role', async () => {
     const { query } = createTestClient(apollo);
     const res = await query({
       query: GET_USERS_BY_ROLE,
-      variables: { role: 'pipicacapopo' },
+      variables: { role: 'noExistedRole' },
     });
     expect(res.data).toEqual(null);
   });

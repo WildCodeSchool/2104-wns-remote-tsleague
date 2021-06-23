@@ -11,7 +11,7 @@
     "debug": "tsc && node --inspect ./build/src/server.js",
     "lint": "tsc --noEmit && eslint --fix src/**/*.ts{,x}",
     "format": "prettier --write src/**/*.ts",
-    "test": "jest --runInBand --coverage --watch"
+    "test": "jest --runInBand --coverage --watchAll"
   },
   "dependencies": {
     "@commitlint/cli": "^12.1.1",
