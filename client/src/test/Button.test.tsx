@@ -9,7 +9,6 @@ const handleClick = jest.fn();
 test('has a button', async () => {
   render(<Button text={text} handleClick={handleClick} />);
   await waitFor(() => screen.getByTestId('btn'));
-  expect(screen.queryByTestId('btn')).not.toBeNull();
   expect(screen.queryByTestId('btn')).toBeInstanceOf(HTMLButtonElement);
 });
 
