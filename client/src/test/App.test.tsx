@@ -11,6 +11,5 @@ test('renders learn react link', async () => {
     </Provider>
   );
   await waitFor(() => screen.getByTestId('app'));
-  expect(screen.queryByTestId('app')).not.toBeNull();
   expect(screen.queryByTestId('app')).toBeInstanceOf(HTMLDivElement);
 });
