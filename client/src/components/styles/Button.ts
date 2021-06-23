@@ -4,6 +4,7 @@ import { colors } from './globals';
 interface StyledButtonProps {
   reverse?: boolean;
 }
+
 const StyledButton = styled.button<StyledButtonProps>`
   text-transform: uppercase;
   margin: 10px 0;
