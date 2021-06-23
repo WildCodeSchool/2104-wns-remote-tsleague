@@ -1,6 +1,7 @@
-import { prop as Property } from '@typegoose/typegoose';
-import { ObjectType, Field, ID } from 'type-graphql';
+import { prop as Property, modelOptions } from '@typegoose/typegoose';
+import { ObjectType, Field, ID, } from 'type-graphql';
 
+@modelOptions({ schemaOptions: { collection: 'user' } })
 @ObjectType()
 export class User {
   @Field(() => ID)

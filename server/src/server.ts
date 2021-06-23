@@ -22,8 +22,12 @@ export async function startServer(config: any): Promise<ApolloServer> {
   } catch (error: any) {
     throw new Error(`Unable to start Apollo server: ${error.message}`);
   }
+  try {
+    await mongoose.connect(config.uri, config.options);
+  }catch(error){
+    console.log(error)
+  }
 
-  await mongoose.connect(config.uri, config.options);
 
   if (config.verbose) console.log('mongodb started at uri: ', config.uri);
   return server;

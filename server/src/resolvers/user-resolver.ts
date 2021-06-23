@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { Resolver, Query, Arg } from 'type-graphql';
+import { getModelForClass } from '@typegoose/typegoose';
 import { User } from '../models/user-model';
 
 const users = [
@@ -32,16 +33,18 @@ const users = [
   },
 ];
 
+const UserModel = getModelForClass(User);
 @Resolver(User)
 class UserResolver {
   @Query(() => User)
   getUserById(id: string) {
-    return users.filter((user) => user.id === parseInt(id, 10))[0];
+    // return users.filter((user) => user.id === parseInt(id, 10))[0];
+    return UserModel.find();
   }
 
   @Query(() => [User])
-  getAllUsers() {
-    return users;
+  async getAllUsers() {
+    return UserModel.find();
   }
 
   @Query(() => [User])
