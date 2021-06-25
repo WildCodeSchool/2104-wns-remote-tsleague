@@ -30,7 +30,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_REPO }}:client:latest
+          tags: ${{ secrets.DOCKERHUB_REPO }}:client
 
       - name: Build and push server
         id: docker_build_server
@@ -39,7 +39,7 @@ jobs:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_REPO }}:server:latest
+          tags: ${{ secrets.DOCKERHUB_REPO }}:server
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
