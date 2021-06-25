@@ -16,6 +16,6 @@ test('has a button', async () => {
 test('Button handleClick', async () => {
   render(<Button text={text} handleClick={handleClick} />);
   fireEvent.click(screen.getByTestId('btn'));
-  await waitFor(() => screen.getByTestId('btn'));
+  await waitFor(() => screen.getByTestId('COUCOU'));
   expect(handleClick).toHaveBeenCalledTimes(1);
 });
