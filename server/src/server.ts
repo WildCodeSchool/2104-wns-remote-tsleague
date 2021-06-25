@@ -1,10 +1,13 @@
 import 'reflect-metadata';
+import dotenv from 'dotenv';
 import { buildSchema } from 'type-graphql';
 import mongoose from 'mongoose';
 
 import { ApolloServer } from 'apollo-server';
 import UserResolver from './resolvers/user-resolver';
 import configServer from './config/server-config';
+
+dotenv.config();
 
 export async function startServer(config: any): Promise<ApolloServer> {
   const schema = await buildSchema({ resolvers: [UserResolver] });
@@ -24,15 +27,14 @@ export async function startServer(config: any): Promise<ApolloServer> {
   }
   try {
     await mongoose.connect(config.uri, config.options);
-  }catch(error){
-    console.log(error)
+  } catch (error) {
+    console.log(error);
   }
-
 
   if (config.verbose) console.log('mongodb started at uri: ', config.uri);
   return server;
 }
 
-startServer(configServer.prod);
+startServer(configServer.dev);
 
 export default startServer;

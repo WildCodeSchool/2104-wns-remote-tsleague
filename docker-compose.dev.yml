@@ -12,4 +12,10 @@ services:
         command: npm run dev
         volumes: 
             - ./server/src:/server/src
+    mongodb:
+        image: mongo
+        volumes: 
+            - ./data:/data/db
+        ports:
+            - 27017:27017
         

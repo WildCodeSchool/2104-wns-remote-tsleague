@@ -5,25 +5,22 @@ import { User } from '../models/user-model';
 
 const users = [
   {
-    id: 1,
-    lastname: 'Dupont',
-    firstname: 'Louis',
+    lastname: 'Laporte',
+    firstname: 'Sam',
     birthday: '20/04/1995',
-    mail: 'louisdupont@gmail.com',
+    mail: 'laportesam@gmail.com',
     password: 'cyI5eWF4JUhwTGMnKDUiRg==',
     role: 'admin',
   },
   {
-    id: 2,
-    lastname: 'Dupont',
-    firstname: 'Louis',
+    lastname: 'Lachaise',
+    firstname: 'Etienne',
     birthday: '20/04/1995',
-    mail: 'louisdupont@gmail.com',
+    mail: 'etienne_lachaise@gmail.com',
     password: 'cyI5eWF4JUhwTGMnKDUiRg==',
     role: 'student',
   },
   {
-    id: 3,
     lastname: 'Dupont',
     firstname: 'Louis',
     birthday: '20/04/1995',

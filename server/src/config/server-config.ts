@@ -1,14 +1,16 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export default {
   dev: {
-    uri: 'mongodb://127.0.0.1:27017/dev',
+    uri: process.env.DB_URI,
     options: { useNewUrlParser: true, useUnifiedTopology: true },
     apolloPort: 4000,
     autoListen: false,
-    verbose: false,
+    verbose: true,
   },
   prod: {
-    uri:
-      'mongodb+srv://JonWildCDA:tsleague6523@cluster0.smene.mongodb.net/pixelearn?retryWrites=true&w=majority',
+    uri: 'mongodb://127.0.0.1:27017/pixelearn-prod',
     options: { useNewUrlParser: true, useUnifiedTopology: true },
     apolloPort: 4000,
     autoListen: false,
