@@ -48,24 +48,24 @@ const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`;
 
-const HeaderText = styled.h2`
-  font-size: 30px;
-  font-weight: 600;
-  line-height: 1.24;
-  color: #fff;
-  z-index: 10;
-  margin: 0;
-`;
+  h2 {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.24;
+    color: #fff;
+    z-index: 10;
+    margin: 0;
+  }
 
-const SmallText = styled.h5`
-  color: #fff;
-  font-weight: 500;
-  font-size: 11px;
-  z-index: 10;
-  margin: 0;
-  margin-top: 7px;
+  h5 {
+    color: #fff;
+    font-weight: 500;
+    font-size: 11px;
+    z-index: 10;
+    margin: 0;
+    margin-top: 7px;
+  }
 `;
 
 const InnerContainer = styled.div`
@@ -81,8 +81,8 @@ function AccountBox(): JSX.Element {
       <TopContainer>
         <BackDrop />
         <HeaderContainer>
-          <HeaderText>Bienvenue sur PixeLearn</HeaderText>
-          <SmallText>Connectez-vous pour continuer!</SmallText>
+          <h2>Bienvenue sur PixeLearn</h2>
+          <h5>Connectez-vous pour continuer!</h5>
         </HeaderContainer>
       </TopContainer>
       <InnerContainer>
