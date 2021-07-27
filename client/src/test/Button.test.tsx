@@ -6,13 +6,13 @@ import '@testing-library/jest-dom/extend-expect';
 const text = 'bouton';
 const handleClick = jest.fn();
 
-test('has a button', async () => {
+test('should have a Button', async () => {
   render(<Button text={text} handleClick={handleClick} />);
   await waitFor(() => screen.getByTestId('btn'));
   expect(screen.queryByTestId('btn')).toBeInstanceOf(HTMLButtonElement);
 });
 
-test('Button handleClick', async () => {
+test('Button should handleClick', async () => {
   render(<Button text={text} handleClick={handleClick} />);
   fireEvent.click(screen.getByTestId('btn'));
   await waitFor(() => screen.getByTestId('btn'));

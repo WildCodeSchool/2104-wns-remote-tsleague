@@ -52,8 +52,8 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
           <h3>FLUX DE NOTIFICATION</h3>
           <div className="notification-feed">
             <div>
-              {notifications.map((Element: NotificationsProps) => (
-                <Notification key={Element.id} message={Element.message} />
+              {notifications.map((elt: NotificationsProps) => (
+                <Notification key={elt.id} message={elt.message} />
               ))}
             </div>
           </div>

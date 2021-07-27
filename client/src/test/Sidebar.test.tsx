@@ -7,13 +7,13 @@ import userData from '../mocks/user';
 
 const handleSidebar = jest.fn();
 
-test('has a sidebar', async () => {
+test('should have a Sidebar', async () => {
   render(<Sidebar handleSidebar={handleSidebar} />);
   await waitFor(() => screen.getByTestId('sidebar-title'));
   expect(screen.queryByTestId('sidebar-title')).toHaveTextContent('PIXELEARN');
 });
 
-test('sidebar display user', async () => {
+test('Sidebar should display user', async () => {
   render(<Sidebar handleSidebar={handleSidebar} />);
   expect(
     screen.queryByTestId('sidebar-user-picture').getAttribute('src')
