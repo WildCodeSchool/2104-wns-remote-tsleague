@@ -5,8 +5,8 @@ import {
   StyledSidebar,
   StyledSidebarNotificationFeed,
   StyledIconRight,
-} from './styles/Sidebar';
-import Button from './common/Button';
+} from '../styles/Sidebar';
+import Button from '../common/Button';
 
 export type NotificationsProps = {
   message: string;
@@ -19,7 +19,11 @@ export type User = {
   picture: string;
 };
 
-function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
+function Sidebar({
+  handleSidebar,
+}: {
+  handleSidebar: () => void;
+}): JSX.Element {
   const user: User = {
     firstName: 'Jake',
     lastName: 'Mike',
@@ -60,8 +64,8 @@ function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
           <h3>FLUX DE NOTIFICATION</h3>
           <div className="notification-feed">
             <div>
-              {notifications.map((Element: NotificationsProps) => (
-                <Notification message={Element.message} />
+              {notifications.map((elt: NotificationsProps) => (
+                <Notification message={elt.message} />
               ))}
             </div>
           </div>
