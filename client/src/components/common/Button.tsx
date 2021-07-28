@@ -7,9 +7,9 @@ export type ButtonProps = {
   reverse?: boolean;
 };
 
-function Button({ text, handleClick, reverse }: ButtonProps) {
+function Button({ text, handleClick }: ButtonProps) {
   return (
-    <StyledButton reverse={reverse} onClick={handleClick} data-testid="btn">
+    <StyledButton onClick={handleClick} data-testid="btn">
       {text}
     </StyledButton>
   );

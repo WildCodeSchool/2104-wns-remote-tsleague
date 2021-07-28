@@ -4,13 +4,12 @@ import App from '../components/App';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 
-test('renders learn react link', async () => {
+test('should renders react app', async () => {
   render(
     <Provider store={store}>
       <App />
     </Provider>
   );
   await waitFor(() => screen.getByTestId('app'));
-  expect(screen.queryByTestId('app')).not.toBeNull();
   expect(screen.queryByTestId('app')).toBeInstanceOf(HTMLDivElement);
 });
