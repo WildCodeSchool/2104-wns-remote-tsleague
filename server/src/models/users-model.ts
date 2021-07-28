@@ -1,5 +1,5 @@
 import { prop as Property, modelOptions } from '@typegoose/typegoose';
-import { ObjectType, Field, ID, } from 'type-graphql';
+import { ObjectType, Field, ID } from 'type-graphql';
 
 @modelOptions({ schemaOptions: { collection: 'users' } })
 @ObjectType()
@@ -30,6 +30,10 @@ export class User {
   @Property({ required: true })
   @Field()
   role!: string;
+
+  @Property({ required: true })
+  @Field(() => [String])
+  classrooms!: string[]; // TODO correct to array of string type
 }
 
 export default User;

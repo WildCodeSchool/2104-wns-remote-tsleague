@@ -1,5 +1,5 @@
 import casual from 'casual';
-import { User } from '../models/user-model';
+import { User } from '../models/users-model';
 
 export default {
   Int: (): number => 6,
@@ -13,5 +13,6 @@ export default {
     birthday: casual.date(),
     password: casual.password,
     role: 'admin',
+    classrooms: [casual.uuid],
   }),
 };

@@ -4,13 +4,16 @@ import { buildSchema } from 'type-graphql';
 import mongoose from 'mongoose';
 
 import { ApolloServer } from 'apollo-server';
-import UserResolver from './resolvers/user-resolver';
+import UserResolver from './resolvers/users-resolver';
+import ClassroomResolver from './resolvers/classrooms-resolver';
 import configServer from './config/server-config';
 
 dotenv.config();
 
 export async function startServer(config: any): Promise<ApolloServer> {
-  const schema = await buildSchema({ resolvers: [UserResolver] });
+  const schema = await buildSchema({
+    resolvers: [UserResolver, ClassroomResolver],
+  });
 
   const server = new ApolloServer({
     schema,
@@ -20,7 +23,7 @@ export async function startServer(config: any): Promise<ApolloServer> {
   try {
     await server.listen(config.apolloPort);
     console.log(
-      `Apollo server started at: http://localhost:${config.apolloPort}/`
+      `Apollo server started at: http://localhost:${config.apolloPort}/`,
     );
   } catch (error: any) {
     throw new Error(`Unable to start Apollo server: ${error.message}`);

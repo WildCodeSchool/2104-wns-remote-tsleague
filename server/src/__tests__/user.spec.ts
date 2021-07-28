@@ -54,7 +54,7 @@ describe('src/resolvers/user =>', () => {
     apollo?.stop();
   });
 
-  it('should return all users with correct key', async () => {
+  it.only('should return all users with correct key', async () => {
     const { query } = createTestClient(apollo);
     const res = await query({ query: GET_ALL_USERS });
 

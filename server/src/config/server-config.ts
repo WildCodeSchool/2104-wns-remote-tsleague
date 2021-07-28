@@ -1,11 +1,12 @@
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 export default {
   dev: {
     uri: process.env.DB_URI,
     options: { useNewUrlParser: true, useUnifiedTopology: true },
-    apolloPort: 4000,
+    apolloPort: 4500,
     autoListen: false,
     verbose: true,
   },
