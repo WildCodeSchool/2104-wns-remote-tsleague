@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors } from './globals';
 
 export const StyledBox = styled.div`
   width: 100%;
@@ -24,14 +25,14 @@ export const StyledInput = styled.input`
   transition: all 200ms ease-in-out;
   font-size: 12px;
   &::placeholder {
-    color: rgba(200, 200, 200, 1);
+    color: ${colors.gray};
   }
   &:not(:last-of-type) {
-    border-bottom: 1.5px solid rgba(200, 200, 200, 0.4);
+    border-bottom: 1.5px solid ${colors.lightgray};
   }
   &:focus {
     outline: none;
-    border-bottom: 2px solid rgb(137, 130, 255);
+    border-bottom: 2px solid ${colors.primary};
   }
 `;
 
@@ -51,11 +52,11 @@ export const StyledCard = styled.div`
 
   a {
     font-size: 11px;
-    color: rgba(200, 200, 200, 0.8);
+    color: ${colors.gray};
     font-weight: 500;
     text-decoration: none;
     margin-bottom: 20px;
-    margin-top: 10px;
+    margin-top: 15px;
   }
 `;
 
@@ -102,7 +103,6 @@ export const BackDrop = styled.div`
   transform: rotate(164deg);
   top: -290px;
   left: -70px;
-  background: rgb(137, 130, 255);
   background: linear-gradient(
     60deg,
     rgba(137, 130, 255, 1) 20%,
