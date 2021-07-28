@@ -1,14 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import StyledButton from '../styles/Button';
-
-const SubmitButton = styled(StyledButton)`
-  background: linear-gradient(
-    60deg,
-    rgba(137, 130, 255, 1) 20%,
-    rgba(92, 92, 237, 1) 100%
-  );
-`;
+import { StyledButton, StyledSubmitButton } from '../styles/Button';
 
 export type ButtonProps = {
   text: string;
@@ -16,16 +7,16 @@ export type ButtonProps = {
   buttonStyle?: string;
 };
 
-function Button({ text, handleClick, buttonStyle }: ButtonProps) {
+function Button({ text, handleClick, buttonStyle }: ButtonProps): JSX.Element {
   if (buttonStyle === 'submit') {
     return (
-      <SubmitButton
+      <StyledSubmitButton
         buttonStyle={buttonStyle}
         onClick={handleClick}
         data-testid="btn"
       >
         {text}
-      </SubmitButton>
+      </StyledSubmitButton>
     );
   }
 

@@ -18,14 +18,10 @@ const StyledButton = styled.button<StyledButtonProps>`
   transition: all, 240ms ease-in-out;
 
   /* Colors */
-  background-color: ${(props) => {
-    if (props.buttonStyle === 'reverse') return colors.white;
-    return colors.primary;
-  }};
-  color: ${(props) => {
-    if (props.buttonStyle === 'reverse') return colors.primary;
-    return colors.white;
-  }};
+  background-color: ${(props) =>
+    props.buttonStyle === 'reverse' ? colors.white : colors.primary};
+  color: ${(props) =>
+    props.buttonStyle === 'reverse' ? colors.primary : colors.white};
 
   /* Rounded border */
   border: none;
@@ -37,4 +33,12 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export default StyledButton;
+const StyledSubmitButton = styled(StyledButton)`
+  background: linear-gradient(
+    60deg,
+    rgba(137, 130, 255, 1) 20%,
+    rgba(92, 92, 237, 1) 100%
+  );
+`;
+
+export { StyledButton, StyledSubmitButton };
