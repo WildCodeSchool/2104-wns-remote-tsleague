@@ -44,7 +44,6 @@ function LoginForm(): JSX.Element {
               touched={touched.password}
               placeholder="Votre mot de passe"
             />
-            {/* <button type="submit">Submit</button> */}
             <Button text="Connectez-vous" type="submit" buttonStyle="submit" />
           </Form>
         )}
