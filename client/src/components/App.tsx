@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { IonPhaser } from '@ion-phaser/react';
-import { io } from 'socket.io-client';
 
 import { StyledIconLeft } from './styles/Sidebar';
 

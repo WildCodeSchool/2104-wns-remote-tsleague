@@ -58,7 +58,7 @@ export default class PixeLearnScene extends Scene {
       .setSize(20, 50);
     this.player.setOffset(15, 35);
     this.player.on('pointerup', () => {
-      store.dispatch({ type: STUDENT_MODAL_TOGGLE });
+      store.dispatch({ type: 'STUDENT_MODAL_TOGGLE' });
     });
 
     this.player.setCollideWorldBounds(true); // Stops player from walking off the canvas
@@ -147,7 +147,7 @@ export default class PixeLearnScene extends Scene {
       this.player.anims.play('turn');
     }
     store.dispatch({
-      type: STUDENT_GAME_POSITION,
+      type: 'STUDENT_GAME_POSITION',
       payload: {
         positionX: this.player.x.toString(),
         positionY: this.player.y.toString(),

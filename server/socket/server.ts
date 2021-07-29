@@ -12,7 +12,11 @@ const io = new Server(httpServer, {
 let lastPlayerID = 0;
 
 io.on('connection', (socket: Socket) => {
-  console.log('OKAAAAAAAYYYYYY');
+  console.log(`connected with id ${socket.id}`);
+  socket.on('STUDENT_GAME_POSITION',(payload)=>{
+    socket.broadcast.emit('STUDENT_GAME_POSITION', payload)
+    console.log(`received move: ${payload.positionX}, ${payload.positionY}`)
+  })
 });
 
 const randomInt = (low: number, high: number): number => {
