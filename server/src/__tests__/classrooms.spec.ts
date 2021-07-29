@@ -94,7 +94,6 @@ describe('src/resolvers/user-resolver =>', () => {
         ],
       },
     });
-    console.log(res);
     expect(res.data?.getClassrooms).toBeDefined();
     expect(res.data?.getClassrooms).toHaveLength(3);
   });

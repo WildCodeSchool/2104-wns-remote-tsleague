@@ -1,5 +1,14 @@
-// [{id: _last_name, name: casual.time}]
-export const arrayOfCasual = (times, generators) => {
+/* eslint-disable import/prefer-default-export */
+import type { Generator } from './index.types';
+
+/**
+ * Generate an array of casual generator
+ *
+ * @param times - number time to repeat element on array
+ * @param generators - the casual generator and id to repeat
+ * @returns
+ */
+export const arrayOfCasual = (times: number, generators: Generator[]) => {
   const result: any = [];
 
   for (let i = 0; i < times; i += 1) {
@@ -12,5 +21,3 @@ export const arrayOfCasual = (times, generators) => {
 
   return result;
 };
-
-export const name = () => {};
