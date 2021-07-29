@@ -19,7 +19,7 @@ export const StyledForm = styled.form`
 
 export const StyledInput = styled.div`
   input {
-    width: 24em;
+    width: 300px;
     height: 52px;
     outline: none;
     border: none;
