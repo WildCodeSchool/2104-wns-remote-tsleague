@@ -1,10 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import { Resolver, Query, Arg } from 'type-graphql';
-import { getModelForClass } from '@typegoose/typegoose';
-import User from '../models/users-model';
+import { UserModel, User } from '../models/users-model';
 
-const UserModel: any = getModelForClass(User);
-
+// TODO => Handler error
 @Resolver(User)
 class UserResolver {
   @Query(() => User)

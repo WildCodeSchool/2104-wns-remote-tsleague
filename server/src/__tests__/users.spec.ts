@@ -1,14 +1,11 @@
 import 'reflect-metadata';
 import casual from 'casual';
 import { gql } from 'apollo-server-core';
-import { getModelForClass } from '@typegoose/typegoose';
 import { ApolloServer } from 'apollo-server';
 
 import { startServer } from '../server';
-import User from '../models/users-model';
+import { UserModel } from '../models/users-model';
 import * as testConfig from '../config/test-config';
-
-const UserModel: any = getModelForClass(User);
 
 const GET_USERS_BY_ROLE = gql`
   query GetUsersByRole($role: String!) {

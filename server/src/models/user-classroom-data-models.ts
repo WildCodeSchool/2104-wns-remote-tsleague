@@ -8,7 +8,7 @@ class UserData {
 
   @Property({ required: true })
   @Field()
-  firstame!: string;
+  firstname!: string;
 
   @Property({ required: true })
   @Field()

@@ -1,10 +1,10 @@
-import { prop as Property, modelOptions } from '@typegoose/typegoose';
+import { prop as Property, modelOptions, getModelForClass } from '@typegoose/typegoose';
 import { ObjectType, Field, ID } from 'type-graphql';
 import UserClassroomData from './user-classroom-data-models';
 
 @modelOptions({ schemaOptions: { collection: 'classrooms' } })
 @ObjectType()
-class Classroom {
+export class Classroom {
   @Field(() => ID)
   readonly id!: string;
 
@@ -25,4 +25,4 @@ class Classroom {
   admins!: UserClassroomData[];
 }
 
-export default Classroom;
+export const ClassroomModel = getModelForClass(Classroom);

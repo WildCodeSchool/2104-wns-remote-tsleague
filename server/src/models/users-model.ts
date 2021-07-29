@@ -1,9 +1,13 @@
-import { prop as Property, modelOptions } from '@typegoose/typegoose';
+import {
+  prop as Property,
+  modelOptions,
+  getModelForClass,
+} from '@typegoose/typegoose';
 import { ObjectType, Field, ID } from 'type-graphql';
 
 @modelOptions({ schemaOptions: { collection: 'users' } })
 @ObjectType()
-class User {
+export class User {
   @Field(() => ID)
   readonly id!: string;
 
@@ -33,7 +37,7 @@ class User {
 
   @Property({ required: true })
   @Field(() => [String])
-  classrooms!: string[]; // TODO correct to array of string type
+  classrooms!: string[];
 }
 
-export default User;
+export const UserModel = getModelForClass(User);
