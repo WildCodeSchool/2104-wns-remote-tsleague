@@ -6,20 +6,20 @@
   "scripts": {
     "start": "npm run dev",
     "build": "tsc",
-    "dev": "ts-node-dev --transpile-only --respawn  ./src/server.ts",
+    "dev": "SERVER_STAGE=prod ts-node-dev --transpile-only --respawn  ./src/index.ts",
     "prod": "tsc && node ./build/src/server.js",
     "debug": "tsc && node --inspect ./build/src/server.js",
     "lint": "tsc --noEmit && eslint --fix src/**/*.ts{,x}",
     "format": "prettier --write src/**/*.ts",
-    "test": "jest --runInBand --coverage --watchAll"
+    "test": "jest --runInBand --coverage --watch --config=jest.config.js"
   },
   "dependencies": {
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
     "@typegoose/typegoose": "^7.6.0",
     "@types/mongoose": "^5.11.97",
-    "apollo-server": "^2.24.1",
-    "apollo-server-core": "^2.24.1",
+    "apollo-server": "^3.0.2",
+    "apollo-server-core": "^3.0.2",
     "casual": "^1.6.2",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

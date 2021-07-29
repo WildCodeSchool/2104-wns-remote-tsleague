@@ -3,7 +3,7 @@ import { ObjectType, Field, ID } from 'type-graphql';
 
 @modelOptions({ schemaOptions: { collection: 'users' } })
 @ObjectType()
-export class User {
+class User {
   @Field(() => ID)
   readonly id!: string;
 

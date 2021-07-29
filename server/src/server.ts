@@ -6,7 +6,6 @@ import mongoose from 'mongoose';
 import { ApolloServer } from 'apollo-server';
 import UserResolver from './resolvers/users-resolver';
 import ClassroomResolver from './resolvers/classrooms-resolver';
-import configServer from './config/server-config';
 
 dotenv.config();
 
@@ -17,7 +16,6 @@ export async function startServer(config: any): Promise<ApolloServer> {
 
   const server = new ApolloServer({
     schema,
-    playground: true,
   });
 
   try {
@@ -37,7 +35,5 @@ export async function startServer(config: any): Promise<ApolloServer> {
   if (config.verbose) console.log('mongodb started at uri: ', config.uri);
   return server;
 }
-
-startServer(configServer.dev);
 
 export default startServer;

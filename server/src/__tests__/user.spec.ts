@@ -1,24 +1,18 @@
 import 'reflect-metadata';
+import casual from 'casual';
 import { gql } from 'apollo-server-core';
-import mongoose from 'mongoose';
-import { createTestClient } from 'apollo-server-testing';
+import { getModelForClass } from '@typegoose/typegoose';
 import { ApolloServer } from 'apollo-server';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import config from '../config/server-config';
-import { startServer } from '../server';
 
-const GET_ALL_USERS = gql`
-  {
-    getAllUsers {
-      id
-      lastname
-      firstname
-    }
-  }
-`;
+import { startServer } from '../server';
+import User from '../models/users-model';
+import * as testConfig from '../config/test-config';
+
+const UserModel: any = getModelForClass(User);
+
 const GET_USERS_BY_ROLE = gql`
   query GetUsersByRole($role: String!) {
-    getAllUsersByRole(role: $role) {
+    getUsersByRole(role: $role) {
       lastname
       firstname
       mail
@@ -27,8 +21,8 @@ const GET_USERS_BY_ROLE = gql`
   }
 `;
 const GET_USER = gql`
-  {
-    getUserById {
+  query GetUsersById($id: String!) {
+    getUserById(id: $id) {
       id
       lastname
       firstname
@@ -37,60 +31,59 @@ const GET_USER = gql`
   }
 `;
 
-describe('src/resolvers/user =>', () => {
-  let apollo: ApolloServer;
-  let mongo: MongoMemoryServer = new MongoMemoryServer();
-  beforeAll(async () => {
-    mongo = new MongoMemoryServer();
-    config.test.uri = await mongo.getUri();
-    await mongoose.connect(config.test.uri, config.test.options);
+const USER_MODEL_MOCK = () => ({
+  lastname: casual.last_name,
+  firstname: casual.first_name,
+  mail: casual.email,
+  birthday: casual.date(),
+  password: casual.password,
+  role: 'admin',
+  classrooms: [casual.uuid],
+});
 
-    apollo = await startServer(config.test);
+describe('src/resolvers/user-resolver =>', () => {
+  let apollo: ApolloServer;
+  beforeAll(async () => {
+    const serverConfig = await testConfig.initDatabase();
+    apollo = await startServer(serverConfig);
+
+    // insert multiple data in MongoMemorySever for test it
+    await UserModel.insertMany([
+      USER_MODEL_MOCK(),
+      { ...USER_MODEL_MOCK(), _id: '60d35854ca586b08bd0234d9' },
+      { ...USER_MODEL_MOCK(), role: 'student' },
+      { ...USER_MODEL_MOCK(), role: 'teacher' },
+    ]);
   });
 
-  afterEach(async () => {
-    await mongoose.disconnect();
-    await mongo.stop();
+  afterAll(async () => {
+    testConfig.closeDatabase();
     apollo?.stop();
   });
 
-  it.only('should return all users with correct key', async () => {
-    const { query } = createTestClient(apollo);
-    const res = await query({ query: GET_ALL_USERS });
-
-    const expectedProperty = ['id', 'lastname', 'firstname'];
-    const properties = Object.keys(res.data.getAllUsers[0]);
-
-    expect(res.data).toBeDefined();
-
-    properties.forEach((property, index) => {
-      expect(property).toEqual(expectedProperty[index]);
-    });
-  });
-
   it('should return correct users according to their roles', async () => {
-    const { query } = createTestClient(apollo);
-    const res = await query({
+    const res = await apollo.executeOperation({
       query: GET_USERS_BY_ROLE,
       variables: { role: 'admin' },
     });
-    expect(res.data.getAllUsersByRole).toBeDefined();
-    expect(res.data.getAllUsersByRole[0]).toHaveProperty('role', 'admin');
+    expect(res.data?.getUsersByRole).toBeDefined();
+    expect(res.data?.getUsersByRole).toHaveLength(2);
+    expect(res.data?.getUsersByRole[0]).toHaveProperty('role', 'admin');
   });
 
   it('should return null in case there are no user found with a specific role', async () => {
-    const { query } = createTestClient(apollo);
-    const res = await query({
+    const res = await apollo.executeOperation({
       query: GET_USERS_BY_ROLE,
       variables: { role: 'noExistedRole' },
     });
-    expect(res.data).toEqual(null);
+    expect(res.data?.getUsersByRole).toEqual([]);
   });
 
   it('should return one user with correct key', async () => {
-    const { query } = createTestClient(apollo);
-    const res = await query({ query: GET_USER });
-
-    expect(res.data).toBeDefined();
+    const res = await apollo.executeOperation({
+      query: GET_USER,
+      variables: { id: '60d35854ca586b08bd0234d9' },
+    });
+    expect(res.data?.getUserById).toBeDefined();
   });
 });

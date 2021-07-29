@@ -3,7 +3,7 @@ import { Resolver, Query, Arg, Mutation } from 'type-graphql';
 import { getModelForClass } from '@typegoose/typegoose';
 import Classroom from '../models/classrooms-model';
 
-const ClassroomModel = getModelForClass(Classroom);
+const ClassroomModel: any = getModelForClass(Classroom);
 
 @Resolver(Classroom)
 class ClassroomResolver {
