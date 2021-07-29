@@ -1,4 +1,5 @@
 import { Scene } from 'phaser';
+import askNewPlayer from './socketClient';
 import store from '../redux/store';
 import GAME_ACTIONS from '../redux/game/game.types';
 
@@ -10,6 +11,8 @@ export default class PixeLearnScene extends Scene {
 
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   player: any;
+
+  playerMap: any = {};
 
   preload = (): void => {
     this.load.tilemapTiledJSON(
@@ -49,6 +52,8 @@ export default class PixeLearnScene extends Scene {
     // set collision according to the property in tiled
     furnitureLayer.setCollisionByProperty({ isSolid: true });
     wallsLayer.setCollisionByProperty({ isSolid: true });
+
+    askNewPlayer();
 
     this.player = this.physics.add
       .sprite(100, 400, 'dude')

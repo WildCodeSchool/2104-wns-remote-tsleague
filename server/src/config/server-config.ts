@@ -3,7 +3,7 @@ dotenv.config();
 
 export default {
   dev: {
-    uri: process.env.DB_URI,
+    uri: 'mongodb://127.0.0.1:27017/pixelearn-dev',
     options: { useNewUrlParser: true, useUnifiedTopology: true },
     apolloPort: 4000,
     autoListen: false,
