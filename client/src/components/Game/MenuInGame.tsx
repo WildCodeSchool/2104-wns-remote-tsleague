@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { StyledMenu, StyledMenuItem } from './styles/MenuInGame';
+import { StyledMenu, StyledMenuItem } from '../styles/MenuInGame';
 
 type PropsType = {
   studentGamePosition: {

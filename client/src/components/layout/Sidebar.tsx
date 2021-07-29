@@ -5,11 +5,11 @@ import {
   StyledSidebar,
   StyledSidebarNotificationFeed,
   StyledIconRight,
-} from './styles/Sidebar';
-import Button from './common/Button';
+} from '../styles/Sidebar';
+import Button from '../common/Button';
 
-import userData from '../mocks/user';
-import notificationsData from '../mocks/notifications';
+import userData from '../../mocks/user';
+import notificationsData from '../../mocks/notifications';
 
 export type NotificationsProps = {
   id: string;
@@ -23,7 +23,11 @@ export type User = {
   picture: string;
 };
 
-function Sidebar({ handleSidebar }: { handleSidebar: () => void }) {
+function Sidebar({
+  handleSidebar,
+}: {
+  handleSidebar: () => void;
+}): JSX.Element {
   const user: User = userData;
   const notifications: NotificationsProps[] = notificationsData;
 

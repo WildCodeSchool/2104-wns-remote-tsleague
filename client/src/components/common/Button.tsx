@@ -1,15 +1,31 @@
 import React from 'react';
-import StyledButton from '../styles/Button';
+import { StyledButton, StyledSubmitButton } from '../styles/Button';
 
 export type ButtonProps = {
   text: string;
   handleClick: () => void;
-  reverse?: boolean;
+  buttonStyle?: string;
 };
 
-function Button({ text, handleClick }: ButtonProps) {
+function Button({ text, handleClick, buttonStyle }: ButtonProps): JSX.Element {
+  if (buttonStyle === 'submit') {
+    return (
+      <StyledSubmitButton
+        buttonStyle={buttonStyle}
+        onClick={handleClick}
+        data-testid="btn"
+      >
+        {text}
+      </StyledSubmitButton>
+    );
+  }
+
   return (
-    <StyledButton onClick={handleClick} data-testid="btn">
+    <StyledButton
+      buttonStyle={buttonStyle}
+      onClick={handleClick}
+      data-testid="btn"
+    >
       {text}
     </StyledButton>
   );
