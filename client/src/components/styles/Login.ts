@@ -7,6 +7,7 @@ export const StyledBox = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
+  text-align: center;
 `;
 
 export const StyledForm = styled.form`
@@ -16,23 +17,32 @@ export const StyledForm = styled.form`
   box-shadow: 0px 0px 2.5px rgba(15, 15, 15, 0.19);
 `;
 
-export const StyledInput = styled.input`
-  width: auto;
-  height: 52px;
-  outline: none;
-  border: none;
-  border-bottom: 1.4px solid transparent;
-  transition: all 200ms ease-in-out;
-  font-size: 12px;
-  &::placeholder {
-    color: ${colors.gray};
-  }
-  &:not(:last-of-type) {
-    border-bottom: 1.5px solid ${colors.lightgray};
-  }
-  &:focus {
+export const StyledInput = styled.div`
+  input {
+    width: 300px;
+    height: 52px;
     outline: none;
-    border-bottom: 2px solid ${colors.primary};
+    border: none;
+    margin: 14px;
+    border-bottom: 1.4px solid transparent;
+    transition: all 200ms ease-in-out;
+    font-size: 14px;
+    &::placeholder {
+      color: ${colors.gray};
+    }
+    &:not(:last-of-type) {
+      border-bottom: 1.5px solid ${colors.lightgray};
+    }
+    &:focus {
+      outline: none;
+      border-bottom: 2px solid ${colors.primary};
+    }
+  }
+
+  div {
+    color: red;
+    opacity: 80%;
+    font-size: 12px;
   }
 `;
 
