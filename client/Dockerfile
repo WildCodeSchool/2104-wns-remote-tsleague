@@ -1,13 +1,12 @@
-# Dockerfile - Client
 FROM node:alpine
 
 RUN mkdir /app
 WORKDIR /app
 
 COPY package*.json ./
-COPY tsconfig.json ./
 RUN yarn install
 
+COPY tsconfig.json ./
 COPY src src
 COPY public public
 
