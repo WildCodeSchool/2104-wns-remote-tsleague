@@ -15,7 +15,9 @@ const validationSchema = Yup.object().shape({
     .min(4, 'Votre entrée est trop courte!')
     .email('Veuillez entrer votre email')
     .required('Ce champ est obligatoire'),
-  password: Yup.string().required('Veuillez entrer votre mot de passe'),
+  password: Yup.string()
+    .min(4, 'Votre entrée est trop courte!')
+    .required('Veuillez entrer votre mot de passe'),
   passwordConfirmation: Yup.string()
     .test(
       'passwords-match',
@@ -44,7 +46,7 @@ function LoginForm(): JSX.Element {
           <Form>
             <Input
               name="className"
-              type="className"
+              type="text"
               errors={errors.className}
               touched={touched.className}
               placeholder="Le nom de votre classe"
@@ -65,7 +67,7 @@ function LoginForm(): JSX.Element {
             />
             <Input
               name="passwordConfirmation"
-              type="passwordConfirmation"
+              type="password"
               errors={errors.passwordConfirmation}
               touched={touched.passwordConfirmation}
               placeholder="Retapez votre mot de passe"

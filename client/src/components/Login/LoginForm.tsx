@@ -44,7 +44,7 @@ function LoginForm(): JSX.Element {
           </Form>
         )}
       </Formik>
-      <a href="/signup">Vous n&apos;avez pas de compte ? Inscrivez-vous !</a>
+      <a href="/signup">Vous n&apos;avez pas un compte ? Inscrivez-vous !</a>
     </StyledBox>
   );
 }
