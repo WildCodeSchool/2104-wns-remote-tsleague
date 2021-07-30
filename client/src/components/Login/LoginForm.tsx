@@ -8,9 +8,9 @@ import Input from '../common/Input';
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .min(4, 'Votre entrée est trop courte!')
-    .email('Veuillez mettre votre email')
+    .email('Veuillez entrer votre email')
     .required('Ce champ est obligatoire'),
-  password: Yup.string().required('Veuillez mettre votre mot de passe'),
+  password: Yup.string().required('Veuillez entrer votre mot de passe'),
 });
 
 function LoginForm(): JSX.Element {
