@@ -6,7 +6,7 @@ export default {
   dev: {
     uri: process.env.DB_URI,
     options: { useNewUrlParser: true, useUnifiedTopology: true },
-    apolloPort: 4500,
+    apolloPort: 5000,
     autoListen: false,
     verbose: true,
     mocks: false,

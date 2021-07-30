@@ -2,11 +2,11 @@
 import { Resolver, Query, Arg } from 'type-graphql';
 import { UserModel, User } from '../models/users-model';
 
-// TODO => Handler error
+// TODO => Handle error
 @Resolver(User)
 class UserResolver {
   @Query(() => User)
-  getUserById(@Arg('id', {}) id: string) {
+  getUser(@Arg('id', {}) id: string) {
     return UserModel.findById(id);
   }
 

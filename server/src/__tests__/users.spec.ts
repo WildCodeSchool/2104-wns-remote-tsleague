@@ -18,8 +18,8 @@ const GET_USERS_BY_ROLE = gql`
   }
 `;
 const GET_USER = gql`
-  query GetUsersById($id: String!) {
-    getUserById(id: $id) {
+  query GetUser($id: String!) {
+    getUser(id: $id) {
       id
       lastname
       firstname
@@ -68,7 +68,7 @@ describe('src/resolvers/user-resolver =>', () => {
     expect(res.data?.getUsersByRole[0]).toHaveProperty('role', 'admin');
   });
 
-  it('should return null in case there are no user found with a specific role', async () => {
+  it('should return an empty array in case there are no user found with a specific role', async () => {
     const res = await apollo.executeOperation({
       query: GET_USERS_BY_ROLE,
       variables: { role: 'noExistedRole' },
@@ -76,11 +76,14 @@ describe('src/resolvers/user-resolver =>', () => {
     expect(res.data?.getUsersByRole).toEqual([]);
   });
 
-  it('should return one user with correct key', async () => {
+  it('should return one user with required id', async () => {
     const res = await apollo.executeOperation({
       query: GET_USER,
       variables: { id: '60d35854ca586b08bd0234d9' },
     });
-    expect(res.data?.getUserById).toBeDefined();
+    expect(res.data?.getUser).toBeDefined();
+    expect(res.data?.getUser).toHaveProperty('id', '60d35854ca586b08bd0234d9');
+    expect(res.data?.getUser).toHaveProperty('firstname');
+    expect(res.data?.getUser).toHaveProperty('lastname');
   });
 });
