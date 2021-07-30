@@ -29,7 +29,7 @@ export const StyledSidebar = styled.div`
   .sidebar-container {
     height: 100vh;
     text-align: center;
-    background-color: #137cbd;
+    background-color: ${colors.primary};
     color: white;
   }
 
