@@ -1,15 +1,39 @@
 import React from 'react';
-import StyledButton from '../styles/Button';
+import { StyledButton, StyledSubmitButton } from '../styles/Button';
 
 export type ButtonProps = {
   text: string;
-  handleClick: () => void;
-  reverse?: boolean;
+  type?: 'submit' | 'button' | 'reset' | undefined;
+  handleClick?: () => void;
+  buttonStyle?: string;
 };
 
-function Button({ text, handleClick, reverse }: ButtonProps) {
+function Button({
+  text,
+  type,
+  handleClick,
+  buttonStyle,
+}: ButtonProps): JSX.Element {
+  if (buttonStyle === 'submit') {
+    return (
+      <StyledSubmitButton
+        buttonStyle={buttonStyle}
+        onClick={handleClick}
+        data-testid="btn"
+        type={type}
+      >
+        {text}
+      </StyledSubmitButton>
+    );
+  }
+
   return (
-    <StyledButton reverse={reverse} onClick={handleClick} data-testid="btn">
+    <StyledButton
+      buttonStyle={buttonStyle}
+      onClick={handleClick}
+      data-testid="btn"
+      type={type}
+    >
       {text}
     </StyledButton>
   );
