@@ -73,7 +73,7 @@ function LoginForm(): JSX.Element {
               placeholder="Retapez votre mot de passe"
             />
 
-            <Button text="Connectez-vous" type="submit" buttonStyle="submit" />
+            <Button text="Inscrivez-vous" type="submit" buttonStyle="submit" />
           </Form>
         )}
       </Formik>
