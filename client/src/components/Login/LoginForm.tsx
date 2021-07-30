@@ -10,9 +10,7 @@ const validationSchema = Yup.object().shape({
     .min(4, 'Votre entrée est trop courte!')
     .email('Veuillez mettre votre email')
     .required('Ce champ est obligatoire'),
-  password: Yup.string()
-    .min(4, 'Votre entrée est trop courte!')
-    .required('Ce champ est obligatoire'),
+  password: Yup.string().required('Veuillez mettre votre mot de passe'),
 });
 
 function LoginForm(): JSX.Element {
