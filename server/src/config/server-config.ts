@@ -2,6 +2,17 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+export type ServerConfig = {
+  uri: string;
+  options: {
+    useNewUrlParser: boolean;
+    useUnifiedTopology: boolean;
+  };
+  apolloPort: number;
+  autoListen: boolean;
+  verbose: boolean;
+};
+
 export default {
   dev: {
     uri: process.env.DB_URI,
@@ -9,7 +20,6 @@ export default {
     apolloPort: 5000,
     autoListen: false,
     verbose: true,
-    mocks: false,
   },
   prod: {
     uri: 'mongodb://127.0.0.1:27017/pixelearn-prod',
@@ -17,18 +27,15 @@ export default {
     apolloPort: 4000,
     autoListen: false,
     verbose: true,
-    mocks: false,
   },
   test: {
     uri: 'mongodb://127.0.0.1:27017/pixelearn-test',
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
-      dbName: 'pixelearn-test',
     },
     apolloPort: 8000,
     autoListen: true,
-    verbose: true,
+    verbose: false,
   },
 };

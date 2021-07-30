@@ -2,18 +2,19 @@ import 'reflect-metadata';
 import dotenv from 'dotenv';
 import { buildSchema } from 'type-graphql';
 import mongoose from 'mongoose';
-
 import { ApolloServer } from 'apollo-server';
+
+import type { ServerConfig } from './config/server-config';
+
 import UserResolver from './resolvers/users-resolver';
 import ClassroomResolver from './resolvers/classrooms-resolver';
 
 dotenv.config();
 
-export async function startServer(config: any): Promise<ApolloServer> {
+export async function startServer(config: ServerConfig): Promise<ApolloServer> {
   const schema = await buildSchema({
     resolvers: [UserResolver, ClassroomResolver],
   });
-
   const server = new ApolloServer({
     schema,
   });

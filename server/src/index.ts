@@ -1,6 +1,6 @@
 import configServer from './config/server-config';
 import { startServer } from './server';
 
-const { SERVER_STAGE } = process.env.SERVER_STAGE;
+const { SERVER_STAGE } = process.env;
 
 startServer(configServer[SERVER_STAGE]);

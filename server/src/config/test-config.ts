@@ -19,7 +19,7 @@ async function initDatabase() {
 }
 
 /**
- * Close any connection for a test
+ * Close any database connections for a test
  */
 async function closeDatabase() {
   await mongo.stop();
