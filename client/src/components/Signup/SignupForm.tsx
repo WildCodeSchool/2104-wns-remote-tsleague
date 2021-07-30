@@ -38,9 +38,7 @@ function LoginForm(): JSX.Element {
           passwordConfirmation: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={(values) => {
-          console.log(values);
-        }}
+        onSubmit={() => {}}
       >
         {({ errors, touched }) => (
           <Form>
