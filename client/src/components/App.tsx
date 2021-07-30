@@ -5,9 +5,11 @@ import './App.css';
 import { StyledIconLeft } from './styles/Sidebar';
 import Sidebar from './layout/Sidebar';
 import Game from './Game/Game';
+import Classroom from './Classroom/Classroom';
 
 function App(): JSX.Element {
   const [handleSidebar, setHandleSidebar] = useState(false);
+  const [handleClassroom] = useState(true);
 
   return (
     <div data-testid="app">
@@ -21,6 +23,7 @@ function App(): JSX.Element {
           />
         </div>
       )}
+      {handleClassroom ? <Classroom /> : ''}
       <Game />
     </div>
   );
