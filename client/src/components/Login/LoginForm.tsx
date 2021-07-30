@@ -22,9 +22,7 @@ function LoginForm(): JSX.Element {
           password: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={(values) => {
-          console.log(values);
-        }}
+        onSubmit={() => {}}
       >
         {({ errors, touched }) => (
           <Form>
@@ -46,7 +44,7 @@ function LoginForm(): JSX.Element {
           </Form>
         )}
       </Formik>
-      <a href="http://localhost:3000/">Vous avez oublié votre mot de passe ?</a>
+      <a href="/signup">Vous n&apos;avez pas de compte ? Inscrivez-vous !</a>
     </StyledBox>
   );
 }

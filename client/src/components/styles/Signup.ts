@@ -23,7 +23,7 @@ export const StyledInput = styled.div`
     height: 52px;
     outline: none;
     border: none;
-    margin: 14px;
+    margin: 4px;
     border-bottom: 1.4px solid transparent;
     transition: all 200ms ease-in-out;
     font-size: 14px;
@@ -48,7 +48,7 @@ export const StyledInput = styled.div`
 
 export const StyledCard = styled.div`
   position: absolute;
-  transform: translate(-0%, 25%);
+  transform: translate(-0%, 10%);
   width: 480px;
   min-height: 550px;
   display: flex;
@@ -59,6 +59,10 @@ export const StyledCard = styled.div`
   position: relative;
   overflow: hidden;
   margin: auto;
+
+  input {
+    margin: 4px;
+  }
 
   a {
     font-size: 12px;
@@ -113,7 +117,6 @@ export const BackDrop = styled.div`
   transform: rotate(164deg);
   top: -290px;
   left: -70px;
-  margin-bottom: -25px;
   background: linear-gradient(
     60deg,
     rgba(137, 130, 255, 1) 20%,
