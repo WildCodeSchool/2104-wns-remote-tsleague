@@ -10,7 +10,7 @@ class ClassroomResolver {
   }
 
   @Query(() => [Classroom])
-  getClassrooms(@Arg('ids', (type) => [String]) ids: string[]) {
+  getClassrooms(@Arg('ids', () => [String]) ids: string[]) {
     return ClassroomModel.find({ _id: { $in: ids } });
   }
 
