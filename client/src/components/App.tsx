@@ -1,39 +1,29 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { IonPhaser } from '@ion-phaser/react';
-
-import Sidebar from './Sidebar';
-import MenuInGame from './MenuInGame';
-import config from '../phaser/config ';
+import React, { useState } from 'react';
 
 import './App.css';
 
-type PropsType = {
-  studentModalProps: boolean;
-};
-type State = {
-  gameToggle: {
-    studentModal: boolean;
-  };
-};
+import { StyledIconLeft } from './styles/Sidebar';
+import Sidebar from './layout/Sidebar';
+import Game from './Game/Game';
 
-function App({ studentModalProps }: PropsType): JSX.Element {
-  const game = config;
-  const initialize = true;
+function App(): JSX.Element {
+  const [handleSidebar, setHandleSidebar] = useState(false);
 
   return (
-    <>
-      <Sidebar />
-      <div className="game">
-        <IonPhaser game={game} initialize={initialize} />
-        {studentModalProps && <MenuInGame />}
-      </div>
-    </>
+    <div data-testid="app">
+      {handleSidebar ? (
+        <Sidebar handleSidebar={() => setHandleSidebar(!handleSidebar)} />
+      ) : (
+        <div>
+          <StyledIconLeft
+            data-testid="sidebar-icon-left"
+            onClick={() => setHandleSidebar(!handleSidebar)}
+          />
+        </div>
+      )}
+      <Game />
+    </div>
   );
 }
 
-const mapStateToProps = (state: State) => ({
-  studentModalProps: state.gameToggle.studentModal,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;
