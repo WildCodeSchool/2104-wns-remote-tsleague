@@ -4,10 +4,10 @@ import { globalStyles } from "../../styles/global";
 import { Form, Formik } from "formik";
 import MyTeachersForm from "./MyTeachersForm";
 
-export default function MyTeachersScreen() {
+export default function MyTeachersScreen({ navigation }: any) {
   return (
     <View>
-      <MyTeachersForm/>
+      <MyTeachersForm navigation ={navigation}/>
     </View>
   );
 }

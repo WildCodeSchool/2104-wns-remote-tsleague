@@ -3,11 +3,14 @@ import { StyleSheet, Button, TextInput, View, Text } from "react-native";
 import { globalStyles } from "../../styles/global";
 import { Form, Formik } from "formik";
 import StudentsForm from "./StudentsForm";
+import {BottomTabScreenProps} from "@react-navigation/bottom-tabs"
 
-export default function StudentsScreen() {
+ type StudentsScreenNavigationProp = BottomTabScreenProps<{'Mon compte': undefined}>;
+
+export default function StudentsScreen({navigation}: StudentsScreenNavigationProp) {
   return (
     <View>
-      <StudentsForm/>
+      <StudentsForm navigation={navigation}/>
     </View>
   );
 }
