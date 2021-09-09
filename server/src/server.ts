@@ -11,7 +11,9 @@ import ClassroomResolver from './resolvers/classrooms-resolver';
 
 dotenv.config();
 
-export async function startServer(config: ServerConfig): Promise<ApolloServer> {
+export default async function startServer(
+  config: ServerConfig,
+): Promise<ApolloServer> {
   const schema = await buildSchema({
     resolvers: [UserResolver, ClassroomResolver],
   });
@@ -28,7 +30,9 @@ export async function startServer(config: ServerConfig): Promise<ApolloServer> {
     throw new Error(`Unable to start Apollo server: ${error.message}`);
   }
   try {
-    await mongoose.connect(config.uri, config.options);
+    await mongoose
+      .connect(config.uri, config.options)
+      .then(() => console.log('Connected to database'));
   } catch (error) {
     console.log(error);
   }
@@ -36,5 +40,3 @@ export async function startServer(config: ServerConfig): Promise<ApolloServer> {
   if (config.verbose) console.log('mongodb started at uri: ', config.uri);
   return server;
 }
-
-export default startServer;
