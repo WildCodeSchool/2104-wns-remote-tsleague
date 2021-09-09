@@ -11,8 +11,9 @@ export default function HomeScreen({
 }: any) {
   return (
     <View>
-      <View style={{ justifyContent: "center" }}>
+      <View style={styles.buttonContainer}>
       <Button
+      
               color="blue"
               title="CRÉER UNE CLASSE"
                 onPress={() =>
@@ -28,16 +29,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  buttonContainer: {
-    flex: 1,
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    margin: 20,
-  },
   button: {
     flex: 0.1,
     alignSelf: "flex-end",
     alignItems: "center",
+  },
+  buttonContainer: {
+    paddingTop: 320,
+    color: "blue",
+    flexDirection: "row",
+    justifyContent: "center",
   },
   text: {
     fontSize: 18,

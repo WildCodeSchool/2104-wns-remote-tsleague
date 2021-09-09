@@ -30,13 +30,17 @@ export default function MyAccountForm({ navigation }: any) {
       >
         {({ errors, touched, values, handleChange, handleSubmit }) => (
           <View>
+                        <View style={globalStyles.inputView}>
+
             <TextInput
               style={globalStyles.input}
               placeholder="Nom"
               onChangeText={handleChange("name")}
               value={values.name}
             />
+            </View>
             {/* <View>{errors.name}</View> */}
+            <View style={globalStyles.inputView}>
 
             <TextInput
               style={globalStyles.input}
@@ -44,6 +48,7 @@ export default function MyAccountForm({ navigation }: any) {
               onChangeText={handleChange("email")}
               value={values.email}
             />
+            </View>
             {/* <View>{errors.email}</View> */}
 
             <Button

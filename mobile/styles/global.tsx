@@ -22,4 +22,7 @@ export const globalStyles = StyleSheet.create({
       fontSize: 18,
       borderRadius: 6,
     },
+    inputView: {
+      paddingBottom: 25,
+    }
   });

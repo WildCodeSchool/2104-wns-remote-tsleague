@@ -27,22 +27,24 @@ export default function StudentsForm({ navigation }: any) {
       >
         {({ errors, touched, values, handleChange, handleSubmit }) => (
           <View>
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Nom"
-              onChangeText={handleChange("name")}
-              value={values.name}
-            />
-            {/* <View>{errors.name}</View> */}
-
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Mail"
-              onChangeText={handleChange("email")}
-              value={values.email}
-            />
-            {/* <View>{errors.email}</View> */}
-
+            <View style={globalStyles.inputView}>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Nom"
+                onChangeText={handleChange("name")}
+                value={values.name}
+              />
+              {/* <View>{errors.name}</View> */}
+            </View>
+            <View style={globalStyles.inputView}>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Mail"
+                onChangeText={handleChange("email")}
+                value={values.email}
+              />
+              {/* <View>{errors.email}</View> */}
+            </View>
             <Button
               color="gray"
               title="AJOUTER UN ÉLÈVE"

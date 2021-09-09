@@ -42,38 +42,44 @@ export default function MyAccountForm({ navigation }: any) {
       >
         {({ errors, touched, values, handleChange, handleSubmit }) => (
           <View>
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Nom"
-              onChangeText={handleChange("name")}
-              value={values.name}
-            />
+            <View style={globalStyles.inputView}>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Nom"
+                onChangeText={handleChange("name")}
+                value={values.name}
+              />
+            </View>
             {/* <View>{errors.name}</View> */}
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Mail"
-              onChangeText={handleChange("email")}
-              value={values.email}
-            />
+            <View style={globalStyles.inputView}>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Mail"
+                onChangeText={handleChange("email")}
+                value={values.email}
+              />
+            </View>
             {/* <View>{errors.email}</View> */}
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Mot de passe"
-              secureTextEntry={true}
-              onChangeText={handleChange("password")}
-              value={values.password}
-            />
+            <View style={globalStyles.inputView}>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Mot de passe"
+                secureTextEntry={true}
+                onChangeText={handleChange("password")}
+                value={values.password}
+              />
+            </View>
             {/* <View>{errors.password}</View> */}
-
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Verification mot de passe"
-              secureTextEntry={true}
-              onChangeText={handleChange("confirmPassword")}
-              value={values.confirmPassword}
-            />
-            {/* <View>{errors.confirmPassword}</View> */}
-
+            <View style={globalStyles.inputView}>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Verification mot de passe"
+                secureTextEntry={true}
+                onChangeText={handleChange("confirmPassword")}
+                value={values.confirmPassword}
+              />
+              {/* <View>{errors.confirmPassword}</View> */}
+            </View>
             <Button
               color="blue"
               title="Suivant"
