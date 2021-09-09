@@ -6,7 +6,7 @@ import StudentsForm from "./StudentsForm";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
 type StudentsScreenNavigationProp = BottomTabScreenProps<{
-  "Accueil": undefined;
+  "Acceuil": undefined;
 }>;
 
 export default function StudentsScreen({

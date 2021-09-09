@@ -25,31 +25,34 @@ export default function StudentsForm({ navigation }: any) {
         validationSchema={StudentsSchema}
         onSubmit={(values) => {}}
       >
-        {(props) => (
+        {({ errors, touched, values, handleChange, handleSubmit }) => (
           <View>
             <TextInput
               style={globalStyles.input}
               placeholder="Nom"
-              onChangeText={props.handleChange("name")}
-              value={props.values.name}
+              onChangeText={handleChange("name")}
+              value={values.name}
             />
+            {/* <View>{errors.name}</View> */}
 
             <TextInput
               style={globalStyles.input}
               placeholder="Mail"
-              onChangeText={props.handleChange("email")}
-              value={props.values.email}
+              onChangeText={handleChange("email")}
+              value={values.email}
             />
+            {/* <View>{errors.email}</View> */}
+
             <Button
               color="gray"
               title="AJOUTER UN ÉLÈVE"
-              onPress={() => props.handleSubmit()}
+              onPress={() => handleSubmit()}
             />
 
             <Button
               color="blue"
               title="CRÉER LA CLASSE"
-              onPress={() => navigation.navigate("Accueil")}
+              onPress={() => navigation.navigate("Acceuil")}
             />
           </View>
         )}

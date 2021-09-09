@@ -16,9 +16,7 @@ export default function HomeScreen({
               color="blue"
               title="CRÉER UNE CLASSE"
                 onPress={() =>
-          navigation.navigate('Inscription', {
-            screen: 'Mon compte',
-          })
+          navigation.navigate( 'Mon compte')
         }
             />
       </View>
