@@ -1,15 +1,17 @@
 import React from "react";
 import { Text, View, StyleSheet, Button, Alert } from "react-native";
+import Carousel from "./Carousel";
 
 export default function HomeScreen() {
   return (
     <View>
       <Text> HomeScreen </Text>
+      <Carousel />
       <Button
-        onPress={() => Alert.alert('Simple Button pressed')}
-         title="Learn More"
-         color="#841584"
-          accessibilityLabel="Learn more about this purple button"
+        onPress={() => Alert.alert("Simple Button pressed")}
+        title="Learn More"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
       />
     </View>
   );
