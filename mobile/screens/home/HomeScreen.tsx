@@ -1,18 +1,24 @@
 import React from "react";
-import { Text, View, StyleSheet, Button, Alert } from "react-native";
+import { Text, View, StyleSheet, Button } from "react-native";
 import Carousel from "./Carousel";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
-export default function HomeScreen() {
+type StudentsScreenNavigationProp = BottomTabScreenProps<{
+  "Mon compte": undefined;
+}>;
+
+export default function HomeScreen({ navigation }: any) {
   return (
     <View>
       <Text> HomeScreen </Text>
       <Carousel />
-      <Button
-        onPress={() => Alert.alert("Simple Button pressed")}
-        title="Learn More"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-      />
+      <View style={{ justifyContent: "center" }}>
+        <Button
+          color="blue"
+          title="CRÉER UNE CLASSE"
+          onPress={() => navigation.navigate("Mon compte")}
+        />
+      </View>
     </View>
   );
 }

@@ -1,29 +1,28 @@
 import React from "react";
 import { StyleSheet, Button, TextInput, View, Text } from "react-native";
 import { globalStyles } from "../../styles/global";
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import * as yup from "yup";
 
 const ClassroomSchema = yup.object({
-  name: yup.string()
-  .required('Ce champ est obligatoire')
-  .min(5),
-  email: yup.string()
-  .required('Ce champ est obligatoire')
-  .email('Veuillez entrer un email')
-  .min(5),
-  password: yup.string()
-  .required('Ce champ est obligatoire'),
-  confirmPassword: yup.string()
-  .test(
-    'passwords-match',
-    'Les mots de passe ne sont pas les mêmes!',
-    function (value) {
-      return this.parent.password === value;
-    }
-  )
-  .required('Ce champ est obligatoire'),
-})
+  name: yup.string().required("Ce champ est obligatoire").min(5),
+  email: yup
+    .string()
+    .required("Ce champ est obligatoire")
+    .email("Veuillez entrer un email")
+    .min(5),
+  password: yup.string().required("Ce champ est obligatoire"),
+  confirmPassword: yup
+    .string()
+    .test(
+      "passwords-match",
+      "Les mots de passe ne sont pas les mêmes!",
+      function (value) {
+        return this.parent.password === value;
+      }
+    )
+    .required("Ce champ est obligatoire"),
+});
 
 export default function MyAccountForm({ navigation }: any) {
   return (
@@ -38,41 +37,48 @@ export default function MyAccountForm({ navigation }: any) {
         validationSchema={ClassroomSchema}
         onSubmit={(values) => {
           console.log(values);
+          navigation.navigate("Mes formateurs");
         }}
       >
-        {(props) => (
+        {({ errors, touched, values, handleChange, handleSubmit }) => (
           <View>
             <TextInput
               style={globalStyles.input}
               placeholder="Nom"
-              onChangeText={props.handleChange("name")}
-              value={props.values.name}
+              onChangeText={handleChange("name")}
+              value={values.name}
             />
-
+            {/* <View>{errors.name}</View> */}
             <TextInput
               style={globalStyles.input}
               placeholder="Mail"
-              onChangeText={props.handleChange("email")}
-              value={props.values.email}
+              onChangeText={handleChange("email")}
+              value={values.email}
             />
-
+            {/* <View>{errors.email}</View> */}
             <TextInput
               style={globalStyles.input}
               placeholder="Mot de passe"
               secureTextEntry={true}
-              onChangeText={props.handleChange("password")}
-              value={props.values.password}
+              onChangeText={handleChange("password")}
+              value={values.password}
             />
+            {/* <View>{errors.password}</View> */}
 
             <TextInput
               style={globalStyles.input}
               placeholder="Verification mot de passe"
               secureTextEntry={true}
-              onChangeText={props.handleChange("confirmPassword")}
-              value={props.values.confirmPassword}
+              onChangeText={handleChange("confirmPassword")}
+              value={values.confirmPassword}
             />
+            {/* <View>{errors.confirmPassword}</View> */}
 
-            <Button color="blue" title="Suivant" onPress={() => props.handleSubmit()} />
+            <Button
+              color="blue"
+              title="Suivant"
+              onPress={() => handleSubmit()}
+            />
           </View>
         )}
       </Formik>
