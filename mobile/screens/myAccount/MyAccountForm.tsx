@@ -38,6 +38,7 @@ export default function MyAccountForm({ navigation }: any) {
         validationSchema={ClassroomSchema}
         onSubmit={(values) => {
           console.log(values);
+          navigation.navigate('Mes formateurs')
         }}
       >
         {(props) => (

@@ -3,12 +3,16 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Ionicons } from "@expo/vector-icons";
+
+import HomeScreen from "./screens/home/HomeScreen";
 import MyTeachersScreen from "./screens/myTeachers/MyTeachersScreen";
 import MyAccountScreen from "./screens/myAccount/MyAccountScreen";
 import StudentsScreen from "./screens/students/StudentsScreen";
-import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const getIconName = (name: string, focused: boolean) => {
   switch (name) {
@@ -26,10 +30,9 @@ const getIconName = (name: string, focused: boolean) => {
   }
 };
 
-export default function App() {
+function SignUp() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
+    <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             return (
@@ -48,6 +51,20 @@ export default function App() {
         <Tab.Screen name="Mes formateurs" component={MyTeachersScreen} />
         <Tab.Screen name="Les élèves" component={StudentsScreen} />
       </Tab.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Acceuil" component={HomeScreen} />
+        <Stack.Screen
+          name="Inscription"
+          component={SignUp}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

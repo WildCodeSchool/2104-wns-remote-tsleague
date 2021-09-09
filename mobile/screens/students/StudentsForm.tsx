@@ -3,20 +3,18 @@ import { StyleSheet, Button, TextInput, View, Text } from "react-native";
 import { globalStyles } from "../../styles/global";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
-import {BottomTabNavigationProp} from "@react-navigation/bottom-tabs"
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 const StudentsSchema = yup.object({
-  name: yup.string()
-  .required('Ce champ est obligatoire')
-  .min(5),
-  email: yup.string()
-  .required('Ce champ est obligatoire')
-  .email('Veuillez entrer un email')
-  .min(5),
-})
+  name: yup.string().required("Ce champ est obligatoire").min(5),
+  email: yup
+    .string()
+    .required("Ce champ est obligatoire")
+    .email("Veuillez entrer un email")
+    .min(5),
+});
 
-
-export default function StudentsForm({navigation}:any) {
+export default function StudentsForm({ navigation }: any) {
   return (
     <View>
       <Formik
@@ -25,9 +23,7 @@ export default function StudentsForm({navigation}:any) {
           email: "",
         }}
         validationSchema={StudentsSchema}
-        onSubmit={(values) => {
-          navigation.navigate('Mon compte')
-        }}
+        onSubmit={(values) => {}}
       >
         {(props) => (
           <View>
@@ -44,8 +40,17 @@ export default function StudentsForm({navigation}:any) {
               onChangeText={props.handleChange("email")}
               value={props.values.email}
             />
+            <Button
+              color="gray"
+              title="AJOUTER UN ÉLÈVE"
+              onPress={() => props.handleSubmit()}
+            />
 
-            <Button color="blue" title="Suivant" onPress={() => props.handleSubmit()} />
+            <Button
+              color="blue"
+              title="CRÉER LA CLASSE"
+              onPress={() => navigation.navigate("Accueil")}
+            />
           </View>
         )}
       </Formik>

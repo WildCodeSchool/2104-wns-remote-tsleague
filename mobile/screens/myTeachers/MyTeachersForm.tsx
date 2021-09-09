@@ -2,32 +2,30 @@ import React from "react";
 import { StyleSheet, Button, TextInput, View, Text } from "react-native";
 import { globalStyles } from "../../styles/global";
 import { Form, Formik } from "formik";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as yup from "yup";
 
 const MyTeachersSchema = yup.object({
-  name: yup.string()
-  .required('Ce champ est obligatoire')
-  .min(5),
-  email: yup.string()
-  .required('Ce champ est obligatoire')
-  .email('Veuillez entrer un email')
-  .min(5),
-})
+  name: yup.string().required("Ce champ est obligatoire").min(5),
+  email: yup
+    .string()
+    .required("Ce champ est obligatoire")
+    .email("Veuillez entrer un email")
+    .min(5),
+});
 
-export default function MyAccountForm({ navigation }:any) {
+export default function MyAccountForm({ navigation }: any) {
   return (
     <View>
       <Formik
         initialValues={{
           name: "",
-          email: "",          
+          email: "",
         }}
         validationSchema={MyTeachersSchema}
         onSubmit={(values) => {
           console.log(values);
-          navigation.navigate('Les élèves');
         }}
       >
         {(props) => (
@@ -45,8 +43,16 @@ export default function MyAccountForm({ navigation }:any) {
               onChangeText={props.handleChange("email")}
               value={props.values.email}
             />
-
-            <Button color="blue" title="Suivant" onPress={() => props.handleSubmit()} />
+            <Button
+              color="gray"
+              title="AJOUTER UN FORMATEUR"
+              onPress={() => props.handleSubmit()}
+            />
+            <Button
+              color="blue"
+              title="SUIVANT"
+              onPress={() => navigation.navigate("Les élèves")}
+            />
           </View>
         )}
       </Formik>
