@@ -13,11 +13,7 @@ export default function Slide({ data }: any) {
         alignItems: "center",
       }}
     >
-      <Image
-        source={{ uri: data.image }}
-        style={{ width: windowWidth * 0.9, height: windowHeight * 0.5 }}
-      />
-      <Text style={{ fontSize: 24 }}>{data.title}</Text>
+      <Text style={{ fontSize: 24, margin: 10 }}>{data.title}</Text>
       <Text style={{ fontSize: 18 }}>{data.subtitle}</Text>
     </View>
   );

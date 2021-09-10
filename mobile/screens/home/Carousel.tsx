@@ -12,14 +12,38 @@ import { storeData, getData } from "../../utils/localeStorage";
 
 import Slide from "./Slide";
 
-const slideList = Array.from({ length: 10 }).map((_, i) => {
-  return {
-    id: i,
-    image: `https://picsum.photos/1440/2842?random=${i}`,
-    title: `This is the title! ${i + 1}`,
-    subtitle: `This is the subtitle ${i + 1}!`,
-  };
-});
+const slideGuide = [
+  {
+    id: 1,
+    title: `Bienvenue sur PixeLearn`,
+    subtitle: `Guide d'introduction`,
+  },
+  // {
+  //   id: 1,
+  //   title: `Créer un compte d'admin`,
+  //   subtitle: `Veuillez contacter l'équipe de PixeLearn pour pouvoir, vous créez un compte.`,
+  // },
+  {
+    id: 2,
+    title: `Créer une classe`,
+    subtitle: `Renseigner le nom de la classe et les informations nécessaires.`,
+  },
+  {
+    id: 3,
+    title: `Rajouter des formateurs`,
+    subtitle: `Rajouter des formateurs dans la classe pour guider et enseigner aux  élèves.`,
+  },
+  {
+    id: 4,
+    title: `Rajouter des élèves`,
+    subtitle: ` Enfin, rajouter des élèves dans la classe `,
+  },
+  {
+    id: 5,
+    title: `Rejoignez le jeux`,
+    subtitle: `Pour rejoindre votre classe PixeLearn , vous aurez besoin d'avoir accès à un ordinateur pour accéder au site web, connecter ensuite avec vos identifiants pour vous connecter à la classe. Félicitations, vous avez terminé la création de votre classe.`,
+  },
+];
 
 export default function Carousel() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -49,7 +73,7 @@ export default function Carousel() {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <FlatList
-              data={slideList}
+              data={slideGuide}
               style={styles.carousel}
               renderItem={({ item }) => {
                 return <Slide data={item} />;
@@ -63,19 +87,19 @@ export default function Carousel() {
               keyExtractor={(item) => item.id.toString()}
             />
             <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
+              style={styles.button}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle}>Fermer le guide</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
       <TouchableOpacity
-        style={[styles.button, styles.buttonOpen]}
+        style={styles.button}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.textStyle}>Show Modal</Text>
+        <Text style={styles.textStyle}>Guide d'introduction</Text>
       </TouchableOpacity>
     </View>
   );
@@ -106,12 +130,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#80B2D4",
   },
   textStyle: {
     color: "white",
