@@ -4,11 +4,11 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
 import Carousel from "./Carousel";
 
-type StudentsScreenNavigationProp = BottomTabScreenProps<{
+type HomeScreenNavigationProp = BottomTabScreenProps<{
   "Mon compte": undefined;
 }>;
 
-export default function HomeScreen({ navigation }: any) {
+export default function HomeScreen({ navigation }: HomeScreenNavigationProp) {
   return (
     <View style={styles.container}>
       <Carousel />

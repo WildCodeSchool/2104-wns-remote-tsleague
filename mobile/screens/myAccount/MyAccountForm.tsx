@@ -5,12 +5,15 @@ import { ErrorMessage, Form, Formik } from "formik";
 import * as yup from "yup";
 
 const ClassroomSchema = yup.object({
-  name: yup.string().required("Ce champ est obligatoire").min(5),
+  name: yup
+    .string()
+    .required("Ce champ est obligatoire")
+    .min(5, "Veuillez saisir un minimum de 5 caractères"),
   email: yup
     .string()
     .required("Ce champ est obligatoire")
     .email("Veuillez entrer un email")
-    .min(5),
+    .min(5, "Veuillez saisir un minimum de 5 caractères"),
   password: yup.string().required("Ce champ est obligatoire"),
   confirmPassword: yup
     .string()
@@ -41,39 +44,48 @@ export default function MyAccountForm({ navigation }: any) {
         }}
       >
         {({ errors, touched, values, handleChange, handleSubmit }) => (
-          <View>
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Nom"
-              onChangeText={handleChange("name")}
-              value={values.name}
-            />
-            {/* <View>{errors.name}</View> */}
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Mail"
-              onChangeText={handleChange("email")}
-              value={values.email}
-            />
-            {/* <View>{errors.email}</View> */}
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Mot de passe"
-              secureTextEntry={true}
-              onChangeText={handleChange("password")}
-              value={values.password}
-            />
-            {/* <View>{errors.password}</View> */}
+          <View style={globalStyles.container}>
+            <View style={globalStyles.inputView}>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Nom"
+                onChangeText={handleChange("name")}
+                value={values.name}
+              />
+              <Text style={globalStyles.errorText}>{errors.name}</Text>
+            </View>
 
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Verification mot de passe"
-              secureTextEntry={true}
-              onChangeText={handleChange("confirmPassword")}
-              value={values.confirmPassword}
-            />
-            {/* <View>{errors.confirmPassword}</View> */}
-
+            <View style={globalStyles.inputView}>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Mail"
+                onChangeText={handleChange("email")}
+                value={values.email}
+              />
+              <Text style={globalStyles.errorText}>{errors.email}</Text>
+            </View>
+            <View style={globalStyles.inputView}>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Mot de passe"
+                secureTextEntry={true}
+                onChangeText={handleChange("password")}
+                value={values.password}
+              />
+              <Text style={globalStyles.errorText}>{errors.password}</Text>
+            </View>
+            <View style={globalStyles.inputView}>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Verification mot de passe"
+                secureTextEntry={true}
+                onChangeText={handleChange("confirmPassword")}
+                value={values.confirmPassword}
+              />
+              <Text style={globalStyles.errorText}>
+                {errors.confirmPassword}
+              </Text>
+            </View>
             <Button
               color="blue"
               title="Suivant"
