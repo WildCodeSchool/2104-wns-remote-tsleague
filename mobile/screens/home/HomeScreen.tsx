@@ -1,7 +1,8 @@
 import React from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
-import Carousel from "./Carousel";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+
+import Carousel from "./Carousel";
 
 type StudentsScreenNavigationProp = BottomTabScreenProps<{
   "Mon compte": undefined;
@@ -9,15 +10,15 @@ type StudentsScreenNavigationProp = BottomTabScreenProps<{
 
 export default function HomeScreen({ navigation }: any) {
   return (
-    <View>
-      <Text> HomeScreen </Text>
+    <View style={styles.container}>
       <Carousel />
-      <View style={{ justifyContent: "center" }}>
-        <Button
-          color="blue"
-          title="CRÉER UNE CLASSE"
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.buttonOpen]}
           onPress={() => navigation.navigate("Mon compte")}
-        />
+        >
+          <Text style={styles.textStyle}>CRÉER UNE CLASSE</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -26,20 +27,25 @@ export default function HomeScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonContainer: {
-    flex: 1,
     backgroundColor: "transparent",
     flexDirection: "row",
     margin: 20,
   },
   button: {
-    flex: 0.1,
-    alignSelf: "flex-end",
-    alignItems: "center",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
   },
-  text: {
-    fontSize: 18,
+  buttonOpen: {
+    backgroundColor: "#0065A8",
+  },
+  textStyle: {
     color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });

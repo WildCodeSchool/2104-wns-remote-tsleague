@@ -1,8 +1,41 @@
 import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+} from "react-native";
+import { storeData, getData } from "../../utils/localeStorage";
+
+import Slide from "./Slide";
+
+const slideList = Array.from({ length: 10 }).map((_, i) => {
+  return {
+    id: i,
+    image: `https://picsum.photos/1440/2842?random=${i}`,
+    title: `This is the title! ${i + 1}`,
+    subtitle: `This is the subtitle ${i + 1}!`,
+  };
+});
 
 export default function Carousel() {
   const [modalVisible, setModalVisible] = useState(false);
+  const value = getData();
+
+  if (value !== null) {
+    value
+      .then((res) => {
+        if (res === null) {
+          storeData();
+          setModalVisible(true);
+        }
+      })
+      .catch((err) => alert(err.toString()));
+  }
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -10,44 +43,55 @@ export default function Carousel() {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
+            <FlatList
+              data={slideList}
+              style={styles.carousel}
+              renderItem={({ item }) => {
+                return <Slide data={item} />;
+              }}
+              pagingEnabled
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              initialNumToRender={0}
+              maxToRenderPerBatch={1}
+              removeClippedSubviews={true}
+              keyExtractor={(item) => item.id.toString()}
+            />
+            <TouchableOpacity
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
               <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
-      <Pressable
+      <TouchableOpacity
         style={[styles.button, styles.buttonOpen]}
         onPress={() => setModalVisible(true)}
       >
         <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   centeredView: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
   },
   modalView: {
     margin: 20,
+    padding: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -74,8 +118,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
+  carousel: {
+    marginBottom: 10,
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  checkbox: {
+    alignSelf: "center",
+  },
+  label: {
+    margin: 8,
   },
 });
