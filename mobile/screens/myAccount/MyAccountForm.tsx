@@ -5,12 +5,15 @@ import { ErrorMessage, Form, Formik } from "formik";
 import * as yup from "yup";
 
 const ClassroomSchema = yup.object({
-  name: yup.string().required("Ce champ est obligatoire").min(5),
+  name: yup
+    .string()
+    .required("Ce champ est obligatoire")
+    .min(5, "Veuillez saisir un minimum de 5 caractères"),
   email: yup
     .string()
     .required("Ce champ est obligatoire")
     .email("Veuillez entrer un email")
-    .min(5),
+    .min(5, "Veuillez saisir un minimum de 5 caractères"),
   password: yup.string().required("Ce champ est obligatoire"),
   confirmPassword: yup
     .string()
@@ -49,8 +52,9 @@ export default function MyAccountForm({ navigation }: any) {
                 onChangeText={handleChange("name")}
                 value={values.name}
               />
+              <Text style={globalStyles.errorText}>{errors.name}</Text>
             </View>
-            {/* <View>{errors.name}</View> */}
+
             <View style={globalStyles.inputView}>
               <TextInput
                 style={globalStyles.input}
@@ -58,8 +62,8 @@ export default function MyAccountForm({ navigation }: any) {
                 onChangeText={handleChange("email")}
                 value={values.email}
               />
+              <Text style={globalStyles.errorText}>{errors.email}</Text>
             </View>
-            {/* <View>{errors.email}</View> */}
             <View style={globalStyles.inputView}>
               <TextInput
                 style={globalStyles.input}
@@ -68,8 +72,9 @@ export default function MyAccountForm({ navigation }: any) {
                 onChangeText={handleChange("password")}
                 value={values.password}
               />
+                          <Text style={globalStyles.errorText}>{errors.password}</Text>
+
             </View>
-            {/* <View>{errors.password}</View> */}
             <View style={globalStyles.inputView}>
               <TextInput
                 style={globalStyles.input}
@@ -78,7 +83,9 @@ export default function MyAccountForm({ navigation }: any) {
                 onChangeText={handleChange("confirmPassword")}
                 value={values.confirmPassword}
               />
-              {/* <View>{errors.confirmPassword}</View> */}
+              <Text style={globalStyles.errorText}>
+                {errors.confirmPassword}
+              </Text>
             </View>
             <Button
               color="blue"

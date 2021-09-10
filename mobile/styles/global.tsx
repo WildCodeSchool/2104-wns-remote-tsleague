@@ -24,5 +24,8 @@ export const globalStyles = StyleSheet.create({
     },
     inputView: {
       paddingBottom: 25,
+    },
+    errorText: {
+      color: "red",
     }
   });

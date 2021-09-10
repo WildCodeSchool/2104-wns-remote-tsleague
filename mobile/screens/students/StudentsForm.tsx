@@ -6,12 +6,12 @@ import * as yup from "yup";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 const StudentsSchema = yup.object({
-  name: yup.string().required("Ce champ est obligatoire").min(5),
+  name: yup.string().required("Ce champ est obligatoire").min(5, "Veuillez saisir un minimum de 5 caractères"),
   email: yup
     .string()
     .required("Ce champ est obligatoire")
     .email("Veuillez entrer un email")
-    .min(5),
+    .min(5, "Veuillez saisir un minimum de 5 caractères"),
 });
 
 export default function StudentsForm({ navigation }: any) {
@@ -34,7 +34,7 @@ export default function StudentsForm({ navigation }: any) {
                 onChangeText={handleChange("name")}
                 value={values.name}
               />
-              {/* <View>{errors.name}</View> */}
+            <Text style={globalStyles.errorText}>{errors.name}</Text>
             </View>
             <View style={globalStyles.inputView}>
               <TextInput
@@ -43,7 +43,7 @@ export default function StudentsForm({ navigation }: any) {
                 onChangeText={handleChange("email")}
                 value={values.email}
               />
-              {/* <View>{errors.email}</View> */}
+            <Text style={globalStyles.errorText}>{errors.email}</Text>
             </View>
             <Button
               color="gray"
