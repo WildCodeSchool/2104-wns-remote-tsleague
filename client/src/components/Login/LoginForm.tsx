@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Yup from 'yup';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import { StyledBox } from '../styles/Login';
 import Button from '../common/Button';
 import Input from '../common/Input';
