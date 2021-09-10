@@ -7,7 +7,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as yup from "yup";
 
 const MyTeachersSchema = yup.object({
-  name: yup.string().required("Ce champ est obligatoire").min(5, "Veuillez saisir un minimum de 5 caractères"),
+  name: yup
+    .string()
+    .required("Ce champ est obligatoire")
+    .min(5, "Veuillez saisir un minimum de 5 caractères"),
   email: yup
     .string()
     .required("Ce champ est obligatoire")
@@ -37,8 +40,7 @@ export default function MyAccountForm({ navigation }: any) {
                 onChangeText={handleChange("name")}
                 value={values.name}
               />
-                          <Text style={globalStyles.errorText}>{errors.name}</Text>
-
+              <Text style={globalStyles.errorText}>{errors.name}</Text>
             </View>
             <View style={globalStyles.inputView}>
               <TextInput
@@ -47,8 +49,7 @@ export default function MyAccountForm({ navigation }: any) {
                 onChangeText={handleChange("email")}
                 value={values.email}
               />
-                          <Text style={globalStyles.errorText}>{errors.email}</Text>
-
+              <Text style={globalStyles.errorText}>{errors.email}</Text>
             </View>
 
             <Button
