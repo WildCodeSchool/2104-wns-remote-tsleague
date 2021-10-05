@@ -6,6 +6,7 @@ services:
           - 8080:3000
       volumes: 
           - ./client/src:/app/src
+          - web-client-build:/app/build
   server:
       build: ./server
       ports:
