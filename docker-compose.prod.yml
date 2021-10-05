@@ -1,7 +1,7 @@
 services:
   client:
       build: ./client
-      command: npm run build
+      command: sh -c "npm run build"
       ports:
           - 8080:3000
       volumes: 
