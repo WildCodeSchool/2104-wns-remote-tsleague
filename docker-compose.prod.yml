@@ -1,20 +1,17 @@
-version: '3'
-
 services:
-  services:
-    client:
-        build: ./client
-        ports:
-            - 8080:3000
-        volumes: 
-            - ./client/src:/app/src
-    server:
-        build: ./server
-        ports:
-            - 5050:5000
-        command: npm run dev
-        volumes: 
-            - ./server/src:/server/src 
+  client:
+      build: ./client
+      ports:
+          - 8080:3000
+      volumes: 
+          - ./client/src:/app/src
+  server:
+      build: ./server
+      ports:
+          - 5050:5000
+      command: npm run dev
+      volumes: 
+          - ./server/src:/server/src 
   nginx:
     image: nginx:1.21.3
     depends_on:
