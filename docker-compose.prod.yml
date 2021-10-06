@@ -1,19 +1,17 @@
 services:
   client:
-      build: ./client
-      command: sh -c "npm run build"
-      ports:
-          - 8080:3000
-      volumes: 
-          - ./client/src:/app/src
-          - web-client-build:/app/build
+    build: ./client
+    command: sh -c "npm run build"
+    volumes:
+      - ./client/src:/app/src
+      - web-client-build:/app/build
   server:
-      build: ./server
-      ports:
-          - 5050:5000
-      command: npm run dev
-      volumes: 
-          - ./server/src:/server/src 
+    build: ./server
+    ports:
+      - 5000
+    command: npm run dev
+    volumes:
+      - ./server/src:/server/src
   nginx:
     image: nginx:1.21.3
     depends_on:
