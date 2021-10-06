@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import Notification from '../components/Notification';
+import Notification from '../components/layout/Notification';
 import '@testing-library/jest-dom/extend-expect';
 
 test('should have a Notification', async () => {
