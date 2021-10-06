@@ -3,17 +3,24 @@ import { StyledButton, StyledSubmitButton } from '../styles/Button';
 
 export type ButtonProps = {
   text: string;
-  handleClick: () => void;
+  type?: 'submit' | 'button' | 'reset' | undefined;
+  handleClick?: () => void;
   buttonStyle?: string;
 };
 
-function Button({ text, handleClick, buttonStyle }: ButtonProps): JSX.Element {
+function Button({
+  text,
+  type,
+  handleClick,
+  buttonStyle,
+}: ButtonProps): JSX.Element {
   if (buttonStyle === 'submit') {
     return (
       <StyledSubmitButton
         buttonStyle={buttonStyle}
         onClick={handleClick}
         data-testid="btn"
+        type={type}
       >
         {text}
       </StyledSubmitButton>
@@ -25,6 +32,7 @@ function Button({ text, handleClick, buttonStyle }: ButtonProps): JSX.Element {
       buttonStyle={buttonStyle}
       onClick={handleClick}
       data-testid="btn"
+      type={type}
     >
       {text}
     </StyledButton>

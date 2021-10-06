@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/layout/Sidebar';
 import '@testing-library/jest-dom/extend-expect';
 
 import userData from '../mocks/user';
