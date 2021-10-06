@@ -1,4 +1,4 @@
-import { Dispatch, Middleware, Store } from 'redux';
+import { Middleware } from 'redux';
 import { Socket } from 'socket.io-client';
 import { Action } from '../game/game.actions';
 

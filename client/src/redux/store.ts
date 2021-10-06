@@ -1,6 +1,5 @@
 // REDUX
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore, applyMiddleware } from 'redux';
 import socketMiddleware from './middleware/socketMiddleware';
 import socket from '../socket';
 
