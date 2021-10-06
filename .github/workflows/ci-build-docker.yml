@@ -23,14 +23,23 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Build and push
-        id: docker_build
+      - name: Build and push client
+        id: docker_build-client
+        uses: docker/build-push-action@v2
+        with:
+          context: ./client
+          file: ./client/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_REPO }}:client
+
+      - name: Build and push server
+        id: docker_build_server
         uses: docker/build-push-action@v2
         with:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_REPO }}:latest
+          tags: ${{ secrets.DOCKERHUB_REPO }}:server
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
