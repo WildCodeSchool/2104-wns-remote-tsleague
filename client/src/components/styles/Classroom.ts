@@ -41,6 +41,7 @@ export const StyledItem = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    margin-left: 10px;
   }
 
   p {
