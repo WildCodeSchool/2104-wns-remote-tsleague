@@ -1,10 +1,11 @@
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
 
+export default function startSocket() {
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: true,
     methods: ['*'],
   },
 }).listen(httpServer);
@@ -22,5 +23,6 @@ io.on('connection', (socket: Socket) => {
 const randomInt = (low: number, high: number): number => {
   return Math.floor(Math.random() * (high - low) + low);
 };
-
-httpServer.listen(5000);
+console.log('socket')
+  httpServer.listen(5050);
+}
