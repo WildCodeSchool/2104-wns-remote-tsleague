@@ -1,9 +1,13 @@
 // REDUX
-import { createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore, applyMiddleware } from 'redux';
+import socketMiddleware from './middleware/socket-middleware';
+import socket from '../socket';
 
 import rootReducer from './root-reducer';
 
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(
+  rootReducer,
+  applyMiddleware(socketMiddleware(socket))
+);
 
 export default store;
