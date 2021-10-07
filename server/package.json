@@ -7,7 +7,7 @@
     "start": "npm run dev",
     "build": "tsc",
     "dev": "SERVER_STAGE=dev ts-node-dev --transpile-only --respawn  ./src/index.ts",
-    "prod": "tsc && node ./build/src/server.js",
+    "prod": "tsc && node ./build/server.js",
     "debug": "tsc && node --inspect ./build/src/server.js",
     "lint": "tsc --noEmit && eslint --fix src/**/*.ts{,x}",
     "format": "prettier --write src/**/*.ts",

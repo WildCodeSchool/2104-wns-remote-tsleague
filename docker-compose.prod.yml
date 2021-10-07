@@ -3,15 +3,12 @@ services:
         build: ./client
         command: sh -c "npm run build"
         volumes:
-            - ./client/src:/app/src
             - web-client-build:/app/build
     server:
         build: ./server
-        ports:
-            - 5000
         command: sh -c "npm run prod"
-        volumes:
-            - ./server/src:/server/src
+    mongodb:
+        image: mongo:4.4.9
     nginx:
         image: nginx:1.21.3
         depends_on:

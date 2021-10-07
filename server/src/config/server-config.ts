@@ -33,7 +33,7 @@ export default {
       useUnifiedTopology: true,
       useFindAndModify: false,
     },
-    apolloPort: 4000,
+    apolloPort: 5000,
     autoListen: false,
     verbose: true,
   },

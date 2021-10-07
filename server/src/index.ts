@@ -4,5 +4,8 @@ import startSocket from './socket/server';
 
 const { SERVER_STAGE } = process.env;
 
-startServer(configServer[SERVER_STAGE]);
+// if (!SERVER_STAGE) {
+//     throw new Error('SERVER_STAGE must be defined');
+// }
+startServer(configServer["prod"]);
 startSocket();

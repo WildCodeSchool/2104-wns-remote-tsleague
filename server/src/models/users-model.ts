@@ -2,10 +2,11 @@ import {
   prop as Property,
   modelOptions,
   getModelForClass,
+  Severity,
 } from '@typegoose/typegoose';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-@modelOptions({ schemaOptions: { collection: 'users' } })
+@modelOptions({ schemaOptions: { collection: 'users'}, options: { allowMixed: Severity.ALLOW } })
 @ObjectType()
 export class User {
   @Field(() => ID)
