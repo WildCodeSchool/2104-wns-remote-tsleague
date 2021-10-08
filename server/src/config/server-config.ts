@@ -27,7 +27,7 @@ export default {
     verbose: true,
   },
   prod: {
-    uri: 'mongodb://127.0.0.1:27017/pixelearn-prod',
+    uri: 'mongodb://mongodb:27017/pixelearn-dev',
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
