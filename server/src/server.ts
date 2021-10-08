@@ -8,6 +8,7 @@ import type { ServerConfig } from './config/server-config';
 
 import UserResolver from './resolvers/users-resolver';
 import ClassroomResolver from './resolvers/classrooms-resolver';
+import { ApolloServerPluginLandingPageDisabled, ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 dotenv.config();
 
@@ -19,6 +20,12 @@ export default async function startServer(
   });
   const server = new ApolloServer({
     schema,
+    plugins: [
+    // Install a landing page plugin based on NODE_ENV
+    process.env.SERVER_STAGE === 'prod'
+      ? ApolloServerPluginLandingPageDisabled()
+      : ApolloServerPluginLandingPageLocalDefault(),
+  ],
   });
 
   try {
