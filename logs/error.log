@@ -1,3 +1,0 @@
-2021/10/08 10:36:32 [error] 31#31: *2 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 172.18.0.1, server: , request: "GET /game HTTP/1.1", host: "localhost:8000"
-2021/10/08 10:38:05 [error] 31#31: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.1, server: , request: "GET /socket.io/?EIO=4&transport=polling&t=NnVUpuv HTTP/1.1", upstream: "http://172.18.0.2:5050/socket.io/?EIO=4&transport=polling&t=NnVUpuv", host: "localhost:8000", referrer: "http://localhost:8000/game"
-2021/10/08 10:38:23 [error] 31#31: *11 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 172.18.0.1, server: , request: "GET /game HTTP/1.1", host: "localhost:8000"
