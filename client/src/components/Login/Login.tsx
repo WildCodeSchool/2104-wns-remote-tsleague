@@ -15,8 +15,7 @@ function Login(): JSX.Element {
       <StyledHeader>
         <BackDrop />
         <div>
-          <h2>Bienvenue sur PixelMerde</h2>
-          <h5>Ne vous connectez surtout pas!</h5>
+          <h2>Bienvenue sur PixeLearn</h2>
         </div>
       </StyledHeader>
       <StyledBody>
