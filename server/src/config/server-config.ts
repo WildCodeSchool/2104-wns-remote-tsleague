@@ -7,6 +7,7 @@ export type ServerConfig = {
   options: {
     useNewUrlParser: boolean;
     useUnifiedTopology: boolean;
+    useFindAndModify: boolean;
   };
   apolloPort: number;
   autoListen: boolean;
@@ -15,16 +16,24 @@ export type ServerConfig = {
 
 export default {
   dev: {
-    uri: process.env.DB_URI,
-    options: { useNewUrlParser: true, useUnifiedTopology: true },
+    options: {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    },
+    uri: 'mongodb://mongodb:27017/pixelearn-dev',
     apolloPort: 5000,
     autoListen: false,
     verbose: true,
   },
   prod: {
     uri: 'mongodb://127.0.0.1:27017/pixelearn-prod',
-    options: { useNewUrlParser: true, useUnifiedTopology: true },
-    apolloPort: 4000,
+    options: {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    },
+    apolloPort: 5000,
     autoListen: false,
     verbose: true,
   },
@@ -33,6 +42,7 @@ export default {
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     },
     apolloPort: 8000,
     autoListen: true,
