@@ -6,7 +6,10 @@ import {
 } from '@typegoose/typegoose';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-@modelOptions({ schemaOptions: { collection: 'users'}, options: { allowMixed: Severity.ALLOW } })
+@modelOptions({
+  schemaOptions: { collection: 'users' },
+  options: { allowMixed: Severity.ALLOW },
+})
 @ObjectType()
 export class User {
   @Field(() => ID)
