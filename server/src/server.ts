@@ -8,6 +8,7 @@ import type { ServerConfig } from './config/server-config';
 
 import UserResolver from './resolvers/users-resolver';
 import ClassroomResolver from './resolvers/classrooms-resolver';
+import AuthResolver from './resolvers/auth-resolver';
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ export default async function startServer(
   config: ServerConfig,
 ): Promise<ApolloServer> {
   const schema = await buildSchema({
-    resolvers: [UserResolver, ClassroomResolver],
+    resolvers: [UserResolver, ClassroomResolver, AuthResolver],
   });
   const server = new ApolloServer({
     schema,
