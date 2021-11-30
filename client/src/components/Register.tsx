@@ -1,8 +1,11 @@
+/* eslint-disable react/button-has-type */
+import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { useEffect } from 'react';
+import Cookies from 'js-cookie';
+import { useHistory } from 'react-router-dom';
 
 const USER_REGISTER = gql`
-  mutation Login($body: AuthRegisterInput!) {
+  mutation Register($body: AuthRegisterInput!) {
     register(body: $body) {
       id
       token
@@ -11,34 +14,37 @@ const USER_REGISTER = gql`
 `;
 
 function Register() {
-  const [registerMutation, { data, loading, error }] = useMutation(
-    USER_REGISTER,
-    { errorPolicy: 'all' }
-  );
+  const [registerMutation] = useMutation(USER_REGISTER);
+  const [registerError, setRegisterError] = useState('');
+  const history = useHistory();
 
-  if (loading) return <p>Submitting... </p>;
-  if (error) return <p>{error.message}</p>;
+  const register = async () => {
+    setRegisterError('');
+    try {
+      const { data } = await registerMutation({
+        variables: {
+          body: {
+            lastname: 'sam',
+            firstname: 'bill',
+            mail: 'billy02@hotmail.fr',
+            password: 'azerty',
+            role: 'admin',
+            classroom: 'class 01',
+          },
+        },
+      });
+      Cookies.set('token', data.register.token);
+      return history.push('/');
+    } catch (error: any) {
+      return setRegisterError(error.message);
+    }
+  };
+
+  if (registerError) return <p>{registerError} </p>;
 
   return (
     <div>
-      <button
-        onClick={() =>
-          registerMutation({
-            variables: {
-              body: {
-                lastname: 'sam',
-                firstname: 'bill',
-                mail: 'sam.bill@hotmail.fr',
-                password: 'azerty',
-                role: 'admin',
-                classroom: 'class 01',
-              },
-            },
-          })
-        }
-      >
-        Register
-      </button>
+      <button onClick={() => register()}>Register</button>
     </div>
   );
 }

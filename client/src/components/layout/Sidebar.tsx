@@ -1,4 +1,6 @@
 import React from 'react';
+import Cookies from 'js-cookie';
+
 import Notification from './Notification';
 
 import {
@@ -65,7 +67,7 @@ function Sidebar({
         <Button
           data-testid="sidebar-btn-disconnection"
           text="Déconnexion"
-          handleClick={() => console.log('Déconnexion')}
+          handleClick={() => Cookies.remove('token')}
         />
       </div>
     </StyledSidebar>

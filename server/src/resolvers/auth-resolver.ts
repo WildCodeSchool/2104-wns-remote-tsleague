@@ -37,9 +37,12 @@ class AuthResolver {
 
     user.save();
 
-    const token: string = jwt.sign({ id: user._id }, 'secretOrPrivateKey');
-
-    return { ...user, token };
+    const token: string = jwt.sign(
+      { id: user._id, mail },
+      process.env.SECRET_KEY || 'secretOrPrivateKey',
+    );
+    console.log('res %s:', { ...user._doc, token });
+    return { id: user._doc._id, ...user._doc, token };
   }
 
   @Mutation(() => AuthRegisterResponse)
@@ -60,11 +63,11 @@ class AuthResolver {
     }
 
     const token: string = jwt.sign(
-      { id: user._id },
-      process.env.SESSION_SECRET || 'secretOrPrivateKey',
+      { id: user._id, mail },
+      process.env.SECRET_KEY || 'secretOrPrivateKey',
     );
 
-    return { ...user, token };
+    return { id: user._doc._id, ...user._doc, token };
   }
 }
 

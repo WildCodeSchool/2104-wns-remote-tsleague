@@ -2,7 +2,8 @@ import 'reflect-metadata';
 import dotenv from 'dotenv';
 import { buildSchema } from 'type-graphql';
 import mongoose from 'mongoose';
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer, AuthenticationError } from 'apollo-server';
+import jwt from 'jsonwebtoken';
 
 import type { ServerConfig } from './config/server-config';
 
@@ -20,6 +21,23 @@ export default async function startServer(
   });
   const server = new ApolloServer({
     schema,
+    context: ({ req }) => {
+      if (req.body.operationName !== 'Register') {
+        const token = req.headers.authorization || '';
+        try {
+          const { id, mail } = jwt.verify(
+            token.split(' ')[1],
+            'secretOrPrivateKey',
+          );
+          return { id, mail };
+        } catch (e) {
+          throw new AuthenticationError(
+            'Authentication token is invalid, please log in',
+          );
+        }
+      }
+      return {};
+    },
   });
 
   try {
