@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import { Field, InputType, InterfaceType } from 'type-graphql';
+import { Field, InputType, ObjectType } from 'type-graphql';
 
 @InputType()
 export class AuthRegisterInput {
@@ -23,7 +23,19 @@ export class AuthRegisterInput {
 }
 
 @InputType()
+export class AuthLoginInput {
+  @Field()
+  mail!: string;
+
+  @Field()
+  password!: string;
+}
+
+@ObjectType()
 export class AuthRegisterResponse {
+  @Field()
+  id!: string;
+
   @Field()
   lastname!: string;
 
@@ -32,9 +44,6 @@ export class AuthRegisterResponse {
 
   @Field()
   mail!: string;
-
-  @Field()
-  password!: string;
 
   @Field()
   role!: string;

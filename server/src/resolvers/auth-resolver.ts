@@ -1,26 +1,30 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import { Resolver, Mutation, Arg } from 'type-graphql';
-import type {
+import {
   AuthRegisterInput,
   AuthRegisterResponse,
+  AuthLoginInput,
 } from '../types/authentication';
 import { UserModel } from '../models/users-model';
 
 @Resolver()
 class AuthResolver {
-  @Mutation(() => String)
-  async register({
-    lastname,
-    firstname,
-    password,
-    mail,
-    classroom,
-    role,
-  }: AuthRegisterInput): Promise<AuthRegisterResponse> {
-    const hashedPassword: string = bcrypt.hash(password, 10);
+  @Mutation(() => AuthRegisterResponse)
+  async register(
+    @Arg('body')
+    { lastname, firstname, password, mail, classroom, role }: AuthRegisterInput,
+  ): Promise<AuthRegisterResponse> {
+    const isAlreadyRegisteredUser = await UserModel.findOne({ mail });
+
+    if (isAlreadyRegisteredUser) {
+      throw new Error('Email already exist, please use an another one');
+    }
+
+    const hashedPassword: string = await bcrypt.hash(password, 10);
 
     const user = new UserModel({
       lastname,
@@ -33,7 +37,32 @@ class AuthResolver {
 
     user.save();
 
-    const token: string = jwt.sign({ user }, 'secretOrPrivateKey');
+    const token: string = jwt.sign({ id: user._id }, 'secretOrPrivateKey');
+
+    return { ...user, token };
+  }
+
+  @Mutation(() => AuthRegisterResponse)
+  async login(
+    @Arg('body')
+    { mail, password }: AuthLoginInput,
+  ): Promise<AuthRegisterResponse> {
+    const user = await UserModel.findOne({ mail });
+
+    if (!user) {
+      throw new Error('Wrong password or email does not exist');
+    }
+
+    const valid = await bcrypt.compare(password, user.password);
+
+    if (!valid) {
+      throw new Error('Wrong password or email does not exist');
+    }
+
+    const token: string = jwt.sign(
+      { id: user._id },
+      process.env.SESSION_SECRET || 'secretOrPrivateKey',
+    );
 
     return { ...user, token };
   }
