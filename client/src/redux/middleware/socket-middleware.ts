@@ -15,8 +15,8 @@ const buildSocketMiddleware: (socket: Socket) => Middleware =
         ) {
           socket.emit('STUDENT_GAME_POSITION', action.payload);
           socket.on('STUDENT_GAME_POSITION', (payload) => {
-            console.log(`position X: ${payload.positionX}, 
-            positionY: ${payload.positionY}`);
+            // console.log(`position X: ${payload.positionX}, 
+            // positionY: ${payload.positionY}`);
           });
         }
         break;
