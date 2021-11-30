@@ -13,11 +13,11 @@ const buildSocketMiddleware: (socket: Socket) => Middleware =
           action.payload.positionX !== prevPosition.positionX ||
           action.payload.positionY !== prevPosition.positionY
         ) {
-          socket.emit('STUDENT_GAME_POSITION', action.payload);
-          socket.on('STUDENT_GAME_POSITION', (payload) => {
+          // socket.emit('STUDENT_GAME_POSITION', action.payload);
+          // socket.on('STUDENT_GAME_POSITION', (payload) => {
             // console.log(`position X: ${payload.positionX}, 
             // positionY: ${payload.positionY}`);
-          });
+          // });
         }
         break;
       default:
