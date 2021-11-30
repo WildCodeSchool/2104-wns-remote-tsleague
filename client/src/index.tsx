@@ -37,7 +37,6 @@ const authMiddleware = new ApolloLink((operation): any => {
 const client = new ApolloClient({
   uri: 'http://localhost:5050',
   cache: new InMemoryCache(),
-  link,
 });
 
 ReactDOM.render(
