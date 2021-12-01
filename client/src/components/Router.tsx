@@ -1,9 +1,10 @@
 import React from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
-
 import Login from './Login/Login';
 import App from './App';
+import ClassroomRegistration from './ClassroomRegistration/ClassroomRegistration';
+import StudentRegistration from './StudentRegistration/StudentRegistration';
 import Register from './Register';
 
 function Router(): JSX.Element {
@@ -17,6 +18,12 @@ function Router(): JSX.Element {
     <Switch>
       <Route exact path="/">
         <Login />
+      </Route>
+      <Route path="/registration">
+        <ClassroomRegistration />
+      </Route>
+      <Route path="/registration2">
+        <StudentRegistration />
       </Route>
       <Route path="/game">
         <App />
