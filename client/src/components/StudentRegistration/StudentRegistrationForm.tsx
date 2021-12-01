@@ -18,13 +18,9 @@ interface FormData {
 }
 
 const validationSchema = Yup.object().shape({
-  studentFirstName: Yup.string().required(
-    "Veuillez entrer le prénom de l'enseignant"
-  ),
-  studentLastName: Yup.string().required(
-    "Veuillez entrer le nom de la l'enseignant"
-  ),
-  email: Yup.string()
+  firstname: Yup.string().required("Veuillez entrer le prénom de l'enseignant"),
+  lastname: Yup.string().required("Veuillez entrer le nom de la l'enseignant"),
+  mail: Yup.string()
     .min(4, 'Votre entrée est trop courte!')
     .email('Veuillez entrer un email')
     .required('Ce champ est obligatoire'),
