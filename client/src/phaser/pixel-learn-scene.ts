@@ -8,6 +8,8 @@ export default class PixeLearnScene extends Scene {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   cursors: any;
 
+  tick = 0;
+
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   player: any;
 
@@ -109,19 +111,6 @@ export default class PixeLearnScene extends Scene {
   };
 
   update = (): void => {
-    // if (this.cursors.up.isDown && this.cursors.right.isDown) {
-    //   this.player.setVelocityX(160);
-    //   this.player.setVelocityY(-160);
-    // } else if (this.cursors.up.isDown && this.cursors.left.isDown) {
-    //   this.player.setVelocityX(-160);
-    //   this.player.setVelocityY(-160);
-    // } else if (this.cursors.down.isDown && this.cursors.right.isDown) {
-    //   this.player.setVelocityX(160);
-    //   this.player.setVelocityY(160);
-    // } else if (this.cursors.down.isDown && this.cursors.left.isDown) {
-    //   this.player.setVelocityX(-160);
-    //   this.player.setVelocityY(160);
-
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-160);
       this.player.setVelocityY(0); // Prevents unintentional diagonal movement
@@ -146,12 +135,16 @@ export default class PixeLearnScene extends Scene {
 
       this.player.anims.play('turn');
     }
-    store.dispatch({
-      type: 'STUDENT_GAME_POSITION',
-      payload: {
-        positionX: this.player.x.toString(),
-        positionY: this.player.y.toString(),
-      },
-    });
+    if (this.time.now - this.tick > 1000) {
+      console.log(this.time.now);
+      store.dispatch({
+        type: 'STUDENT_GAME_POSITION',
+        payload: {
+          positionX: this.player.x.toString(),
+          positionY: this.player.y.toString(),
+        },
+      });
+      this.tick = this.time.now;
+    }
   };
 }
