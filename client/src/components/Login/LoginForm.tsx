@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { gql, useMutation } from '@apollo/client';
@@ -84,7 +84,8 @@ function LoginForm(): JSX.Element {
           </Form>
         )}
       </Formik>
-      <a href="http://localhost:3000/">Vous avez oublié votre mot de passe ?</a>
+      <Link to="/">Vous avez oublié votre mot de passe ?</Link>
+      <Link to="/register-teacher">Créer un compte</Link>
     </StyledBox>
   );
 }

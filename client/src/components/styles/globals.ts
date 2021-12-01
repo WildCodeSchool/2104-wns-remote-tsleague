@@ -4,6 +4,7 @@ export const colors = {
   white: '#FFFFFF',
   gray: '#C8C8C8',
   lightgray: '#C8C8C840',
+  error: 'red',
   focus: {
     h: 45,
     s: '100%',
