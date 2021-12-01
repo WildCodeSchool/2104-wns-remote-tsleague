@@ -10,6 +10,7 @@ import {
   AuthLoginInput,
 } from '../types/authentication';
 import { UserModel } from '../models/users-model';
+import { ClassroomModel } from '../models/classrooms-model';
 
 @Resolver()
 class AuthResolver {
@@ -36,6 +37,14 @@ class AuthResolver {
     });
 
     user.save();
+
+    if (role === 'teacher') {
+      const newClassroom = new ClassroomModel({
+        name: classroom,
+        teachers: user,
+      });
+      await newClassroom.save();
+    }
 
     const token: string = jwt.sign(
       { id: user._id, mail },

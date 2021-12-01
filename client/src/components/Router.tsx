@@ -9,9 +9,9 @@ import Register from './Register';
 function Router(): JSX.Element {
   const history = useHistory();
 
-  if (!Cookies.get('token')) {
-    history.push('/');
-  }
+  // if (!Cookies.get('token')) {
+  //   history.push('/');
+  // }
 
   return (
     <Switch>

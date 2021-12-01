@@ -26,9 +26,9 @@ function Register() {
           body: {
             lastname: 'sam',
             firstname: 'bill',
-            mail: 'billy02@hotmail.fr',
+            mail: 'teacher02@hotmail.fr',
             password: 'azerty',
-            role: 'admin',
+            role: 'teacher',
             classroom: 'class 01',
           },
         },
