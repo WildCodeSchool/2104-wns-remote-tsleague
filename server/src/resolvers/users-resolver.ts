@@ -3,7 +3,11 @@ import {
   Resolver, Query, Arg, Mutation,
 } from 'type-graphql';
 import { UserModel, User } from '../models/users-model';
+import { ClassroomModel } from '../models/classrooms-model';
+
 import UserInput from './validator/userInput';
+import TeacherClassroomInput from './validator/teacherClassroomInput';
+
 // TODO => Handle error
 @Resolver(User)
 class UserResolver {
@@ -27,6 +31,25 @@ class UserResolver {
     await UserModel.init();
     const user = new UserModel(userInput);
     await user.save();
+    return user;
+  }
+
+  @Mutation(() => User)
+  public async createTeacherClassroom(
+    @Arg('input') teacherClassroomInput: TeacherClassroomInput,
+  ) {
+    await UserModel.init();
+    const user = new UserModel({
+      ...teacherClassroomInput,
+      role: 'teacher',
+    });
+    await user.save();
+    await ClassroomModel.init();
+    const classroom = new ClassroomModel({
+      name: teacherClassroomInput.classrooms,
+      teachers: user,
+    });
+    await classroom.save();
     return user;
   }
 
