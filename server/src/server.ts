@@ -2,13 +2,18 @@ import 'reflect-metadata';
 import dotenv from 'dotenv';
 import { buildSchema } from 'type-graphql';
 import mongoose from 'mongoose';
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer, AuthenticationError } from 'apollo-server';
+import {
+  ApolloServerPluginLandingPageDisabled,
+  ApolloServerPluginLandingPageLocalDefault,
+} from 'apollo-server-core';
+import jwt from 'jsonwebtoken';
 
 import type { ServerConfig } from './config/server-config';
 
 import UserResolver from './resolvers/users-resolver';
 import ClassroomResolver from './resolvers/classrooms-resolver';
-import { ApolloServerPluginLandingPageDisabled, ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import AuthResolver from './resolvers/auth-resolver';
 
 dotenv.config();
 
@@ -16,16 +21,33 @@ export default async function startServer(
   config: ServerConfig,
 ): Promise<ApolloServer> {
   const schema = await buildSchema({
-    resolvers: [UserResolver, ClassroomResolver],
+    resolvers: [UserResolver, ClassroomResolver, AuthResolver],
   });
   const server = new ApolloServer({
     schema,
+    context: ({ req }) => {
+      if (req.body.operationName !== 'Login') {
+        const token = req.headers.authorization || '';
+        try {
+          const { id, mail } = jwt.verify(
+            token.split(' ')[1],
+            process.env.SECRET_KEY || 'secretOrPrivateKey',
+          );
+          return { id, mail };
+        } catch (e) {
+          throw new AuthenticationError(
+            'Authentication token is invalid, please log in',
+          );
+        }
+      }
+      return {};
+    },
     plugins: [
-    // Install a landing page plugin based on NODE_ENV
-    process.env.SERVER_STAGE === 'prod'
-      ? ApolloServerPluginLandingPageDisabled()
-      : ApolloServerPluginLandingPageLocalDefault(),
-  ],
+      // Install a landing page plugin based on NODE_ENV
+      process.env.SERVER_STAGE === 'prod'
+        ? ApolloServerPluginLandingPageDisabled()
+        : ApolloServerPluginLandingPageLocalDefault(),
+    ],
   });
 
   try {

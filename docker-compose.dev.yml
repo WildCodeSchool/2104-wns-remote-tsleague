@@ -13,7 +13,7 @@ services:
         volumes:
             - ./server/src:/server/src
     mongodb:
-        image: mongo
+        image: mongo:4.4.9
         volumes:
             - ./data:/data/db
         ports:

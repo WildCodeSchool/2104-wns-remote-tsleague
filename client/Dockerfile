@@ -1,10 +1,11 @@
-FROM node:alpine
+FROM node:16-alpine3.12
 
 RUN mkdir /app
 WORKDIR /app
 
 COPY package*.json ./
 RUN yarn install
+RUN node -v
 
 COPY tsconfig.json ./
 COPY src src

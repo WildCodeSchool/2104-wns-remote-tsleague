@@ -1,5 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import { Resolver, Query, Arg, Mutation } from 'type-graphql';
+import {
+  Resolver, Query, Arg, Mutation,
+} from 'type-graphql';
 import { Classroom, ClassroomModel } from '../models/classrooms-model';
 import ClassroomInput from './validator/classroomInput';
 
