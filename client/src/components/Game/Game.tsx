@@ -21,10 +21,6 @@ function Game({ studentModalProps }: PropsType): JSX.Element {
   const initialize = true;
   const history = useHistory();
 
-  if (!Cookies.get('token')) {
-    history.push('/');
-  }
-
   return (
     <>
       <div className="game">

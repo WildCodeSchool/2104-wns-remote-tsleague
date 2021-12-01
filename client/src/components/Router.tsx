@@ -8,9 +8,9 @@ import TeacherRegistration from './TeacherRegistration/TeacherRegistration';
 function Router(): JSX.Element {
   const history = useHistory();
 
-  // if (!Cookies.get('token')) {
-  //   history.push('/');
-  // }
+  if (!Cookies.get('token')) {
+    history.push('/');
+  }
 
   return (
     <Switch>
