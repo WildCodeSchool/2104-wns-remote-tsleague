@@ -3,6 +3,10 @@ import dotenv from 'dotenv';
 import { buildSchema } from 'type-graphql';
 import mongoose from 'mongoose';
 import { ApolloServer, AuthenticationError } from 'apollo-server';
+import {
+  ApolloServerPluginLandingPageDisabled,
+  ApolloServerPluginLandingPageLocalDefault,
+} from 'apollo-server-core';
 import jwt from 'jsonwebtoken';
 
 import type { ServerConfig } from './config/server-config';
@@ -38,6 +42,12 @@ export default async function startServer(
       }
       return {};
     },
+    plugins: [
+      // Install a landing page plugin based on NODE_ENV
+      process.env.SERVER_STAGE === 'prod'
+        ? ApolloServerPluginLandingPageDisabled()
+        : ApolloServerPluginLandingPageLocalDefault(),
+    ],
   });
 
   try {
