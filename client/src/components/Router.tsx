@@ -3,9 +3,8 @@ import { Switch, Route, useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Login from './Login/Login';
 import App from './App';
-import ClassroomRegistration from './ClassroomRegistration/ClassroomRegistration';
+import TeacherRegistration from './TeacherRegistration/TeacherRegistration';
 import StudentRegistration from './StudentRegistration/StudentRegistration';
-import Register from './Register';
 
 function Router(): JSX.Element {
   const history = useHistory();
@@ -19,17 +18,11 @@ function Router(): JSX.Element {
       <Route exact path="/">
         <Login />
       </Route>
-      <Route path="/registration">
-        <ClassroomRegistration />
-      </Route>
-      <Route path="/registration2">
-        <StudentRegistration />
-      </Route>
       <Route path="/game">
         <App />
       </Route>
       <Route path="/register">
-        <Register />
+        <TeacherRegistration />
       </Route>
     </Switch>
   );
