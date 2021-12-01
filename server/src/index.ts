@@ -3,7 +3,7 @@ import startServer from './server';
 import startSocket from './socket/server';
 import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 const { SERVER_STAGE } = process.env;
 
