@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 import Login from './Login/Login';
 import App from './App';
 import TeacherRegistration from './TeacherRegistration/TeacherRegistration';
-import StudentRegistration from './StudentRegistration/StudentRegistration';
 
 function Router(): JSX.Element {
   const history = useHistory();
