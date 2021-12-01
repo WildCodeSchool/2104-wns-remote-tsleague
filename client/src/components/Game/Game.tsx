@@ -1,6 +1,8 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IonPhaser } from '@ion-phaser/react';
+import Cookies from 'js-cookie';
 
 import MenuInGame from './MenuInGame';
 import config from '../../phaser/config ';
@@ -17,6 +19,7 @@ type State = {
 function Game({ studentModalProps }: PropsType): JSX.Element {
   const game = config;
   const initialize = true;
+  const history = useHistory();
 
   return (
     <>
