@@ -1,15 +1,15 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
-import { StyledBox } from '../styles/ClassroomRegistration';
+import { StyledBox } from '../styles/StudentRegistration';
 import Button from '../common/Button';
 import Input from '../common/Input';
 
 const validationSchema = Yup.object().shape({
-  teacherFirstName: Yup.string().required(
+  studentFirstName: Yup.string().required(
     "Veuillez entrer le prénom de l'enseignant"
   ),
-  teacherLastName: Yup.string().required(
+  studentLastName: Yup.string().required(
     "Veuillez entrer le nom de la l'enseignant"
   ),
   email: Yup.string()
@@ -17,7 +17,6 @@ const validationSchema = Yup.object().shape({
     .email('Veuillez entrer un email')
     .required('Ce champ est obligatoire'),
   password: Yup.string().required('Veuillez entrer un mot de passe'),
-  className: Yup.string().required('Veuillez entrer le nom de la classe'),
 });
 
 function ClassroomRegistrationForm(): JSX.Element {
@@ -25,11 +24,10 @@ function ClassroomRegistrationForm(): JSX.Element {
     <StyledBox>
       <Formik
         initialValues={{
-          teacherFirstName: '',
-          teacherLastName: '',
+          studentFirstName: '',
+          studentLastName: '',
           email: '',
           password: '',
-          className: '',
         }}
         validationSchema={validationSchema}
         onSubmit={() => {}}
@@ -37,18 +35,18 @@ function ClassroomRegistrationForm(): JSX.Element {
         {({ errors, touched }) => (
           <Form>
             <Input
-              name="teacherLastname"
+              name="studentLastname"
               type="text"
-              errors={errors.teacherLastName}
-              touched={touched.teacherLastName}
-              placeholder="Nom de l'enseignant"
+              errors={errors.studentLastName}
+              touched={touched.studentLastName}
+              placeholder="Nom de l'élève"
             />
             <Input
-              name="teacherFirstName"
+              name="studentFirstName"
               type="text"
-              errors={errors.teacherFirstName}
-              touched={touched.teacherFirstName}
-              placeholder="Prénom de l'enseignant"
+              errors={errors.studentFirstName}
+              touched={touched.studentFirstName}
+              placeholder="Prénom de l'élève"
             />
             <Input
               name="email"
@@ -63,13 +61,6 @@ function ClassroomRegistrationForm(): JSX.Element {
               errors={errors.password}
               touched={touched.password}
               placeholder="Mot de passe"
-            />
-            <Input
-              name="className"
-              type="text"
-              errors={errors.className}
-              touched={touched.className}
-              placeholder="Nom de la classe"
             />
             <Button text="INSCRIRE" type="submit" buttonStyle="submit" />
           </Form>

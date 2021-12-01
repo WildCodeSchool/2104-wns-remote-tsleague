@@ -69,6 +69,31 @@ export const StyledCard = styled.div`
   }
 `;
 
+export const StyledCardClassroom = styled.div`
+  position: absolute;
+  transform: translate(-0%, 25%);
+  width: 480px;
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 19px;
+  background-color: #fff;
+  box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  margin-top: -150px;
+
+  a {
+    font-size: 11px;
+    color: ${colors.gray};
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 20px;
+    margin-top: 15px;
+  }
+`;
+
 export const StyledHeader = styled.div`
   width: 80%;
   height: 150px;

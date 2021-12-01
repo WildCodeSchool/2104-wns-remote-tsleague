@@ -6,22 +6,23 @@ import {
   StyledHeader,
   BackDrop,
   StyledBody,
-} from '../styles/ClasroomRegistration';
+  StyledCardClassroom,
+} from '../styles/ClassroomRegistration';
 import ClassroomRegistrationForm from './ClassroomRegistrationForm';
 
 function ClassroomRegistration(): JSX.Element {
   return (
-    <StyledCard>
+    <StyledCardClassroom>
       <StyledHeader>
         <BackDrop />
         <div>
-          <h2>Bienvenue sur PixeLearn</h2>
+          <h2>PixeLearn - Création de l&rsquo;enseignant et de la classe</h2>
         </div>
       </StyledHeader>
       <StyledBody>
         <ClassroomRegistrationForm />
       </StyledBody>
-    </StyledCard>
+    </StyledCardClassroom>
   );
 }
 
