@@ -43,9 +43,6 @@ export class AuthRegisterResponse {
   firstname!: string;
 
   @Field()
-  mail!: string;
-
-  @Field()
   role!: string;
 
   @Field(() => [String])

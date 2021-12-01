@@ -27,7 +27,7 @@ export class User {
   @Field()
   birthday!: string;
 
-  @Property({ required: true })
+  @Property({ required: true, unique: true })
   @Field()
   mail!: string;
 

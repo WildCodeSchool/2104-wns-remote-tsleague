@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import Notification from './Notification';
@@ -32,6 +33,7 @@ function Sidebar({
 }): JSX.Element {
   const user: User = userData;
   const notifications: NotificationsProps[] = notificationsData;
+  const history = useHistory();
 
   return (
     <StyledSidebar>
@@ -67,7 +69,10 @@ function Sidebar({
         <Button
           data-testid="sidebar-btn-disconnection"
           text="Déconnexion"
-          handleClick={() => Cookies.remove('token')}
+          handleClick={() => {
+            Cookies.remove('token');
+            history.push('/');
+          }}
         />
       </div>
     </StyledSidebar>

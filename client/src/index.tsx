@@ -18,10 +18,10 @@ import store from './redux/store';
 
 import 'normalize.css';
 
-// const httpLink = createHttpLink({ uri: 'http://localhost:5050/graphql' });
+const httpLink = createHttpLink({ uri: 'http://localhost:5050/graphql' });
 
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
+  // get the authentication token from cookies if it exists
   const token = Cookies.get('token');
   // return the headers to the context so httpLink can read them
   return {
@@ -33,9 +33,8 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5050',
   cache: new InMemoryCache(),
-  // link: authLink,
+  link: authLink.concat(httpLink),
 });
 
 ReactDOM.render(

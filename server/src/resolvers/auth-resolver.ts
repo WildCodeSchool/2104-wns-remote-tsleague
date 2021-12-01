@@ -41,7 +41,6 @@ class AuthResolver {
       { id: user._id, mail },
       process.env.SECRET_KEY || 'secretOrPrivateKey',
     );
-    console.log('res %s:', { ...user._doc, token });
     return { id: user._doc._id, ...user._doc, token };
   }
 
