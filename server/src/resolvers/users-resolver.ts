@@ -1,5 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import { Resolver, Query, Arg, Mutation } from 'type-graphql';
+import {
+  Resolver, Query, Arg, Mutation,
+} from 'type-graphql';
 import { UserModel, User } from '../models/users-model';
 import { ClassroomModel } from '../models/classrooms-model';
 
