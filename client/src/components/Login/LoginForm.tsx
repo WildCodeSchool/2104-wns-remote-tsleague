@@ -85,7 +85,7 @@ function LoginForm(): JSX.Element {
           </Form>
         )}
       </Formik>
-      <a href="http://localhost:3000/">Vous avez oublié votre mot de passe ?</a>
+      <a href="/forgotpassword">Vous avez oublié votre mot de passe ?</a>
     </StyledBox>
   );
 }

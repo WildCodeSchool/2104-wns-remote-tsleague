@@ -6,6 +6,7 @@ import App from './App';
 import ClassroomRegistration from './ClassroomRegistration/ClassroomRegistration';
 import StudentRegistration from './StudentRegistration/StudentRegistration';
 import Register from './Register';
+import ForgotPassword from './ForgotPassword/ForgotPassword';
 
 function Router(): JSX.Element {
   const history = useHistory();
@@ -24,6 +25,9 @@ function Router(): JSX.Element {
       </Route>
       <Route path="/registration2">
         <StudentRegistration />
+      </Route>
+      <Route path="/forgotpassword">
+        <ForgotPassword />
       </Route>
       <Route path="/game">
         <App />
