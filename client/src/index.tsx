@@ -10,7 +10,6 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import Cookies from 'js-cookie';
-
 import Router from './components/Router';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
