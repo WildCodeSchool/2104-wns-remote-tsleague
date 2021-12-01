@@ -22,14 +22,12 @@ export default async function startServer(
   const server = new ApolloServer({
     schema,
     context: ({ req }) => {
-      if (
-        req.body.operationName !== 'Login' 
-      ) {
+      if (req.body.operationName !== 'Login') {
         const token = req.headers.authorization || '';
         try {
           const { id, mail } = jwt.verify(
             token.split(' ')[1],
-            'secretOrPrivateKey',
+            process.env.SECRET_KEY || 'secretOrPrivateKey',
           );
           return { id, mail };
         } catch (e) {
