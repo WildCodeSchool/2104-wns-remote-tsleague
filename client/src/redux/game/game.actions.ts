@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-cycle
+import { ClassMate } from './game.reducer';
+
 type Position = {
   positionX: string;
   positionY: string;
@@ -10,6 +13,10 @@ export type Action =
   | {
       type: 'STUDENT_GAME_POSITION';
       payload: Position;
+    }
+  | {
+      type: 'CLASSMATES_GAME_POSITION';
+      payload: ClassMate[];
     };
 
 const studentModalToggle = (): Action => ({

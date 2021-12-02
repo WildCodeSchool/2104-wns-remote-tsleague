@@ -1,8 +1,10 @@
 import { Scene } from 'phaser';
+import { ClassMate, State } from '../redux/game/game.reducer';
 import store from '../redux/store';
-import GAME_ACTIONS from '../redux/game/game.types';
 
-const { STUDENT_MODAL_TOGGLE, STUDENT_GAME_POSITION } = GAME_ACTIONS;
+const getRandomPosition = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min) + min);
+};
 
 export default class PixeLearnScene extends Scene {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -10,10 +12,22 @@ export default class PixeLearnScene extends Scene {
 
   tick = 0;
 
+  otherPlayers: Phaser.GameObjects.Sprite[] = [];
+
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   player: any;
 
   playerMap: any = {};
+
+  addOtherPlayer = (): void => {
+    this.otherPlayers.push(
+      this.add.sprite(
+        getRandomPosition(50, 1000),
+        getRandomPosition(100, 500),
+        'dude'
+      )
+    );
+  };
 
   preload = (): void => {
     this.load.tilemapTiledJSON(
@@ -55,7 +69,7 @@ export default class PixeLearnScene extends Scene {
     wallsLayer.setCollisionByProperty({ isSolid: true });
 
     this.player = this.physics.add
-      .sprite(100, 400, 'dude')
+      .sprite(getRandomPosition(50, 1000), getRandomPosition(100, 500), 'dude')
       .setInteractive({ useHandCursor: true })
       .setSize(20, 50);
     this.player.setOffset(15, 35);
@@ -63,7 +77,32 @@ export default class PixeLearnScene extends Scene {
       store.dispatch({ type: 'STUDENT_MODAL_TOGGLE' });
     });
 
+    this.addOtherPlayer();
+    this.addOtherPlayer();
+    this.addOtherPlayer();
+
     this.player.setCollideWorldBounds(true); // Stops player from walking off the canvas
+    this.player.setOffset(15, 35);
+
+    // const select = (state: any) => {
+    //   return state.gameToggle.classMates;
+    // };
+
+    // store.subscribe(() => {
+    //   const state = select(store.getState());
+    //   console.log(state);
+    //   state.forEach((classMate: ClassMate) => {
+    //     const otherPlayer = this.add
+    //       .sprite(
+    //         Number(classMate.positionX),
+    //         Number(classMate.positionY),
+    //         'dude'
+    //       )
+    //       .setInteractive({ useHandCursor: true })
+    //       .setSize(20, 50);
+    //     this.otherPlayers.add(otherPlayer);
+    //   });
+    // });
 
     this.anims.create({
       key: 'left',
@@ -136,7 +175,6 @@ export default class PixeLearnScene extends Scene {
       this.player.anims.play('turn');
     }
     if (this.time.now - this.tick > 1000) {
-      console.log(this.time.now);
       store.dispatch({
         type: 'STUDENT_GAME_POSITION',
         payload: {
@@ -146,5 +184,18 @@ export default class PixeLearnScene extends Scene {
       });
       this.tick = this.time.now;
     }
+    const select = (state: any): ClassMate[] => {
+      return state.gameToggle.classMates;
+    };
+
+    const state = select(store.getState());
+    state.forEach((classMate: ClassMate, index: number) => {
+      if (index < this.otherPlayers.length) {
+        this.otherPlayers[index].setPosition(
+          Number(classMate.position.positionX),
+          Number(classMate.position.positionY)
+        );
+      }
+    });
   };
 }

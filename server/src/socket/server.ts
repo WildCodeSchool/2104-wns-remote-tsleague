@@ -1,28 +1,65 @@
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
 
-export default function startSocket() {
-const httpServer = createServer();
-const io = new Server(httpServer, {
-  cors: {
-    origin: true,
-    methods: ['*'],
-  },
-}).listen(httpServer);
-
-let lastPlayerID = 0;
-
-io.on('connection', (socket: Socket) => {
-  console.log(`connected with id ${socket.id}`);
-  socket.on('STUDENT_GAME_POSITION',(payload)=>{
-    socket.broadcast.emit('STUDENT_GAME_POSITION', payload)
-    console.log(`received move: ${payload.positionX}, ${payload.positionY}`)
-  })
-});
-
-const randomInt = (low: number, high: number): number => {
-  return Math.floor(Math.random() * (high - low) + low);
+type Position = {
+  positionX: string;
+  positionY: string;
 };
-console.log('socket')
+
+type Player = {
+  socketId: string;
+  position: Position;
+};
+
+const updatePlayersPosition = async (players: Player[], socketId: string, payload: any ): Promise<Player[]> => {
+  return players.map((player: Player) => {
+    if (player.socketId === socketId){
+      return { ...player, position: payload } 
+    }
+
+    return player
+    
+  });
+}
+
+export default function startSocket(): void {
+  const httpServer = createServer();
+  const io = new Server(httpServer, {
+    cors: {
+      origin: true,
+      methods: ['*'],
+    },
+  }).listen(httpServer);
+
+  let players: Player[] = [];
+
+  io.on('connection', (socket: Socket): void => {
+    console.log(`connected with id ${socket.id}`);
+
+    players.push({
+      socketId: socket.id,
+      position: {
+        positionX: '',
+        positionY: '',
+      },
+    });
+
+    socket.emit('currentPlayers', players);
+
+    socket.on('disconnect', () => {
+      console.log(`${socket.id} disconnected`);
+    });
+
+    socket.on('studentPlayer', async (payload: Position) => {
+      console.log(payload)
+      const newPlayers = await updatePlayersPosition(players, socket.id, payload)
+
+      socket.broadcast.emit('newPlayers', newPlayers);
+      console.log(players);
+      console.log(`received move: ${payload.positionX}, ${payload.positionY}`);
+    });
+  });
+
+  console.log('Socket server started at port 5050');
   httpServer.listen(5050);
 }
