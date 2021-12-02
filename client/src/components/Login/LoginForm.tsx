@@ -51,7 +51,6 @@ function LoginForm(): JSX.Element {
       Cookies.set('token', data.login.token);
       return history.push('/game');
     } catch (error: any) {
-      console.log(error.message);
       return setLoginError(error.message);
     }
   };

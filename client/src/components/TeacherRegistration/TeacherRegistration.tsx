@@ -1,5 +1,5 @@
 import React from 'react';
-import './ClassroomRegistration.css';
+import './TeacherRegistration.css';
 
 import {
   StyledCard,
@@ -7,10 +7,10 @@ import {
   BackDrop,
   StyledBody,
   StyledCardClassroom,
-} from '../styles/ClassroomRegistration';
-import ClassroomRegistrationForm from './ClassroomRegistrationForm';
+} from '../styles/TeacherRegistration';
+import TeacherRegistrationFormForm from './TeacherRegistrationForm';
 
-function ClassroomRegistration(): JSX.Element {
+function TeacherRegistrationForm(): JSX.Element {
   return (
     <StyledCardClassroom>
       <StyledHeader>
@@ -20,10 +20,10 @@ function ClassroomRegistration(): JSX.Element {
         </div>
       </StyledHeader>
       <StyledBody>
-        <ClassroomRegistrationForm />
+        <TeacherRegistrationFormForm />
       </StyledBody>
     </StyledCardClassroom>
   );
 }
 
-export default ClassroomRegistration;
+export default TeacherRegistrationForm;

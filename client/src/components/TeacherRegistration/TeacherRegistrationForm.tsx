@@ -5,7 +5,7 @@ import { gql, useMutation } from '@apollo/client';
 import Cookies from 'js-cookie';
 import { useHistory } from 'react-router-dom';
 
-import { StyledBox } from '../styles/StudentRegistration';
+import { StyledBox } from '../styles/TeacherRegistration';
 import Button from '../common/Button';
 import Input from '../common/Input';
 
@@ -14,7 +14,8 @@ interface FormData {
   firstname: string;
   mail: string;
   password: string;
-  role?: 'student';
+  role?: 'teacher';
+  classroom?: string;
 }
 
 const validationSchema = Yup.object().shape({
@@ -25,6 +26,7 @@ const validationSchema = Yup.object().shape({
     .email('Veuillez entrer un email')
     .required('Ce champ est obligatoire'),
   password: Yup.string().required('Veuillez entrer un mot de passe'),
+  classroom: Yup.string().required('Veuillez entrer le nom de la classe'),
 });
 
 const USER_REGISTER = gql`
@@ -36,14 +38,13 @@ const USER_REGISTER = gql`
   }
 `;
 
-function ClassroomRegistrationForm(): JSX.Element {
+function TeacherRegistrationForm(): JSX.Element {
   const [registerMutation] = useMutation(USER_REGISTER);
   const [registerError, setRegisterError] = useState('');
   const history = useHistory();
 
   const register = async (formData: FormData) => {
-    const { firstname, lastname, mail, password } = formData;
-
+    const { firstname, lastname, mail, password, classroom } = formData;
     setRegisterError('');
     try {
       const { data } = await registerMutation({
@@ -53,7 +54,8 @@ function ClassroomRegistrationForm(): JSX.Element {
             firstname,
             mail,
             password,
-            role: 'student',
+            classroom,
+            role: 'teacher',
           },
         },
       });
@@ -72,6 +74,7 @@ function ClassroomRegistrationForm(): JSX.Element {
           lastname: '',
           mail: '',
           password: '',
+          classroom: '',
         }}
         validationSchema={validationSchema}
         onSubmit={(data: FormData) => register(data)}
@@ -83,14 +86,14 @@ function ClassroomRegistrationForm(): JSX.Element {
               type="text"
               errors={errors.lastname}
               touched={touched.lastname}
-              placeholder="Nom de l'élève"
+              placeholder="Nom de l'enseignant"
             />
             <Input
               name="firstname"
               type="text"
               errors={errors.firstname}
               touched={touched.firstname}
-              placeholder="Prénom de l'élève"
+              placeholder="Prénom de l'enseignant"
             />
             <Input
               name="mail"
@@ -106,6 +109,13 @@ function ClassroomRegistrationForm(): JSX.Element {
               touched={touched.password}
               placeholder="Mot de passe"
             />
+            <Input
+              name="classroom"
+              type="text"
+              errors={errors.classroom}
+              touched={touched.classroom}
+              placeholder="Nom de la classe"
+            />
             <Button text="INSCRIRE" type="submit" buttonStyle="submit" />
           </Form>
         )}
@@ -115,4 +125,4 @@ function ClassroomRegistrationForm(): JSX.Element {
   );
 }
 
-export default ClassroomRegistrationForm;
+export default TeacherRegistrationForm;
