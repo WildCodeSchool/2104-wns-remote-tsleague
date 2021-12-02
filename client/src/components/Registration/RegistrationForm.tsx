@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { gql, useMutation } from '@apollo/client';
 import Cookies from 'js-cookie';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 
 import { StyledBox, ErrorMsg } from '../styles/Registration';
+import validationSchema from './form';
 import Button from '../common/Button';
 import Input from '../common/Input';
 
@@ -17,17 +17,6 @@ interface FormData {
   role?: 'teacher' | 'student';
   classroom?: string;
 }
-
-const validationSchema = Yup.object().shape({
-  firstname: Yup.string().required('Veuillez entrer un prénom'),
-  lastname: Yup.string().required('Veuillez entrer un nom'),
-  mail: Yup.string()
-    .min(4, 'Votre entrée est trop courte!')
-    .email('Veuillez entrer un email')
-    .required('Ce champ est obligatoire'),
-  password: Yup.string().required('Veuillez entrer un mot de passe'),
-  classroom: Yup.string().required('Veuillez entrer le nom de la classe'),
-});
 
 const USER_REGISTER = gql`
   mutation Register($body: AuthRegisterInput!) {
@@ -84,11 +73,11 @@ function RegistrationForm(): JSX.Element {
     <StyledBox>
       <Formik
         initialValues={{
-          firstname: 'test',
-          lastname: 'test',
-          mail: 'testmail1@mail.com',
-          password: 'test',
-          classroom: query.get('classroom') ?? 'test',
+          firstname: '',
+          lastname: '',
+          mail: '',
+          password: '',
+          classroom: query.get('classroom') ?? '',
         }}
         validationSchema={validationSchema}
         onSubmit={(data: FormData) => register(data)}
@@ -100,14 +89,14 @@ function RegistrationForm(): JSX.Element {
               type="text"
               errors={errors.lastname}
               touched={touched.lastname}
-              placeholder="Nom de l'enseignant"
+              placeholder="Nom"
             />
             <Input
               name="firstname"
               type="text"
               errors={errors.firstname}
               touched={touched.firstname}
-              placeholder="Prénom de l'enseignant"
+              placeholder="Prénom"
             />
             <Input
               name="mail"
