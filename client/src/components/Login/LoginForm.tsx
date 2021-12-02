@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import * as Yup from 'yup';
+import { useHistory, Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { gql, useMutation } from '@apollo/client';
 import Cookies from 'js-cookie';
 
 import { StyledBox } from '../styles/Login';
+import { validationSchemaLogin } from '../../form/validationSchema';
 import Button from '../common/Button';
 import Input from '../common/Input';
-
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .min(4, 'Votre entrée est trop courte!')
-    .email('Veuillez entrer votre email')
-    .required('Ce champ est obligatoire'),
-  password: Yup.string().required('Veuillez entrer votre mot de passe'),
-});
 
 const USER_LOGIN = gql`
   mutation Login($body: AuthLoginInput!) {
@@ -61,7 +53,7 @@ function LoginForm(): JSX.Element {
           email: '',
           password: '',
         }}
-        validationSchema={validationSchema}
+        validationSchema={validationSchemaLogin}
         onSubmit={({ email, password }) => login({ email, password })}
       >
         {({ errors, touched }) => (
@@ -84,7 +76,8 @@ function LoginForm(): JSX.Element {
           </Form>
         )}
       </Formik>
-      <a href="/forgotpassword">Vous avez oublié votre mot de passe ?</a>
+      <Link to="/">Vous avez oublié votre mot de passe ?</Link>
+      <Link to="/register-teacher">Créer un compte</Link>
     </StyledBox>
   );
 }
