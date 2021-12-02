@@ -5,7 +5,7 @@ import { gql, useMutation } from '@apollo/client';
 import Cookies from 'js-cookie';
 
 import { StyledBox } from '../styles/Login';
-import validationSchema from './form';
+import { validationSchemaLogin } from '../../form/validationSchema';
 import Button from '../common/Button';
 import Input from '../common/Input';
 
@@ -53,7 +53,7 @@ function LoginForm(): JSX.Element {
           email: '',
           password: '',
         }}
-        validationSchema={validationSchema}
+        validationSchema={validationSchemaLogin}
         onSubmit={({ email, password }) => login({ email, password })}
       >
         {({ errors, touched }) => (

@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 
 import { StyledBox, ErrorMsg } from '../styles/Registration';
-import validationSchema from './form';
+import { validationSchemaRegistration } from '../../form/validationSchema';
 import Button from '../common/Button';
 import Input from '../common/Input';
 
@@ -79,7 +79,7 @@ function RegistrationForm(): JSX.Element {
           password: '',
           classroom: query.get('classroom') ?? '',
         }}
-        validationSchema={validationSchema}
+        validationSchema={validationSchemaRegistration}
         onSubmit={(data: FormData) => register(data)}
       >
         {({ errors, touched }) => (
