@@ -1,5 +1,6 @@
 import React from 'react';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { StyledBox } from '../styles/ForgotPassword';
 import Button from '../common/Button';
@@ -35,7 +36,7 @@ function ForgotPasswordForm(): JSX.Element {
           </Form>
         )}
       </Formik>
-      <a href="/">Revenir sur la page d&apos;accueil </a>
+      <Link to="/">Vous avez oublié votre mot de passe ?</Link>
     </StyledBox>
   );
 }

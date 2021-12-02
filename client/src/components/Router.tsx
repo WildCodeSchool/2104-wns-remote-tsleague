@@ -4,21 +4,22 @@ import Cookies from 'js-cookie';
 import Login from './Login/Login';
 import App from './App';
 import Registration from './Registration/Registration';
+import ForgotPassword from './ForgotPassword/ForgotPassword';
 
 function Router(): JSX.Element {
   const history = useHistory();
   const { pathname } = useLocation();
 
-  if (!Cookies.get('token')) {
-    if (
-      // pathname.match(/(\/||\/register-.+)/gm)
-      pathname !== '/' &&
-      pathname !== '/register-teacher' &&
-      pathname !== '/register-student'
-    ) {
-      history.push('/');
-    }
-  }
+  // if (!Cookies.get('token')) {
+  //   if (
+  //     // pathname.match(/(\/||\/register-.+)/gm)
+  //     pathname !== '/' &&
+  //     pathname !== '/register-teacher' &&
+  //     pathname !== '/register-student'
+  //   ) {
+  //     history.push('/');
+  //   }
+  // }
 
   return (
     <Switch>
@@ -27,6 +28,9 @@ function Router(): JSX.Element {
       </Route>
       <Route path="/game">
         <App />
+      </Route>
+      <Route path="/forgotpassword">
+        <ForgotPassword />
       </Route>
       <Route path={['/register-teacher', '/register-student']}>
         <Registration />
