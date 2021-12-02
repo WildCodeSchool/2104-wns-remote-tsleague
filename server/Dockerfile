@@ -10,5 +10,7 @@ RUN yarn install
 
 COPY tsconfig.json ./
 COPY src src
+COPY .env .env
+
 
 CMD yarn start

@@ -23,6 +23,7 @@ export default async function startServer(
   const schema = await buildSchema({
     resolvers: [UserResolver, ClassroomResolver, AuthResolver],
   });
+  console.log('env:', process.env.SMTP_USER)
   const server = new ApolloServer({
     schema,
     validationRules: [],
