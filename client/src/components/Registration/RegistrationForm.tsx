@@ -60,11 +60,6 @@ function RegistrationForm(): JSX.Element {
       Cookies.set('token', data.register.token);
       return history.push('/');
     } catch (error: any) {
-      if (error.message === 'Email already exist, please use an another one') {
-        return setRegisterError(
-          "L'email existe déjà, merci d'en utiliser un autre"
-        );
-      }
       return setRegisterError(error.message);
     }
   };

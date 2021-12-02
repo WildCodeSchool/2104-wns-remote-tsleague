@@ -11,6 +11,7 @@ function Router(): JSX.Element {
 
   if (!Cookies.get('token')) {
     if (
+      // pathname.match(/(\/||\/register-.+)/gm)
       pathname !== '/' &&
       pathname !== '/register-teacher' &&
       pathname !== '/register-student'
