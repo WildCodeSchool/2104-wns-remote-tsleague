@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import { Formik, Form, Field } from 'formik';
 import { StyledBox, ErrorMsg } from '../styles/Authentication';
-import { validationSchemaForgotPassword } from '../../form/validationSchema';
+import { validationSchemaResetPassword } from '../../form/validationSchema';
 import useQuery from '../../utils/useQuery';
 
 import Button from '../common/Button';
@@ -11,9 +11,11 @@ import Input from '../common/Input';
 
 interface FormData {
   email: string;
+  password: string;
+  token: string;
 }
 
-const USER_FORGOT_PASSWORD = gql`
+const USER_RESET_PASSWORD = gql`
   mutation Register($body: AuthRegisterInput!) {
     register(body: $body) {
       id
@@ -22,13 +24,13 @@ const USER_FORGOT_PASSWORD = gql`
   }
 `;
 
-function ForgotPasswordForm(): JSX.Element {
+function ResetPasswordForm(): JSX.Element {
   const history = useHistory();
   const query = useQuery();
-  const [registerMutation] = useMutation(USER_FORGOT_PASSWORD);
+  const [registerMutation] = useMutation(USER_RESET_PASSWORD);
   const [requestError, setRequestError] = useState('');
 
-  const forgotPassword = async (formData: FormData) => {
+  const resetPassword = async (formData: FormData) => {
     try {
       // const { data } = await registerMutation({
       //   variables: {
@@ -45,10 +47,12 @@ function ForgotPasswordForm(): JSX.Element {
     <StyledBox>
       <Formik
         initialValues={{
-          email: '',
+          email: query.get('email') ?? '',
+          password: '',
+          token: query.get('token') ?? '',
         }}
-        validationSchema={validationSchemaForgotPassword}
-        onSubmit={(data: FormData) => forgotPassword(data)}
+        validationSchema={validationSchemaResetPassword}
+        onSubmit={(data: FormData) => resetPassword(data)}
       >
         {({ errors, touched }) => (
           <Form>
@@ -58,6 +62,13 @@ function ForgotPasswordForm(): JSX.Element {
               errors={errors.email}
               touched={touched.email}
               placeholder="E-mail"
+            />
+            <Input
+              name="password"
+              type="password"
+              errors={errors.password}
+              touched={touched.password}
+              placeholder="Mot de passe"
             />
             {requestError ? <ErrorMsg>{requestError}</ErrorMsg> : ''}
             <Button text="CONTINUER" type="submit" buttonStyle="submit" />
@@ -69,4 +80,4 @@ function ForgotPasswordForm(): JSX.Element {
   );
 }
 
-export default ForgotPasswordForm;
+export default ResetPasswordForm;

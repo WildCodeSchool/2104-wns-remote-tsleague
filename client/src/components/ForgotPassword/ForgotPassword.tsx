@@ -1,4 +1,6 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+
 import './ForgotPassword.css';
 
 import {
@@ -6,23 +8,33 @@ import {
   StyledHeader,
   BackDrop,
   StyledBody,
-  StyledCardPassword,
-} from '../styles/ForgotPassword';
+} from '../styles/Authentication';
 import ForgotPasswordForm from './ForgotPasswordForm';
+import ResetPasswordForm from './ResetPasswordForm';
 
 function ForgotPassword(): JSX.Element {
+  const { pathname } = useLocation();
+
   return (
-    <StyledCardPassword>
+    <StyledCard>
       <StyledHeader>
         <BackDrop />
         <div>
-          <h2>PixeLearn - Mot de passe oublié </h2>
+          <h2>
+            {pathname === '/forgot-password'
+              ? 'PixeLearn - Mot de passe oublié '
+              : 'PixeLearn - Chagner de mot de passe'}
+          </h2>
         </div>
       </StyledHeader>
       <StyledBody>
-        <ForgotPasswordForm />
+        {pathname === '/forgot-password' ? (
+          <ForgotPasswordForm />
+        ) : (
+          <ResetPasswordForm />
+        )}
       </StyledBody>
-    </StyledCardPassword>
+    </StyledCard>
   );
 }
 

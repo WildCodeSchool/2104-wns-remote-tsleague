@@ -4,7 +4,7 @@ import { Formik, Form } from 'formik';
 import { gql, useMutation } from '@apollo/client';
 import Cookies from 'js-cookie';
 
-import { StyledBox } from '../styles/Login';
+import { StyledBox } from '../styles/Authentication';
 import { validationSchemaLogin } from '../../form/validationSchema';
 import Button from '../common/Button';
 import Input from '../common/Input';

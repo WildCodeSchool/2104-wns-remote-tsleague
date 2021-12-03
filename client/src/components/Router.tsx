@@ -15,7 +15,9 @@ function Router(): JSX.Element {
   //     // pathname.match(/(\/||\/register-.+)/gm)
   //     pathname !== '/' &&
   //     pathname !== '/register-teacher' &&
-  //     pathname !== '/register-student'
+  //     pathname !== '/register-student' &&
+  //     pathname !== '/forgot-password' &&
+  //     pathname !== '/reset-password'
   //   ) {
   //     history.push('/');
   //   }
@@ -29,7 +31,7 @@ function Router(): JSX.Element {
       <Route path="/game">
         <App />
       </Route>
-      <Route path="/forgotpassword">
+      <Route path={['/forgot-password', '/reset-password']}>
         <ForgotPassword />
       </Route>
       <Route path={['/register-teacher', '/register-student']}>
