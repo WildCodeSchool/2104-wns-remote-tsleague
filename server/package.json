@@ -4,10 +4,9 @@
   "main": "server.ts",
   "license": "MIT",
   "scripts": {
-    "start": "npm run dev",
+    "start:dev": "SERVER_STAGE=dev ts-node-dev --transpile-only --respawn  ./src/index.ts",
+    "start:prod": "tsc && node ./build/index.js",
     "build": "tsc",
-    "dev": "SERVER_STAGE=dev ts-node-dev --transpile-only --respawn  ./src/index.ts",
-    "prod": "tsc && node ./build/index.js",
     "debug": "tsc && node --inspect ./build/src/index.js",
     "lint": "tsc --noEmit && eslint --fix src/**/*.ts{,x}",
     "format": "prettier --write src/**/*.ts",

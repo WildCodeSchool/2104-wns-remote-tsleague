@@ -25,10 +25,8 @@ export default async function startServer(
   const schema = await buildSchema({
     resolvers: [UserResolver, ClassroomResolver, AuthResolver],
   });
-  console.log(process.env.JWT_SECRET_KEY);
   const server = new ApolloServer({
     schema,
-    validationRules: [],
     context: ({ req }) => {
       if (!['Login', 'Register'].includes(req.body.operationName)) {
         const token = req.headers.authorization || '';

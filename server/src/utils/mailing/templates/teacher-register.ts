@@ -1,4 +1,9 @@
-function teacherRegister({ firstname, name }): {
+type InputTeacherRegisterTemplate = {
+  firstname: string;
+  name: string;
+};
+
+function teacherRegister({ firstname, name }: InputTeacherRegisterTemplate): {
   subject: string;
   html: string;
 } {

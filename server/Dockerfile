@@ -14,7 +14,4 @@ COPY tsconfig.json ./
 COPY src src
 COPY .env.enc .env.enc
 
-RUN echo $DOTENVENC_KEY
-RUN DOCENVENC_KEY=$DOTENVENC_KEY
-
-CMD yarn start
+CMD yarn start:dev
