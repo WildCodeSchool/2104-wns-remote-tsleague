@@ -13,7 +13,6 @@ socket.on('connect', () => {
 //   const players = args;
 //   console.log('current', players);
 // });
-
 socket.on('newPlayers', (payload) => {
   console.log(payload);
   store.dispatch({

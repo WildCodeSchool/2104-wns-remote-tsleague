@@ -1,5 +1,5 @@
 import { Scene } from 'phaser';
-import { ClassMate, State } from '../redux/game/game.reducer';
+import { ClassMate } from '../redux/game/game.reducer';
 import store from '../redux/store';
 
 const getRandomPosition = (min: number, max: number): number => {
@@ -15,18 +15,24 @@ export default class PixeLearnScene extends Scene {
   otherPlayers: Phaser.GameObjects.Sprite[] = [];
 
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  player: any;
+  player: any | Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
   playerMap: any = {};
 
-  addOtherPlayer = (): void => {
-    this.otherPlayers.push(
-      this.add.sprite(
-        getRandomPosition(50, 1000),
-        getRandomPosition(100, 500),
+  addOtherPlayer = (classMate: ClassMate): void => {
+    const otherPlayer = this.add
+      .sprite(
+        Number(classMate.position.positionX),
+        Number(classMate.position.positionY),
         'dude'
       )
-    );
+      .setData('playerId', classMate.socketId);
+
+    this.otherPlayers.push(otherPlayer);
+  };
+
+  select = (state: any): ClassMate[] => {
+    return state.gameToggle.classMates;
   };
 
   preload = (): void => {
@@ -77,32 +83,27 @@ export default class PixeLearnScene extends Scene {
       store.dispatch({ type: 'STUDENT_MODAL_TOGGLE' });
     });
 
-    this.addOtherPlayer();
-    this.addOtherPlayer();
-    this.addOtherPlayer();
-
     this.player.setCollideWorldBounds(true); // Stops player from walking off the canvas
     this.player.setOffset(15, 35);
 
     // const select = (state: any) => {
     //   return state.gameToggle.classMates;
     // };
+    store.subscribe(() => {
+      const state = this.select(store.getState());
 
-    // store.subscribe(() => {
-    //   const state = select(store.getState());
-    //   console.log(state);
-    //   state.forEach((classMate: ClassMate) => {
-    //     const otherPlayer = this.add
-    //       .sprite(
-    //         Number(classMate.positionX),
-    //         Number(classMate.positionY),
-    //         'dude'
-    //       )
-    //       .setInteractive({ useHandCursor: true })
-    //       .setSize(20, 50);
-    //     this.otherPlayers.add(otherPlayer);
-    //   });
-    // });
+      state.forEach((classMate: ClassMate) => {
+        const playerAlreadyExist = this.otherPlayers.some(
+          (otherPlayer) =>
+            otherPlayer.data.values.playerId === classMate.socketId
+        );
+
+        if (!playerAlreadyExist) {
+          this.addOtherPlayer(classMate);
+        }
+      });
+      console.log(this.otherPlayers);
+    });
 
     this.anims.create({
       key: 'left',
@@ -184,18 +185,23 @@ export default class PixeLearnScene extends Scene {
       });
       this.tick = this.time.now;
     }
-    const select = (state: any): ClassMate[] => {
-      return state.gameToggle.classMates;
-    };
 
-    const state = select(store.getState());
-    state.forEach((classMate: ClassMate, index: number) => {
-      if (index < this.otherPlayers.length) {
-        this.otherPlayers[index].setPosition(
-          Number(classMate.position.positionX),
-          Number(classMate.position.positionY)
-        );
-      }
+    const state = this.select(store.getState());
+    state.forEach((classMate: ClassMate) => {
+      this.otherPlayers.forEach((otherPlayer) => {
+        if (otherPlayer.data.values.playerId === classMate.socketId) {
+          otherPlayer.setPosition(
+            Number(classMate.position.positionX),
+            Number(classMate.position.positionY)
+          );
+        }
+      });
+      // if (index < this.otherPlayers.length) {
+      //   this.otherPlayers.setPosition(
+      //     Number(classMate.position.positionX),
+      //     Number(classMate.position.positionY)
+      //   );
+      // }
     });
   };
 }
