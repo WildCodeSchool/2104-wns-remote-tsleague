@@ -150,3 +150,7 @@ export const StyledBody = styled.div`
   flex-direction: column;
   padding: 0 1.8em;
 `;
+
+export const ErrorMsg = styled.p`
+  color: ${colors.error};
+`;
