@@ -1,5 +1,7 @@
 FROM node:16-alpine3.12
 
+ARG DOTENVENC_KEY
+
 RUN mkdir /server
 WORKDIR /server
 
@@ -10,7 +12,9 @@ RUN yarn install
 
 COPY tsconfig.json ./
 COPY src src
-COPY .env .env
+COPY .env.enc .env.enc
 
+RUN echo $DOTENVENC_KEY
+RUN DOCENVENC_KEY=$DOTENVENC_KEY
 
 CMD yarn start

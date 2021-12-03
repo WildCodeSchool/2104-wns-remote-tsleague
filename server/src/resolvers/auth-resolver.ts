@@ -50,7 +50,7 @@ class AuthResolver {
 
     const token: string = jwt.sign(
       { id: user._id, mail },
-      process.env.SECRET_KEY || 'secretOrPrivateKey',
+      process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
     );
     console.log(user);
     return { id: user._id, ...user._doc, token };
@@ -75,7 +75,7 @@ class AuthResolver {
 
     const token: string = jwt.sign(
       { id: user._id, mail },
-      process.env.SECRET_KEY || 'secretOrPrivateKey',
+      process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
     );
 
     return { id: user._doc._id, ...user._doc, token };
