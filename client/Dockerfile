@@ -10,4 +10,4 @@ COPY tsconfig.json ./
 COPY src src
 COPY public public
 
-CMD yarn start:dev
+CMD yarn start

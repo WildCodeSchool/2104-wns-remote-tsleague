@@ -23,7 +23,9 @@ class AuthResolver {
     const isAlreadyRegisteredUser = await UserModel.findOne({ mail });
 
     if (isAlreadyRegisteredUser) {
-      throw new Error("L'email renseigné existe déjà, merci d'en utiliser un autre");
+      throw new Error(
+        "L'email renseigné existe déjà, merci d'en utiliser un autre",
+      );
     }
 
     const hashedPassword: string = await bcrypt.hash(password, 10);

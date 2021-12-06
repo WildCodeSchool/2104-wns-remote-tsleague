@@ -34,7 +34,7 @@ export class AuthLoginInput {
 @ObjectType()
 export class AuthRegisterResponse {
   @Field()
-  _id!: string;
+  id!: string;
 
   @Field()
   lastname!: string;
