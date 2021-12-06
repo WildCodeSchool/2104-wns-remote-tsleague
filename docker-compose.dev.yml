@@ -12,6 +12,8 @@ services:
         command: npm run dev
         volumes:
             - ./server/src:/server/src
+        environment: 
+            - DOTENVENC_KEY=${DOTENVENC_KEY}
     mongodb:
         image: mongo:4.4.9
         volumes:
