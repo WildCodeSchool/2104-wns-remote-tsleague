@@ -16,7 +16,11 @@ export type Action =
     }
   | {
       type: 'CLASSMATES_GAME_POSITION';
-      payload: ClassMate[];
+      classMates: ClassMate[];
+    }
+  | {
+      type: 'CLASSMATE_LOGOUT';
+      socketId: string;
     };
 
 const studentModalToggle = (): Action => ({

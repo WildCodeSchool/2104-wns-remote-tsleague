@@ -9,6 +9,8 @@ type Position = {
 type Player = {
   socketId: string;
   position: Position;
+  direction: string;
+  connected: boolean;
 };
 
 const getRandomPosition = (min: number, max: number): number => {
@@ -19,7 +21,7 @@ const getRandomPosition = (min: number, max: number): number => {
 const updatePlayersPosition = async (players: Player[], socketId: string, payload: any ): Promise<Player[]> => {
   return players.map((player: Player) => {
     if (player.socketId === socketId){
-      return { ...player, position: payload } 
+      return { ...player, position: { positionX: payload.positionX, positionY: payload.positionY }, direction: payload.direction } 
     }
 
     return player
@@ -43,12 +45,16 @@ export default function startSocket(): void {
 
     socket.emit('currentPlayers', players);
 
+    socket.emit('socketId', socket.id)
+
     socket.on('disconnect', () => {
       console.log(`${socket.id} disconnected`);
       players = players.filter(player => player.socketId !== socket.id)
+
+      socket.emit('logout', socket.id);
     });
 
-    socket.on('studentPlayer', async (payload: Position) => {
+    socket.on('studentPlayer', async (payload: any) => {
       const playerAlreadyExist = players.some(player => player.socketId === socket.id)
       if (!playerAlreadyExist) {
         players.push({
@@ -56,14 +62,15 @@ export default function startSocket(): void {
           position: {
             positionX: payload.positionX,
             positionY: payload.positionY
-          }
+          },
+          direction: payload.direction,
+          connected: true,
         })
       }
-      console.log(payload)
-      const newPlayers = await updatePlayersPosition(players, socket.id, payload)
+      
+      players = await updatePlayersPosition(players, socket.id, payload)
 
-      console.log(newPlayers);
-      socket.broadcast.emit('newPlayers', newPlayers);
+      socket.broadcast.emit('newPlayers', players);
     });
   });
 

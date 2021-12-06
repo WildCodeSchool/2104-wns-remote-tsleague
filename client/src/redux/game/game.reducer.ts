@@ -5,6 +5,7 @@ const initialGameState = {
   studentModal: false,
   studentGamePosition: { positionX: '', positionY: '' },
   classMates: [],
+  logoutClassMates: [],
 };
 
 export type ClassMate = {
@@ -13,6 +14,8 @@ export type ClassMate = {
     positionY: string;
   };
   socketId: string;
+  direction: string;
+  connected: boolean;
 };
 
 export type State = {
@@ -22,6 +25,7 @@ export type State = {
     positionY: string;
   };
   classMates: ClassMate[];
+  logoutClassMates: string[];
 };
 
 const gameReducer = (state = initialGameState, action: Action): State => {
@@ -33,7 +37,16 @@ const gameReducer = (state = initialGameState, action: Action): State => {
       return { ...state, studentGamePosition: action.payload };
     }
     case 'CLASSMATES_GAME_POSITION': {
-      return { ...state, classMates: action.payload };
+      return { ...state, classMates: action.classMates };
+    }
+    case 'CLASSMATE_LOGOUT': {
+      const newClassMates = state.classMates.filter((classMate: ClassMate) => {
+        return classMate.socketId !== action.socketId;
+      });
+      return {
+        ...state,
+        classMates: newClassMates,
+      };
     }
     default:
       return state;

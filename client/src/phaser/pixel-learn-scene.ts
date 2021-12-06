@@ -31,8 +31,16 @@ export default class PixeLearnScene extends Scene {
     this.otherPlayers.push(otherPlayer);
   };
 
-  select = (state: any): ClassMate[] => {
+  deletePlayerSprite = (id: string): void => {
+    console.log(id);
+  };
+
+  selectClassMateState = (state: any): ClassMate[] => {
     return state.gameToggle.classMates;
+  };
+
+  selectLogoutState = (state: any): string[] => {
+    return state.gameToggle.logoutClassMates;
   };
 
   preload = (): void => {
@@ -86,13 +94,9 @@ export default class PixeLearnScene extends Scene {
     this.player.setCollideWorldBounds(true); // Stops player from walking off the canvas
     this.player.setOffset(15, 35);
 
-    // const select = (state: any) => {
-    //   return state.gameToggle.classMates;
-    // };
     store.subscribe(() => {
-      const state = this.select(store.getState());
-
-      state.forEach((classMate: ClassMate) => {
+      const initClassMatesState = this.selectClassMateState(store.getState());
+      initClassMatesState.forEach((classMate: ClassMate) => {
         const playerAlreadyExist = this.otherPlayers.some(
           (otherPlayer) =>
             otherPlayer.data.values.playerId === classMate.socketId
@@ -102,7 +106,6 @@ export default class PixeLearnScene extends Scene {
           this.addOtherPlayer(classMate);
         }
       });
-      console.log(this.otherPlayers);
     });
 
     this.anims.create({
@@ -151,21 +154,27 @@ export default class PixeLearnScene extends Scene {
   };
 
   update = (): void => {
+    let direction = 'turn';
+
     if (this.cursors.left.isDown) {
+      direction = 'left';
       this.player.setVelocityX(-160);
       this.player.setVelocityY(0); // Prevents unintentional diagonal movement
 
       this.player.anims.play('left', true);
     } else if (this.cursors.right.isDown) {
+      direction = 'right';
       this.player.setVelocityX(160);
       this.player.setVelocityY(0); // Prevents unintentional diagonal movement
 
       this.player.anims.play('right', true);
     } else if (this.cursors.up.isDown) {
+      direction = 'up';
       this.player.setVelocityY(-160);
       this.player.setVelocityX(0); // Prevents unintentional diagonal movement
       this.player.anims.play('up', true);
     } else if (this.cursors.down.isDown) {
+      direction = 'down';
       this.player.setVelocityY(160);
       this.player.setVelocityX(0); // Prevents unintentional diagonal movement
       this.player.anims.play('down', true);
@@ -175,33 +184,38 @@ export default class PixeLearnScene extends Scene {
 
       this.player.anims.play('turn');
     }
-    if (this.time.now - this.tick > 1000) {
+    if (this.time.now - this.tick > 100) {
       store.dispatch({
         type: 'STUDENT_GAME_POSITION',
         payload: {
           positionX: this.player.x.toString(),
           positionY: this.player.y.toString(),
+          direction,
         },
       });
       this.tick = this.time.now;
     }
 
-    const state = this.select(store.getState());
-    state.forEach((classMate: ClassMate) => {
+    const classMateState = this.selectClassMateState(store.getState());
+
+    // UPDATE OTHER PLAYERS POSITIONS
+    classMateState.forEach((classMate: ClassMate) => {
       this.otherPlayers.forEach((otherPlayer) => {
         if (otherPlayer.data.values.playerId === classMate.socketId) {
           otherPlayer.setPosition(
             Number(classMate.position.positionX),
             Number(classMate.position.positionY)
           );
+          otherPlayer.anims.play(classMate.direction, true);
         }
       });
-      // if (index < this.otherPlayers.length) {
-      //   this.otherPlayers.setPosition(
-      //     Number(classMate.position.positionX),
-      //     Number(classMate.position.positionY)
-      //   );
-      // }
     });
+
+    // DELETE LAST LOGOUT CLASSMATE
+    // const logoutState = this.selectLogoutState(store.getState());
+
+    // logoutState.forEach((id: string) => {
+    //   console.log(id);
+    // });
   };
 }

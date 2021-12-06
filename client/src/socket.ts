@@ -1,4 +1,5 @@
 import { io } from 'socket.io-client';
+import { ClassMate } from './redux/game/game.reducer';
 // eslint-disable-next-line import/no-cycle
 import store from './redux/store';
 
@@ -9,15 +10,35 @@ socket.on('connect', () => {
   console.log(`log to socket server with id ${socket.id}`);
 });
 
-// socket.on('currentPlayers', (args) => {
-//   const players = args;
-//   console.log('current', players);
-// });
-socket.on('newPlayers', (payload) => {
-  console.log(payload);
+let socketId: string;
+socket.on('socketId', (arg): void => {
+  socketId = arg;
+});
+
+socket.on('currentPlayers', (payload) => {
+  const classMates: ClassMate[] = payload.filter(
+    (classMate: ClassMate) => classMate.socketId !== socketId
+  );
   store.dispatch({
     type: 'CLASSMATES_GAME_POSITION',
-    payload,
+    classMates,
+  });
+});
+
+socket.on('newPlayers', (payload) => {
+  const classMates: ClassMate[] = payload.filter(
+    (classMate: ClassMate) => classMate.socketId !== socketId
+  );
+  store.dispatch({
+    type: 'CLASSMATES_GAME_POSITION',
+    classMates,
+  });
+});
+
+socket.on('logout', (arg) => {
+  store.dispatch({
+    type: 'CLASSMATE_LOGOUT',
+    socketId: arg,
   });
 });
 
