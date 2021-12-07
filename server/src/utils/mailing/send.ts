@@ -15,7 +15,6 @@ async function send({
   firstname = '',
   name = '',
 }: SendInput): Promise<void> {
-  console.log('env:', process.env.SMTP_USER);
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     host: 'smtp.laposte.net',
