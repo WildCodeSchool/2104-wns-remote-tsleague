@@ -15,7 +15,8 @@ export type Action =
     }
   | {
       type: 'CLASSMATES_GAME_POSITION';
-      classMates: ClassMate[];
+      payload: ClassMate[];
+      socketId: string;
     }
   | {
       type: 'CLASSMATE_LOGOUT';

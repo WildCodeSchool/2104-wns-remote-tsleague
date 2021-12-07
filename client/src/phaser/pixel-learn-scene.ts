@@ -8,14 +8,14 @@ const getRandomPosition = (min: number, max: number): number => {
 
 export default class PixeLearnScene extends Scene {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  cursors: any;
+  cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
 
   tick = 0;
 
   otherPlayers: Phaser.GameObjects.Sprite[] = [];
 
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  player: any | Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
   addOtherPlayer = (classMate: ClassMate): void => {
     const otherPlayer = this.add

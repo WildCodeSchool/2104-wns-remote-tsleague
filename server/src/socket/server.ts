@@ -1,22 +1,11 @@
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
-
-type Position = {
-  positionX: string;
-  positionY: string;
-};
-
-type Player = {
-  socketId: string;
-  position: Position;
-  direction: string;
-  connected: boolean;
-};
+import { Player, StudentPlayerMoves } from './helpers/types';
 
 const updatePlayersPosition = async (
   players: Player[],
   socketId: string,
-  payload: any,
+  payload: StudentPlayerMoves,
 ): Promise<Player[]> => players.map((player: Player) => {
   if (player.socketId === socketId) {
     return {
@@ -57,7 +46,7 @@ export default function startSocket(): void {
       socket.broadcast.emit('logout', socket.id);
     });
 
-    socket.on('studentPlayer', async (payload: any) => {
+    socket.on('studentPlayer', async (payload: StudentPlayerMoves) => {
       const playerAlreadyExist = players.some(
         (player) => player.socketId === socket.id,
       );

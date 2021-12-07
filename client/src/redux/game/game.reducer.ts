@@ -36,7 +36,10 @@ const gameReducer = (state = initialGameState, action: Action): State => {
       return { ...state, studentGamePosition: action.payload };
     }
     case 'CLASSMATES_GAME_POSITION': {
-      return { ...state, classMates: action.classMates };
+      const newClassMates: ClassMate[] = action.payload.filter(
+        (classMate: ClassMate) => classMate.socketId !== action.socketId
+      );
+      return { ...state, classMates: newClassMates };
     }
     case 'CLASSMATE_LOGOUT': {
       const newClassMates = state.classMates.map((classMate: ClassMate) => {
