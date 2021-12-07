@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-cycle
-import { Action } from './game.actions';
+import type { Action } from './game.actions';
 
 const initialGameState = {
   studentModal: false,
@@ -40,8 +39,11 @@ const gameReducer = (state = initialGameState, action: Action): State => {
       return { ...state, classMates: action.classMates };
     }
     case 'CLASSMATE_LOGOUT': {
-      const newClassMates = state.classMates.filter((classMate: ClassMate) => {
-        return classMate.socketId !== action.socketId;
+      const newClassMates = state.classMates.map((classMate: ClassMate) => {
+        if (classMate.socketId === action.socketId) {
+          return { ...classMate, connected: !classMate.connected };
+        }
+        return classMate;
       });
       return {
         ...state,

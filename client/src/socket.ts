@@ -4,7 +4,7 @@ import { ClassMate } from './redux/game/game.reducer';
 import store from './redux/store';
 
 const socket =
-  process.env.NODE_ENV === 'development' ? io('http://localhost:5050') : io();
+  process.env.NODE_ENV === 'development' ? io('http://localhost:6000') : io();
 
 socket.on('connect', () => {
   console.log(`log to socket server with id ${socket.id}`);

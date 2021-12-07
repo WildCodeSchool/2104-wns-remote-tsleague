@@ -17,8 +17,6 @@ export default class PixeLearnScene extends Scene {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   player: any | Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
-  playerMap: any = {};
-
   addOtherPlayer = (classMate: ClassMate): void => {
     const otherPlayer = this.add
       .sprite(
@@ -31,16 +29,8 @@ export default class PixeLearnScene extends Scene {
     this.otherPlayers.push(otherPlayer);
   };
 
-  deletePlayerSprite = (id: string): void => {
-    console.log(id);
-  };
-
   selectClassMateState = (state: any): ClassMate[] => {
     return state.gameToggle.classMates;
-  };
-
-  selectLogoutState = (state: any): string[] => {
-    return state.gameToggle.logoutClassMates;
   };
 
   preload = (): void => {
@@ -72,9 +62,7 @@ export default class PixeLearnScene extends Scene {
     const tilesRoomBuilder = map.addTilesetImage('tiles_room_builder');
 
     // add layers
-    const floorLayer = map
-      .createLayer('floor', tilesRoomBuilder, 0, 0)
-      .setDepth(-1);
+    map.createLayer('floor', tilesRoomBuilder, 0, 0).setDepth(-1);
     const wallsLayer = map.createLayer('walls', tilesRoomBuilder, 0, 0);
     const furnitureLayer = map.createLayer('furniture', tilesClassroom, 0, 0);
 
@@ -202,6 +190,10 @@ export default class PixeLearnScene extends Scene {
     classMateState.forEach((classMate: ClassMate) => {
       this.otherPlayers.forEach((otherPlayer) => {
         if (otherPlayer.data.values.playerId === classMate.socketId) {
+          if (!classMate.connected) {
+            otherPlayer.setActive(false);
+            otherPlayer.setVisible(false);
+          }
           otherPlayer.setPosition(
             Number(classMate.position.positionX),
             Number(classMate.position.positionY)
@@ -210,12 +202,5 @@ export default class PixeLearnScene extends Scene {
         }
       });
     });
-
-    // DELETE LAST LOGOUT CLASSMATE
-    // const logoutState = this.selectLogoutState(store.getState());
-
-    // logoutState.forEach((id: string) => {
-    //   console.log(id);
-    // });
   };
 }

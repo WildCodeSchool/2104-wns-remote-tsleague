@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-cycle
 import { ClassMate } from './game.reducer';
 
 export type Position = {
