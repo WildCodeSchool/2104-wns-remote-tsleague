@@ -1,20 +1,22 @@
 services:
-    client:
-        build: ./client
-        ports:
-            - 8080:3000
-        volumes:
-            - ./client/src:/app/src
-    server:
-        build: ./server
-        ports:
-            - 5050:5000
-        command: npm run dev
-        volumes:
-            - ./server/src:/server/src
-    mongodb:
-        image: mongo:4.4.9
-        volumes:
-            - ./data:/data/db
-        ports:
-            - 27017:27017
+  client:
+    build: ./client
+    ports:
+      - 8080:3000
+    volumes:
+      - ./client/src:/app/src
+  server:
+    build: ./server
+    ports:
+      - 5050:5000
+    command: yarn start:dev
+    volumes:
+      - ./server/src:/server/src
+    environment:
+      - DOTENVENC_KEY=${DOTENVENC_KEY}
+  mongodb:
+    image: mongo:4.4.9
+    volumes:
+      - ./data:/data/db
+    ports:
+      - 27017:27017

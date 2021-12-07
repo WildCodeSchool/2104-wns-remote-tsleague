@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import dotenv from 'dotenv';
+import dotenvenc from 'dotenvenc';
 import { buildSchema } from 'type-graphql';
 import mongoose from 'mongoose';
 import { ApolloServer, AuthenticationError } from 'apollo-server';
@@ -15,6 +16,7 @@ import UserResolver from './resolvers/users-resolver';
 import ClassroomResolver from './resolvers/classrooms-resolver';
 import AuthResolver from './resolvers/auth-resolver';
 
+dotenvenc.decrypt({ passwd: process.env.DOTENVENC_KEY });
 dotenv.config();
 
 export default async function startServer(
@@ -25,14 +27,13 @@ export default async function startServer(
   });
   const server = new ApolloServer({
     schema,
-    validationRules: [],
     context: ({ req }) => {
       if (!['Login', 'Register'].includes(req.body.operationName)) {
         const token = req.headers.authorization || '';
         try {
           const { id, mail } = jwt.verify(
             token.split(' ')[1],
-            process.env.SECRET_KEY || 'secretOrPrivateKey',
+            process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
           );
           return { id, mail };
         } catch (e) {

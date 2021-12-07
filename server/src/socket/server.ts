@@ -23,5 +23,5 @@ export default function startSocket() {
   // eslint-disable-next-line max-len
   // const randomInt = (low: number, high: number): number => Math.floor(Math.random() * (high - low) + low);
   console.log('socket');
-  httpServer.listen(5050);
+  httpServer.listen(6000);
 }

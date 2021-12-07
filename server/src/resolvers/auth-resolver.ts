@@ -11,6 +11,7 @@ import {
 } from '../types/authentication';
 import { UserModel } from '../models/users-model';
 import { ClassroomModel } from '../models/classrooms-model';
+import sendMail from '../utils/mailing/send';
 
 @Resolver()
 class AuthResolver {
@@ -22,7 +23,9 @@ class AuthResolver {
     const isAlreadyRegisteredUser = await UserModel.findOne({ mail });
 
     if (isAlreadyRegisteredUser) {
-      throw new Error("L'email existe déjà, merci d'en utiliser un autre");
+      throw new Error(
+        "L'email renseigné existe déjà, merci d'en utiliser un autre",
+      );
     }
 
     const hashedPassword: string = await bcrypt.hash(password, 10);
@@ -36,7 +39,7 @@ class AuthResolver {
       role,
     });
 
-    user.save();
+    await user.save();
 
     if (role === 'teacher') {
       const newClassroom = new ClassroomModel({
@@ -44,13 +47,15 @@ class AuthResolver {
         teachers: user,
       });
       await newClassroom.save();
+      await sendMail({ templateName: 'teacherRegister', mail });
     }
 
     const token: string = jwt.sign(
       { id: user._id, mail },
-      process.env.SECRET_KEY || 'secretOrPrivateKey',
+      process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
     );
-    return { id: user._doc._id, ...user._doc, token };
+    console.log(user);
+    return { id: user._id, ...user._doc, token };
   }
 
   @Mutation(() => AuthRegisterResponse)
@@ -72,7 +77,7 @@ class AuthResolver {
 
     const token: string = jwt.sign(
       { id: user._id, mail },
-      process.env.SECRET_KEY || 'secretOrPrivateKey',
+      process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
     );
 
     return { id: user._doc._id, ...user._doc, token };
