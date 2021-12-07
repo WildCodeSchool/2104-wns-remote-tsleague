@@ -2,13 +2,18 @@ import serverConfig from '../../../config/server-config';
 
 const { SERVER_STAGE } = process.env;
 
-type InputStudentRegisterTemplate = {
-  firstname: string;
-  name: string;
-  classroom: string;
+export type InputStudentRegisterTemplate = {
+  mail: string;
+  firstname?: string;
+  name?: string;
+  classroom?: string;
 };
 
-function studentRegister({ firstname, name, classroom }: InputStudentRegisterTemplate): {
+function studentRegister({
+  firstname = '',
+  name = '',
+  classroom,
+}: InputStudentRegisterTemplate): {
   subject: string;
   html: string;
 } {
@@ -16,7 +21,8 @@ function studentRegister({ firstname, name, classroom }: InputStudentRegisterTem
     throw new Error('SERVER_STAGE must be defined');
   }
 
-  const registerUrl = `${serverConfig[SERVER_STAGE]}/register-student?classroom=${classroom}`;
+  const registerUrl = `${serverConfig[SERVER_STAGE].urlFront}register-student?classroom=${classroom}`;
+
   return {
     subject: 'Bienvenue sur Pixelearn 🏫',
     html: `

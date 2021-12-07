@@ -1,9 +1,13 @@
-type InputTeacherRegisterTemplate = {
-  firstname: string;
-  name: string;
+export type InputTeacherRegisterTemplate = {
+  mail: string;
+  firstname?: string;
+  name?: string;
 };
 
-function teacherRegister({ firstname, name }: InputTeacherRegisterTemplate): {
+function teacherRegister({
+  firstname = '',
+  name = '',
+}: InputTeacherRegisterTemplate): {
   subject: string;
   html: string;
 } {
