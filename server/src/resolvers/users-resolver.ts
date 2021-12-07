@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
+import bcrypt from 'bcrypt';
 import { Resolver, Query, Arg, Mutation } from 'type-graphql';
 import { UserModel, User } from '../models/users-model';
-import bcrypt from 'bcrypt';
 import { UserInput, ResetPasswordInput } from './validator/userInput';
 
 // TODO => Handle error
@@ -48,20 +48,19 @@ class UserResolver {
     return user;
   }
 
-  @Mutation(() => ResetPasswordInput)
+  @Mutation(() => User)
   async updateUserPassword(
     @Arg('body')
     { mail, password }: ResetPasswordInput,
   ) {
-    // const hashedPassword: string = await bcrypt.hash(password, 10);
+    const hashedPassword: string = await bcrypt.hash(password, 10);
     const user = await UserModel.findOneAndUpdate(
-      { email: mail },
-      { password: password },
+      { mail },
+      { password: hashedPassword },
       {
         new: true,
       },
     );
-
     return user;
   }
 }

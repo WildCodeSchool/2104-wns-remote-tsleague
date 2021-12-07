@@ -38,7 +38,7 @@ function RegistrationForm(): JSX.Element {
     pathname === '/register-teacher'
   );
 
-  const register = async (formData: FormData) => {
+  const register = async (formData: FormData): Promise<void> => {
     const { firstname, lastname, mail, password, classroom } = formData;
     try {
       const { data } = await registerMutation({
@@ -54,9 +54,9 @@ function RegistrationForm(): JSX.Element {
         },
       });
       Cookies.set('token', data.register.token);
-      return history.push('/');
+      history.push('/');
     } catch (error: any) {
-      return setRequestError(error.message);
+      setRequestError(error.message);
     }
   };
 

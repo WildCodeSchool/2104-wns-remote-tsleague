@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
+import Cookies from 'js-cookie';
 import { Link, useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
-import { Formik, Form, Field } from 'formik';
-import { StyledBox, ErrorMsg } from '../styles/Authentication';
+import { Formik, Form } from 'formik';
 import { validationSchemaResetPassword } from '../../form/validationSchema';
 import useQuery from '../../utils/useQuery';
 
+import { StyledBox, ErrorMsg } from '../styles/Authentication';
 import Button from '../common/Button';
 import Input from '../common/Input';
 
 interface FormData {
   email: string;
   password: string;
-  token: string;
 }
 
 const USER_RESET_PASSWORD = gql`
-  mutation Register($body: AuthRegisterInput!) {
-    register(body: $body) {
-      id
-      token
+  mutation Mutation($body: ResetPasswordInput!) {
+    updateUserPassword(body: $body) {
+      password
+      mail
     }
   }
 `;
@@ -29,17 +29,25 @@ function ResetPasswordForm(): JSX.Element {
   const query = useQuery();
   const [registerMutation] = useMutation(USER_RESET_PASSWORD);
   const [requestError, setRequestError] = useState('');
+  Cookies.set('token', query.get('token') ?? '');
 
-  const resetPassword = async (formData: FormData) => {
+  const resetPassword = async ({
+    email,
+    password,
+  }: FormData): Promise<void> => {
     try {
-      // const { data } = await registerMutation({
-      //   variables: {
-      //     body: formData,
-      //   },
-      // });
-      return history.push('/');
+      await registerMutation({
+        variables: {
+          body: {
+            mail: email,
+            password,
+          },
+        },
+      });
+      Cookies.remove('token');
+      history.push('/');
     } catch (error: any) {
-      return setRequestError(error.message);
+      setRequestError(error.message);
     }
   };
 
@@ -49,7 +57,6 @@ function ResetPasswordForm(): JSX.Element {
         initialValues={{
           email: query.get('email') ?? '',
           password: '',
-          token: query.get('token') ?? '',
         }}
         validationSchema={validationSchemaResetPassword}
         onSubmit={(data: FormData) => resetPassword(data)}

@@ -28,16 +28,16 @@ function ForgotPasswordForm(): JSX.Element {
   const [registerMutation] = useMutation(USER_FORGOT_PASSWORD);
   const [requestError, setRequestError] = useState('');
 
-  const forgotPassword = async (formData: FormData) => {
+  const forgotPassword = async (formData: FormData): Promise<void> => {
     try {
       // const { data } = await registerMutation({
       //   variables: {
       //     body: formData,
       //   },
       // });
-      return history.push('/');
+      history.push('/');
     } catch (error: any) {
-      return setRequestError(error.message);
+      setRequestError(error.message);
     }
   };
 
