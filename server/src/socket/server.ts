@@ -1,7 +1,27 @@
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
+import { Player, StudentPlayerMoves } from './helpers/types';
 
-export default function startSocket() {
+const updatePlayersPosition = async (
+  players: Player[],
+  socketId: string,
+  payload: StudentPlayerMoves,
+): Promise<Player[]> => players.map((player: Player) => {
+  if (player.socketId === socketId) {
+    return {
+      ...player,
+      position: {
+        positionX: payload.positionX,
+        positionY: payload.positionY,
+      },
+      direction: payload.direction,
+    };
+  }
+
+  return player;
+});
+
+export default function startSocket(): void {
   const httpServer = createServer();
   const io = new Server(httpServer, {
     cors: {
@@ -10,18 +30,44 @@ export default function startSocket() {
     },
   }).listen(httpServer);
 
-  // const lastPlayerID = 0;
+  let players: Player[] = [];
 
-  io.on('connection', (socket: Socket) => {
+  io.on('connection', (socket: Socket): void => {
     console.log(`connected with id ${socket.id}`);
-    socket.on('STUDENT_GAME_POSITION', (payload) => {
-      socket.broadcast.emit('STUDENT_GAME_POSITION', payload);
-      console.log(`received move: ${payload.positionX}, ${payload.positionY}`);
+
+    socket.emit('currentPlayers', players);
+
+    socket.emit('socketId', socket.id);
+
+    socket.on('disconnect', () => {
+      console.log(`${socket.id} disconnected`);
+      players = players.filter((player) => player.socketId !== socket.id);
+
+      socket.broadcast.emit('logout', socket.id);
+    });
+
+    socket.on('studentPlayer', async (payload: StudentPlayerMoves) => {
+      const playerAlreadyExist = players.some(
+        (player) => player.socketId === socket.id,
+      );
+      if (!playerAlreadyExist) {
+        players.push({
+          socketId: socket.id,
+          position: {
+            positionX: payload.positionX,
+            positionY: payload.positionY,
+          },
+          direction: payload.direction,
+          connected: true,
+        });
+      }
+
+      players = await updatePlayersPosition(players, socket.id, payload);
+
+      socket.broadcast.emit('newPlayers', players);
     });
   });
-
-  // eslint-disable-next-line max-len
-  // const randomInt = (low: number, high: number): number => Math.floor(Math.random() * (high - low) + low);
-  console.log('socket');
-  httpServer.listen(6000);
+  const port = 6000;
+  console.log(`Socket server started at port ${port}`);
+  httpServer.listen(port);
 }
