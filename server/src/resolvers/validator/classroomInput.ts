@@ -1,8 +1,7 @@
-import { InputType, Field, ID } from 'type-graphql';
+import { InputType, Field } from 'type-graphql';
 
 @InputType()
 export default class ClassroomInput {
-  @Field(() => ID)
   readonly id!: string;
 
   @Field()

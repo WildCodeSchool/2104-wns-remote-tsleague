@@ -3,7 +3,7 @@ import casual from 'casual';
 import { gql } from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server';
 
-import { startServer } from '../server';
+import startServer from '../server';
 import { ClassroomModel } from '../models/classrooms-model';
 import * as testConfig from '../config/test-config';
 import * as utils from '../utils';

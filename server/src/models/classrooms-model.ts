@@ -1,8 +1,16 @@
-import { prop as Property, modelOptions, getModelForClass, Severity } from '@typegoose/typegoose';
+import {
+  prop as Property,
+  modelOptions,
+  getModelForClass,
+  Severity,
+} from '@typegoose/typegoose';
 import { ObjectType, Field, ID } from 'type-graphql';
 import UserClassroomData from './user-classroom-data-models';
 
-@modelOptions({ schemaOptions: { collection: 'classrooms', }, options: { allowMixed: Severity.ALLOW }  })
+@modelOptions({
+  schemaOptions: { collection: 'classrooms' },
+  options: { allowMixed: Severity.ALLOW },
+})
 @ObjectType()
 export class Classroom {
   @Field(() => ID)
