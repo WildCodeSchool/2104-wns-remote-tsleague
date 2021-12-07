@@ -6,14 +6,16 @@ type SendInput = {
   templateName: 'teacherRegister';
   mail: string;
   firstname?: string;
-  name?: string;
+  lastname?: string;
+  additionalParameters?: Object;
 };
 
 async function send({
   templateName,
   mail,
   firstname = '',
-  name = '',
+  lastname = '',
+  additionalParameters = {},
 }: SendInput): Promise<void> {
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
@@ -25,7 +27,11 @@ async function send({
     },
   });
 
-  const { subject, html } = templates[templateName]({ firstname, name });
+  const { subject, html } = templates[templateName]({
+    firstname,
+    lastname,
+    ...additionalParameters,
+  });
 
   const info = await transporter.sendMail({
     from: '"Pixelearn 🏫" <pixelearn@laposte.net>',

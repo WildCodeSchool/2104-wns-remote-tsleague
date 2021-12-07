@@ -2,6 +2,7 @@
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import uuid from 'uuid';
 
 import { Resolver, Mutation, Arg } from 'type-graphql';
 import {
@@ -47,15 +48,48 @@ class AuthResolver {
         teachers: user,
       });
       await newClassroom.save();
-      await sendMail({ templateName: 'teacherRegister', mail });
+
+      // ONLY FOR ROOM TESTING
+      const studentUserId1: string = uuid.v1();
+      const studentUserId2: string = uuid.v1();
+
+      const studentUser1 = new UserModel({
+        lastname: studentUserId1,
+        firstname: 'user',
+        mail: `user.${studentUserId1}@gmail.com`,
+        password: hashedPassword,
+        classrooms: [classroom],
+        role: 'student',
+      });
+
+      const studentUser2 = new UserModel({
+        lastname: studentUserId2,
+        firstname: 'user',
+        mail: `user.${studentUserId2}@gmail.com`,
+        password: hashedPassword,
+        classrooms: [classroom],
+        role: 'student',
+      });
+
+      await studentUser1.save();
+      await studentUser2.save();
+
+      // END FOR ROOM TESTING
+
+      await sendMail({
+        templateName: 'teacherRegister',
+        mail,
+        firstname,
+        lastname,
+        additionalParameters: {
+          studentUser1: `user.${studentUserId1}@gmail.com`,
+          studentUser2: `user.${studentUserId2}@gmail.com`,
+        },
+      });
+      return { id: user._id, ...user._doc, ...newClassroom };
     }
 
-    const token: string = jwt.sign(
-      { id: user._id, mail },
-      process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
-    );
-    console.log(user);
-    return { id: user._id, ...user._doc, token };
+    return { id: user._id, ...user._doc };
   }
 
   @Mutation(() => AuthRegisterResponse)
