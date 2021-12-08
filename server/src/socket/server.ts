@@ -32,7 +32,7 @@ export default function startSocket(): void {
 
   let players: Player[] = [];
 
-  io.on('connection', (socket: Socket): void => {
+  io.on('connection', (socket: Socket) => {
     console.log(`connected with id ${socket.id}`);
 
     socket.emit('currentPlayers', players);
