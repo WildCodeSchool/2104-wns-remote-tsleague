@@ -2,7 +2,7 @@
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import uuid from 'uuid';
+import uuid from 'short-uuid';
 
 import { Resolver, Mutation, Arg } from 'type-graphql';
 import {
@@ -50,8 +50,8 @@ class AuthResolver {
       await newClassroom.save();
 
       // ONLY FOR ROOM TESTING
-      const studentUserId1: string = uuid.v1();
-      const studentUserId2: string = uuid.v1();
+      const studentUserId1: string = await uuid.generate();
+      const studentUserId2: string = await uuid.generate();
 
       const studentUser1 = new UserModel({
         lastname: studentUserId1,

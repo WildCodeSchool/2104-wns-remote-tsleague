@@ -22,7 +22,6 @@ const USER_REGISTER = gql`
   mutation Register($body: AuthRegisterInput!) {
     register(body: $body) {
       id
-      token
     }
   }
 `;
@@ -57,7 +56,6 @@ function RegistrationForm(): JSX.Element {
           },
         },
       });
-      Cookies.set('token', data.register.token);
       return history.push('/');
     } catch (error: any) {
       return setRegisterError(error.message);
