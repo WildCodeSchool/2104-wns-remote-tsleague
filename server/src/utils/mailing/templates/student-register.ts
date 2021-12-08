@@ -5,13 +5,13 @@ const { SERVER_STAGE } = process.env;
 export type InputStudentRegisterTemplate = {
   mail: string;
   firstname?: string;
-  name?: string;
+  lastname?: string;
   classroom?: string;
 };
 
 function studentRegister({
   firstname = '',
-  name = '',
+  lastname = '',
   classroom,
 }: InputStudentRegisterTemplate): {
   subject: string;
@@ -26,7 +26,7 @@ function studentRegister({
   return {
     subject: 'Bienvenue sur Pixelearn 🏫',
     html: `
-    <p>Hello ${firstname} ${name} 🧑‍🎓</p>
+    <p>Hello ${firstname} ${lastname} 🧑‍🎓</p>
     <p>Bienvenue sur Pixelearn !</p>
     <p>Visiblement ton professeur t'as ajouté à sa classe !</p>
     <p>Ne perd pas de temps, viens t'inscrire dès maintenant en allant sur cette url: ${registerUrl} !</p>
