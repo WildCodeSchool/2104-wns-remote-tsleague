@@ -9,9 +9,7 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
 } from 'apollo-server-core';
 import jwt from 'jsonwebtoken';
-
 import type { ServerConfig } from './config/server-config';
-
 import UserResolver from './resolvers/users-resolver';
 import ClassroomResolver from './resolvers/classrooms-resolver';
 import AuthResolver from './resolvers/auth-resolver';
