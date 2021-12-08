@@ -1,6 +1,7 @@
 import { Scene } from 'phaser';
 import { ClassMate } from '../redux/game/game.reducer';
 import store from '../redux/store';
+import socket from '../socket';
 
 const getRandomPosition = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min) + min);
@@ -51,6 +52,7 @@ export default class PixeLearnScene extends Scene {
       frameWidth: 48,
       frameHeight: 96,
     });
+    socket.connect();
   };
 
   create = (): void => {

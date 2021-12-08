@@ -67,7 +67,7 @@ export default function startSocket(): void {
       socket.broadcast.emit('newPlayers', players);
     });
   });
-  const port = 6000;
+  const port = 4000;
   console.log(`Socket server started at port ${port}`);
   httpServer.listen(port);
 }
