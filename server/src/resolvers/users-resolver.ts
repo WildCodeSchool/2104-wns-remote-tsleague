@@ -1,10 +1,16 @@
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { Resolver, Query, Arg, Mutation } from 'type-graphql';
+import {
+  Resolver,
+  Query,
+  Arg,
+  Mutation,
+} from 'type-graphql';
 import { UserModel, User } from '../models/users-model';
 import { UserInput, ResetPasswordInput } from './validator/userInput';
 import sendMail from '../utils/mailing/send';
+import { first_name } from 'casual';
 
 // TODO => Handle error
 @Resolver(User)
@@ -40,12 +46,25 @@ class UserResolver {
     await sendMail({ templateName: 'forgotPassword', data: { mail, token } });
   }
 
-  @Mutation(() => User)
-  public async createUser(@Arg('input') userInput: UserInput) {
-    await UserModel.init();
-    const user = new UserModel(userInput);
-    await user.save();
-    return user;
+  @Mutation(() => User, { nullable: true })
+  async addStudent(
+  @Arg('email', () => String) mail: string, 
+  @Arg('classrooms', () => String) classroom: string,
+  @Arg('firstname', () => String) firstname: string,
+  @Arg('lastname', () => String) lastname: string) {
+    const user = await UserModel.findOne({ mail });
+    if (user) {
+      throw new Error(
+        "L'email renseigné est déjà utilisée, merci d'en utiliser un autre",
+      );
+    }
+    
+    const token: string = jwt.sign(
+      { mail },
+      process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
+      { expiresIn: '1h' },
+    );
+    await sendMail({ templateName: 'studentRegister', data: { firstname, lastname, classroom, mail } });
   }
 
   @Mutation(() => User)

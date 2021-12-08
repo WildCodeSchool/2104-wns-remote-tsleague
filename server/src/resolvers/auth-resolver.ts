@@ -51,7 +51,14 @@ class AuthResolver {
         templateName: 'teacherRegister',
         data: { lastname, firstname, mail },
       });
-    }
+    } 
+
+    // if (role === 'student') {
+    //   await sendMail({
+    //     templateName: 'studentRegister',
+    //     data: { lastname, firstname, classroom, mail },
+    //   });
+    // }
 
     const token: string = jwt.sign(
       { id: user._id, mail },
