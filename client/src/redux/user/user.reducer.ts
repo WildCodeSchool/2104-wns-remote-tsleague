@@ -1,6 +1,6 @@
 import type { UserAction, UserState } from './user.types';
 
-const initialUserState = {
+const initialUserState: UserState = {
   userData: {
     id: '',
     lastname: '',
@@ -12,7 +12,7 @@ const initialUserState = {
 };
 
 const userReducer = (
-  state = initialUserState,
+  state: UserState = initialUserState,
   action: UserAction
 ): UserState => {
   switch (action.type) {
