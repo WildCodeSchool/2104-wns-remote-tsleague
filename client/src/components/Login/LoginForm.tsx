@@ -14,6 +14,10 @@ const USER_LOGIN = gql`
   mutation Login($body: AuthLoginInput!) {
     login(body: $body) {
       id
+      firstname
+      lastname
+      classrooms
+      role
       token
     }
   }
@@ -44,7 +48,7 @@ function LoginForm(): JSX.Element {
       });
       Cookies.set('token', data.login.token);
       delete data.login.token;
-      dispatch({ type: 'USER_FETCH_DATA', payload: data });
+      dispatch({ type: 'USER_FETCH_DATA', payload: data.login });
       history.push('/game');
     } catch (error: any) {
       setLoginError(error.message);
