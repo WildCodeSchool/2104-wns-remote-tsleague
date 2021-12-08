@@ -19,9 +19,8 @@ const USER_LOGIN = gql`
   }
 `;
 
-const dispatch = useDispatch();
-
 function LoginForm(): JSX.Element {
+  const dispatch = useDispatch();
   const [loginMutation] = useMutation(USER_LOGIN);
   const [loginError, setLoginError] = useState('');
   const history = useHistory();

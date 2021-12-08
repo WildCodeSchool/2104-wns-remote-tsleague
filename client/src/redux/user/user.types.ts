@@ -1,14 +1,14 @@
 export type UserState = {
-  userData: UserData;
+  readonly userData: UserData;
 };
 
 export type UserData = {
-  id: string;
-  lastname: string;
-  firstname: string;
-  role: string;
-  classrooms: string[];
-  token: string;
+  readonly id: string;
+  readonly lastname: string;
+  readonly firstname: string;
+  readonly role: string;
+  readonly classrooms: string[];
+  readonly token: string;
 };
 
 export type UserAction = {
