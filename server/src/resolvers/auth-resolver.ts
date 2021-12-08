@@ -86,7 +86,6 @@ class AuthResolver {
           studentUser2: `user.${studentUserId2}@gmail.com`,
         },
       });
-      return { id: user._id, ...user._doc, ...newClassroom };
     }
 
     return { id: user._id, ...user._doc };
