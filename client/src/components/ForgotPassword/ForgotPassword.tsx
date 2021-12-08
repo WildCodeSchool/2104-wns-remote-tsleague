@@ -23,7 +23,7 @@ function ForgotPassword(): JSX.Element {
           <h2>
             {pathname === '/forgot-password'
               ? 'PixeLearn - Mot de passe oublié '
-              : 'PixeLearn - Chagner de mot de passe'}
+              : 'PixeLearn - Changer de mot de passe'}
           </h2>
         </div>
       </StyledHeader>

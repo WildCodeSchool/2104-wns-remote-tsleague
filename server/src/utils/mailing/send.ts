@@ -14,6 +14,7 @@ type SendInput = {
 };
 
 async function send({ templateName, data }: SendInput): Promise<void> {
+  const { mail } = data;
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     host: 'smtp.laposte.net',
@@ -28,7 +29,7 @@ async function send({ templateName, data }: SendInput): Promise<void> {
 
   const info = await transporter.sendMail({
     from: '"Pixelearn 🏫" <pixelearn@laposte.net>',
-    to: data.mail,
+    to: mail,
     subject,
     html,
   });
