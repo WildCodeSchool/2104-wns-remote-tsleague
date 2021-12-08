@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { Resolver, Query, Arg, Mutation } from 'type-graphql';
 import { UserModel, User } from '../models/users-model';
-import { UserInput, ResetPasswordInput } from './validator/userInput';
+import { UserInput, ResetPasswordInput } from '../types/userInput';
 import sendMail from '../utils/mailing/send';
 
 // TODO => Handle error
