@@ -28,7 +28,11 @@ export default async function startServer(
   const server = new ApolloServer({
     schema,
     context: ({ req }) => {
-      if (!['Login', 'Register'].includes(req.body.operationName)) {
+      if (
+        !['Login', 'Register', 'ForgotPassword'].includes(
+          req.body.operationName,
+        )
+      ) {
         const token = req.headers.authorization || '';
         try {
           const { id, mail } = jwt.verify(

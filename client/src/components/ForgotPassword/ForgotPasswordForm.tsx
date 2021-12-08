@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import { StyledBox, ErrorMsg } from '../styles/Authentication';
 import { validationSchemaForgotPassword } from '../../form/validationSchema';
-import useQuery from '../../utils/useQuery';
 
 import Button from '../common/Button';
 import Input from '../common/Input';
@@ -14,27 +13,25 @@ interface FormData {
 }
 
 const USER_FORGOT_PASSWORD = gql`
-  mutation Register($body: AuthRegisterInput!) {
-    register(body: $body) {
-      id
-      token
+  mutation ForgotPassword($email: String!) {
+    forgotPassword(email: $email) {
+      mail
     }
   }
 `;
 
 function ForgotPasswordForm(): JSX.Element {
   const history = useHistory();
-  const query = useQuery();
   const [registerMutation] = useMutation(USER_FORGOT_PASSWORD);
   const [requestError, setRequestError] = useState('');
 
-  const forgotPassword = async (formData: FormData): Promise<void> => {
+  const forgotPassword = async ({ email }: FormData): Promise<void> => {
     try {
-      // const { data } = await registerMutation({
-      //   variables: {
-      //     body: formData,
-      //   },
-      // });
+      await registerMutation({
+        variables: {
+          email,
+        },
+      });
       history.push('/');
     } catch (error: any) {
       setRequestError(error.message);

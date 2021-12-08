@@ -24,7 +24,7 @@ class UserResolver {
     return UserModel.find({ role });
   }
 
-  @Query(() => User, { nullable: true })
+  @Mutation(() => User, { nullable: true })
   async forgotPassword(@Arg('email', () => String) mail: string) {
     const user = await UserModel.findOne({ mail });
     if (!user) {

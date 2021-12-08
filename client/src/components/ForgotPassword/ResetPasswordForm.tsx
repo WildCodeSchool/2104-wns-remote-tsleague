@@ -16,7 +16,7 @@ interface FormData {
 }
 
 const USER_RESET_PASSWORD = gql`
-  mutation Mutation($body: ResetPasswordInput!) {
+  mutation UpdateUserPassword($body: ResetPasswordInput!) {
     updateUserPassword(body: $body) {
       password
       mail
