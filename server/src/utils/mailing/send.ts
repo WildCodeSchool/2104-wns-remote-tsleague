@@ -40,6 +40,8 @@ async function send({
     html,
   });
 
+  console.log('html:', html);
+
   console.log('Message sent: %s', info.messageId);
   console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 }
