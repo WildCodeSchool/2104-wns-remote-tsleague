@@ -10,18 +10,18 @@ function Router(): JSX.Element {
   const history = useHistory();
   const { pathname } = useLocation();
 
-  // if (!Cookies.get('token')) {
-  //   if (
-  //     // pathname.match(/(\/||\/register-.+)/gm)
-  //     pathname !== '/' &&
-  //     pathname !== '/register-teacher' &&
-  //     pathname !== '/register-student' &&
-  //     pathname !== '/forgot-password' &&
-  //     pathname !== '/reset-password'
-  //   ) {
-  //     history.push('/');
-  //   }
-  // }
+  if (!Cookies.get('token')) {
+    if (
+      // pathname.match(/(\/||\/register-.+)/gm)
+      pathname !== '/' &&
+      pathname !== '/register-teacher' &&
+      pathname !== '/register-student' &&
+      pathname !== '/forgot-password' &&
+      pathname !== '/reset-password'
+    ) {
+      history.push('/');
+    }
+  }
 
   return (
     <Switch>
