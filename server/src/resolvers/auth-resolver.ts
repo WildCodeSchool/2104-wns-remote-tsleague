@@ -31,23 +31,37 @@ class AuthResolver {
 
     const hashedPassword: string = await bcrypt.hash(password, 10);
 
-    const user = new UserModel({
+    let user = new UserModel({
       lastname,
       firstname,
       mail,
       password: hashedPassword,
-      classrooms: [classroom],
+      classrooms: [{ id: '', name: classroom }],
       role,
     });
 
     await user.save();
 
     if (role === 'teacher') {
-      const newClassroom = new ClassroomModel({
+      let newClassroom = new ClassroomModel({
         name: classroom,
-        teachers: user,
+        teachers: {
+          id: user._id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+        },
       });
       await newClassroom.save();
+
+      user = await UserModel.findOneAndUpdate(
+        { _id: user._id },
+        { classrooms: [{ id: newClassroom._id, name: newClassroom.name }] },
+        {
+          new: true,
+        },
+      );
+
+      await user.save();
 
       // ONLY FOR ROOM TESTING
       const studentUserId1: string = await uuid.generate();
@@ -58,7 +72,7 @@ class AuthResolver {
         firstname: 'user',
         mail: `user.${studentUserId1}@gmail.com`,
         password: hashedPassword,
-        classrooms: [classroom],
+        classrooms: [{ id: newClassroom._id, name: newClassroom.name }],
         role: 'student',
       });
 
@@ -67,13 +81,33 @@ class AuthResolver {
         firstname: 'user',
         mail: `user.${studentUserId2}@gmail.com`,
         password: hashedPassword,
-        classrooms: [classroom],
+        classrooms: [{ id: newClassroom._id, name: newClassroom.name }],
         role: 'student',
       });
 
       await studentUser1.save();
       await studentUser2.save();
 
+      newClassroom = await ClassroomModel.findOneAndUpdate(
+        { _id: newClassroom._id },
+        {
+          students: [
+            {
+              id: studentUser1._id,
+              firstname: studentUser1.firstname,
+              lastname: studentUser1.lastname,
+            },
+            {
+              id: studentUser2._id,
+              firstname: studentUser2.firstname,
+              lastname: studentUser2.lastname,
+            },
+          ],
+        },
+        {
+          new: true,
+        },
+      );
       // END FOR ROOM TESTING
 
       await sendMail({
@@ -86,6 +120,7 @@ class AuthResolver {
           studentUser2: `user.${studentUserId2}@gmail.com`,
         },
       });
+      return { id: user._id, ...user._doc, createdClassroom: newClassroom };
     }
 
     return { id: user._id, ...user._doc };
