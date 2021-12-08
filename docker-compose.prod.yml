@@ -1,27 +1,25 @@
 services:
-  client:
-    build: ./client
-    command: sh -c "npm run build"
-    volumes:
-      - ./client/src:/app/src
-      - web-client-build:/app/build
-  server:
-    build: ./server
-    ports:
-      - 5000
-    command: npm run dev
-    volumes:
-      - ./server/src:/server/src
-  nginx:
-    image: nginx:1.21.3
-    depends_on:
-      - server
-      - client
-    restart: always
-    ports:
-      - ${GATEWAY_PORT}:80
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - web-client-build:/web-client-build
+    client:
+        build: ./client
+        command: sh -c "npm run build"
+        volumes:
+            - web-client-build:/app/build
+    server:
+        build: ./server
+        command: sh -c "SERVER_STAGE=${SERVER_STAGE} npm run prod"
+    mongodb:
+        image: mongo:4.4.9
+    nginx:
+        image: nginx:1.21.3
+        depends_on:
+            - server
+            - client
+        restart: always
+        ports:
+            - ${GATEWAY_PORT}:80
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf
+            - web-client-build:/web-client-build
+            - ./logs:/var/log/nginx
 volumes:
-  web-client-build:
+    web-client-build:

@@ -16,7 +16,6 @@ function Login(): JSX.Element {
         <BackDrop />
         <div>
           <h2>Bienvenue sur PixeLearn</h2>
-          <h5>Connectez-vous pour continuer!</h5>
         </div>
       </StyledHeader>
       <StyledBody>

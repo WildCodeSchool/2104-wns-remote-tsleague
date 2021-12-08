@@ -1,7 +1,9 @@
 /* eslint-disable class-methods-use-this */
 import { Resolver, Query, Arg, Mutation } from 'type-graphql';
 import { UserModel, User } from '../models/users-model';
+
 import UserInput from './validator/userInput';
+
 // TODO => Handle error
 @Resolver(User)
 class UserResolver {

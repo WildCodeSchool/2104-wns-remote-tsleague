@@ -1,15 +1,37 @@
 import { Scene } from 'phaser';
+import { ClassMate } from '../redux/game/game.reducer';
 import store from '../redux/store';
-import GAME_ACTIONS from '../redux/game/game.types';
 
-const { STUDENT_MODAL_TOGGLE, STUDENT_GAME_POSITION } = GAME_ACTIONS;
+const getRandomPosition = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min) + min);
+};
 
 export default class PixeLearnScene extends Scene {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  cursors: any;
+  cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
+
+  tick = 0;
+
+  otherPlayers: Phaser.GameObjects.Sprite[] = [];
 
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  player: any;
+  player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+
+  addOtherPlayer = (classMate: ClassMate): void => {
+    const otherPlayer = this.add
+      .sprite(
+        Number(classMate.position.positionX),
+        Number(classMate.position.positionY),
+        'dude'
+      )
+      .setData('playerId', classMate.socketId);
+
+    this.otherPlayers.push(otherPlayer);
+  };
+
+  selectClassMateState = (state: any): ClassMate[] => {
+    return state.gameToggle.classMates;
+  };
 
   preload = (): void => {
     this.load.tilemapTiledJSON(
@@ -40,9 +62,7 @@ export default class PixeLearnScene extends Scene {
     const tilesRoomBuilder = map.addTilesetImage('tiles_room_builder');
 
     // add layers
-    const floorLayer = map
-      .createLayer('floor', tilesRoomBuilder, 0, 0)
-      .setDepth(-1);
+    map.createLayer('floor', tilesRoomBuilder, 0, 0).setDepth(-1);
     const wallsLayer = map.createLayer('walls', tilesRoomBuilder, 0, 0);
     const furnitureLayer = map.createLayer('furniture', tilesClassroom, 0, 0);
 
@@ -51,15 +71,30 @@ export default class PixeLearnScene extends Scene {
     wallsLayer.setCollisionByProperty({ isSolid: true });
 
     this.player = this.physics.add
-      .sprite(100, 400, 'dude')
+      .sprite(getRandomPosition(50, 1000), getRandomPosition(100, 500), 'dude')
       .setInteractive({ useHandCursor: true })
       .setSize(20, 50);
     this.player.setOffset(15, 35);
     this.player.on('pointerup', () => {
-      store.dispatch({ type: STUDENT_MODAL_TOGGLE });
+      store.dispatch({ type: 'STUDENT_MODAL_TOGGLE' });
     });
 
     this.player.setCollideWorldBounds(true); // Stops player from walking off the canvas
+    this.player.setOffset(15, 35);
+
+    store.subscribe(() => {
+      const initClassMatesState = this.selectClassMateState(store.getState());
+      initClassMatesState.forEach((classMate: ClassMate) => {
+        const playerAlreadyExist = this.otherPlayers.some(
+          (otherPlayer) =>
+            otherPlayer.data.values.playerId === classMate.socketId
+        );
+
+        if (!playerAlreadyExist) {
+          this.addOtherPlayer(classMate);
+        }
+      });
+    });
 
     this.anims.create({
       key: 'left',
@@ -107,34 +142,27 @@ export default class PixeLearnScene extends Scene {
   };
 
   update = (): void => {
-    // if (this.cursors.up.isDown && this.cursors.right.isDown) {
-    //   this.player.setVelocityX(160);
-    //   this.player.setVelocityY(-160);
-    // } else if (this.cursors.up.isDown && this.cursors.left.isDown) {
-    //   this.player.setVelocityX(-160);
-    //   this.player.setVelocityY(-160);
-    // } else if (this.cursors.down.isDown && this.cursors.right.isDown) {
-    //   this.player.setVelocityX(160);
-    //   this.player.setVelocityY(160);
-    // } else if (this.cursors.down.isDown && this.cursors.left.isDown) {
-    //   this.player.setVelocityX(-160);
-    //   this.player.setVelocityY(160);
+    let direction = 'turn';
 
     if (this.cursors.left.isDown) {
+      direction = 'left';
       this.player.setVelocityX(-160);
       this.player.setVelocityY(0); // Prevents unintentional diagonal movement
 
       this.player.anims.play('left', true);
     } else if (this.cursors.right.isDown) {
+      direction = 'right';
       this.player.setVelocityX(160);
       this.player.setVelocityY(0); // Prevents unintentional diagonal movement
 
       this.player.anims.play('right', true);
     } else if (this.cursors.up.isDown) {
+      direction = 'up';
       this.player.setVelocityY(-160);
       this.player.setVelocityX(0); // Prevents unintentional diagonal movement
       this.player.anims.play('up', true);
     } else if (this.cursors.down.isDown) {
+      direction = 'down';
       this.player.setVelocityY(160);
       this.player.setVelocityX(0); // Prevents unintentional diagonal movement
       this.player.anims.play('down', true);
@@ -144,12 +172,35 @@ export default class PixeLearnScene extends Scene {
 
       this.player.anims.play('turn');
     }
-    store.dispatch({
-      type: STUDENT_GAME_POSITION,
-      payload: {
-        positionX: this.player.x.toString(),
-        positionY: this.player.y.toString(),
-      },
+    if (this.time.now - this.tick > 100) {
+      store.dispatch({
+        type: 'STUDENT_GAME_POSITION',
+        payload: {
+          positionX: this.player.x.toString(),
+          positionY: this.player.y.toString(),
+          direction,
+        },
+      });
+      this.tick = this.time.now;
+    }
+
+    const classMateState = this.selectClassMateState(store.getState());
+
+    // UPDATE OTHER PLAYERS POSITIONS
+    classMateState.forEach((classMate: ClassMate) => {
+      this.otherPlayers.forEach((otherPlayer) => {
+        if (otherPlayer.data.values.playerId === classMate.socketId) {
+          if (!classMate.connected) {
+            otherPlayer.setActive(false);
+            otherPlayer.setVisible(false);
+          }
+          otherPlayer.setPosition(
+            Number(classMate.position.positionX),
+            Number(classMate.position.positionY)
+          );
+          otherPlayer.anims.play(classMate.direction, true);
+        }
+      });
     });
   };
 }
