@@ -47,7 +47,10 @@ class AuthResolver {
         teachers: user,
       });
       await newClassroom.save();
-      await sendMail({ templateName: 'teacherRegister', mail });
+      await sendMail({
+        templateName: 'teacherRegister',
+        data: { lastname, firstname, mail },
+      });
     }
 
     const token: string = jwt.sign(

@@ -4,7 +4,7 @@ module.exports = {
     'airbnb/hooks',
     'plugin:@typescript-eslint/recommended',
     'plugin:jest/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   plugins: ['react', '@typescript-eslint', 'jest'],
   env: {
@@ -26,7 +26,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: 'tsconfig.json',
   },
-  ignorePatterns: [".eslintrc.js", "./build"],
+  ignorePatterns: ['.eslintrc.js', './build'],
   rules: {
     'linebreak-style': 'off',
     'prettier/prettier': [

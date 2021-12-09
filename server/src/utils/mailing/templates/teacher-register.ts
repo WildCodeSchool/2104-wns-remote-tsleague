@@ -1,16 +1,20 @@
-type InputTeacherRegisterTemplate = {
-  firstname: string;
-  name: string;
+export type InputTeacherRegisterTemplate = {
+  mail: string;
+  firstname?: string;
+  lastname?: string;
 };
 
-function teacherRegister({ firstname, name }: InputTeacherRegisterTemplate): {
+function teacherRegister({
+  firstname = '',
+  lastname = '',
+}: InputTeacherRegisterTemplate): {
   subject: string;
   html: string;
 } {
   return {
     subject: 'Bienvenue sur Pixelearn',
     html: `
-    <p>Hello ${firstname} ${name}</p>
+    <p>Hello ${firstname} ${lastname}</p>
     <p>Bienvenue sur Pixelearn !</p>
     <p>Nous sommes absolument ravis de vous avoir à bord !</p>
     <p>Grâce à Pixelearn, vous pouvez à tout instant : </p>
