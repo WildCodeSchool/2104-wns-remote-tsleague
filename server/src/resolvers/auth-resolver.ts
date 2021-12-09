@@ -10,8 +10,9 @@ import {
   AuthLoginInput,
 } from '../types/authentication';
 import { UserModel } from '../models/users-model';
-import { ClassroomModel } from '../models/classrooms-model';
+import { Classroom, ClassroomModel } from '../models/classrooms-model';
 import sendMail from '../utils/mailing/send';
+import ClassroomResolver from './classrooms-resolver';
 
 @Resolver()
 class AuthResolver {
@@ -41,24 +42,38 @@ class AuthResolver {
 
     await user.save();
 
-    if (role === 'teacher') {
-      const newClassroom = new ClassroomModel({
-        name: classroom,
-        teachers: user,
-      });
-      await newClassroom.save();
-      await sendMail({
-        templateName: 'teacherRegister',
-        data: { lastname, firstname, mail },
-      });
-    } 
+    switch (role) {
+      case 'teacher':
+        const newClassroom = new ClassroomModel({
+          name: classroom,
+          teachers: user,
+        });
+        await newClassroom.save();
 
-    // if (role === 'student') {
-    //   await sendMail({
-    //     templateName: 'studentRegister',
-    //     data: { lastname, firstname, classroom, mail },
-    //   });
-    // }
+        await sendMail({
+          templateName: 'teacherRegister',
+          data: { lastname, firstname, mail },
+        });
+        break;
+      case 'student':
+         await UserModel.findOneAndUpdate(
+           { classroom: classroom},
+           { students: {firstname: firstname, lastname: lastname}},
+           {
+             new: true,
+          },
+         );
+         
+        await sendMail({
+          templateName: 'studentRegister',
+           data: { lastname, firstname, classroom, mail },
+         });
+        break;
+      default:
+        throw new Error(
+          "L'utilisateur n'a pas de rôle identifiable"
+        );
+    }
 
     const token: string = jwt.sign(
       { id: user._id, mail },

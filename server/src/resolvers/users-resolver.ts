@@ -46,27 +46,6 @@ class UserResolver {
     await sendMail({ templateName: 'forgotPassword', data: { mail, token } });
   }
 
-  @Mutation(() => User, { nullable: true })
-  async addStudent(
-  @Arg('email', () => String) mail: string, 
-  @Arg('classrooms', () => String) classroom: string,
-  @Arg('firstname', () => String) firstname: string,
-  @Arg('lastname', () => String) lastname: string) {
-    const user = await UserModel.findOne({ mail });
-    if (user) {
-      throw new Error(
-        "L'email renseigné est déjà utilisée, merci d'en utiliser un autre",
-      );
-    }
-    
-    const token: string = jwt.sign(
-      { mail },
-      process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
-      { expiresIn: '1h' },
-    );
-    await sendMail({ templateName: 'studentRegister', data: { firstname, lastname, classroom, mail } });
-  }
-
   @Mutation(() => User)
   public async updateUser(@Arg('input') userInput: UserInput) {
     const user = await UserModel.findOneAndUpdate(
