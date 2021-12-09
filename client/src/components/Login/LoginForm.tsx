@@ -16,7 +16,9 @@ const USER_LOGIN = gql`
       id
       firstname
       lastname
-      classrooms
+      classrooms {
+        id
+      }
       role
       token
     }
