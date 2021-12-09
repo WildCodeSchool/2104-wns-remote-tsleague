@@ -11,19 +11,10 @@ const buildSocketMiddleware: (socket: Socket) => Middleware =
       case 'STUDENT_GAME_POSITION':
         // TODO detect if postion changed and emit
         if (
-          (prevPosition &&
-            action.payload.positionX !== prevPosition.positionX) ||
-          (prevPosition && action.payload.positionY !== prevPosition.positionY)
+          action.payload.positionX !== prevPosition?.positionX ||
+          action.payload.positionY !== prevPosition?.positionY
         ) {
           socket.emit('studentPlayer', action.payload);
-        }
-
-        if (state.user.userData.id !== '') {
-          const playerIds = {
-            id: state.user.userData.id,
-            classroomId: state.user.userData.classrooms[0],
-          };
-          socket.emit('IDs', playerIds);
         }
         break;
       default:

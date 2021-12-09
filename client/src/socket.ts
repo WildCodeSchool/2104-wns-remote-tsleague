@@ -13,6 +13,8 @@ socket.on('socketId', (arg): void => {
   console.log(`new mate connected with id ${socketId}`);
 });
 
+socket.on('roomJoined', (arg: string) => console.log(`you joined room ${arg}`));
+
 socket.on('currentPlayers', (payload) => {
   store.dispatch({
     type: 'CLASSMATES_GAME_POSITION',

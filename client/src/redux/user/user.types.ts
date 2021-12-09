@@ -2,12 +2,18 @@ export type UserState = {
   readonly userData: UserData;
 };
 
+export type UserClassRoom = {
+  id: string;
+  name: string;
+  __typename: string;
+};
+
 export type UserData = {
   readonly id: string;
   readonly lastname: string;
   readonly firstname: string;
   readonly role: string;
-  readonly classrooms: string[];
+  readonly classrooms: Partial<UserClassRoom>[];
   readonly token: string;
 };
 
