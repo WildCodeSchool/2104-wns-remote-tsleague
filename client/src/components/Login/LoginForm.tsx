@@ -4,7 +4,7 @@ import { Formik, Form } from 'formik';
 import { gql, useMutation } from '@apollo/client';
 import Cookies from 'js-cookie';
 
-import { StyledBox } from '../styles/Login';
+import { StyledBox, ErrorMsg } from '../styles/Authentication';
 import { validationSchemaLogin } from '../../form/validationSchema';
 import Button from '../common/Button';
 import Input from '../common/Input';
@@ -20,7 +20,7 @@ const USER_LOGIN = gql`
 
 function LoginForm(): JSX.Element {
   const [loginMutation] = useMutation(USER_LOGIN);
-  const [loginError, setLoginError] = useState('');
+  const [requestError, setRequestError] = useState('');
   const history = useHistory();
 
   const login = async ({
@@ -29,8 +29,7 @@ function LoginForm(): JSX.Element {
   }: {
     email: string;
     password: string;
-  }) => {
-    setLoginError('');
+  }): Promise<void> => {
     try {
       const { data } = await loginMutation({
         variables: {
@@ -41,11 +40,12 @@ function LoginForm(): JSX.Element {
         },
       });
       Cookies.set('token', data.login.token);
-      return history.push('/game');
+      history.push('/game');
     } catch (error: any) {
-      return setLoginError(error.message);
+      setRequestError(error.message);
     }
   };
+
   return (
     <StyledBox>
       <Formik
@@ -72,11 +72,12 @@ function LoginForm(): JSX.Element {
               touched={touched.password}
               placeholder="Votre mot de passe"
             />
+            {requestError ? <ErrorMsg>{requestError}</ErrorMsg> : ''}
             <Button text="Connectez-vous" type="submit" buttonStyle="submit" />
           </Form>
         )}
       </Formik>
-      <Link to="/">Vous avez oublié votre mot de passe ?</Link>
+      <Link to="/forgot-password">Vous avez oublié votre mot de passe ?</Link>
       <Link to="/register-teacher">Créer un compte</Link>
     </StyledBox>
   );

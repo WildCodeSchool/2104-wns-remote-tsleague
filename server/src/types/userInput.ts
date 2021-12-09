@@ -1,7 +1,7 @@
 import { InputType, Field } from 'type-graphql';
 
 @InputType()
-export default class UserInput {
+export class UserInput {
   readonly id!: string;
 
   @Field()
@@ -24,4 +24,13 @@ export default class UserInput {
 
   @Field(() => [String])
   classrooms!: string[];
+}
+
+@InputType()
+export class ResetPasswordInput {
+  @Field()
+  mail!: string;
+
+  @Field()
+  password!: string;
 }

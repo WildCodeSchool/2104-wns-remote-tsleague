@@ -6,7 +6,7 @@ import {
   StyledHeader,
   BackDrop,
   StyledBody,
-} from '../styles/Login';
+} from '../styles/Authentication';
 import LoginForm from './LoginForm';
 
 function Login(): JSX.Element {
