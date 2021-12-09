@@ -18,9 +18,9 @@ export default function startSocket(): void {
   io.on('connection', async (socket: Socket): Promise<void> => {
     console.log(`connected with id ${socket.id}`);
 
-    socket.on('createRoom', (classroomId: string) => {
+    socket.on('createRoom', async (classroomId: string) => {
       room = classroomId;
-      const alreadyExist = playerAlreadyExist(players, socket.id);
+      const alreadyExist = await playerAlreadyExist(players, socket.id);
       if (!alreadyExist) {
         players.push({
           socketId: socket.id,
@@ -61,7 +61,7 @@ export default function startSocket(): void {
           },
           direction: payload.direction,
           connected: true,
-          classroom: '',
+          classroom: room,
         });
       }
       players = await updatePlayersPosition(players, socket.id, payload);
