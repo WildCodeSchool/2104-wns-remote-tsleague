@@ -56,14 +56,14 @@ class AuthResolver {
         });
         break;
       case 'student':
-         await UserModel.findOneAndUpdate(
-           { classroom: classroom},
-           { students: {firstname: firstname, lastname: lastname}},
-           {
+        await ClassroomModel.findOneAndUpdate(
+           { classroom },
+           { students: user },
+            {
              new: true,
-          },
-         );
-         
+            },
+          );
+                
         await sendMail({
           templateName: 'studentRegister',
            data: { lastname, firstname, classroom, mail },
