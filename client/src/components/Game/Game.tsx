@@ -11,7 +11,7 @@ type PropsType = {
   studentModalProps: boolean;
 };
 type State = {
-  gameToggle: {
+  game: {
     studentModal: boolean;
   };
 };
@@ -32,7 +32,7 @@ function Game({ studentModalProps }: PropsType): JSX.Element {
 }
 
 const mapStateToProps = (state: State) => ({
-  studentModalProps: state.gameToggle.studentModal,
+  studentModalProps: state.game.studentModal,
 });
 
 export default connect(mapStateToProps)(Game);
