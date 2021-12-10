@@ -1,4 +1,5 @@
-type InputTeacherRegisterTemplate = {
+export type InputTeacherRegisterTemplate = {
+  mail: string;
   firstname: string;
   lastname: string;
   studentUser1?: string;
@@ -6,8 +7,8 @@ type InputTeacherRegisterTemplate = {
 };
 
 function teacherRegister({
-  firstname,
-  lastname,
+  firstname = '',
+  lastname = '',
   studentUser1,
   studentUser2,
 }: InputTeacherRegisterTemplate): {

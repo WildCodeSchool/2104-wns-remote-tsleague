@@ -30,6 +30,7 @@ async function send({
   const { subject, html } = templates[templateName]({
     firstname,
     lastname,
+    mail,
     ...additionalParameters,
   });
 
