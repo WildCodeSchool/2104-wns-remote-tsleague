@@ -6,6 +6,7 @@ export type ClassMate = {
   socketId: string;
   direction: string;
   connected: boolean;
+  classroom: string;
 };
 
 export type GameState = {

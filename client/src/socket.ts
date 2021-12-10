@@ -8,6 +8,7 @@ const socket =
     : io({ autoConnect: false });
 
 let socketId: string;
+
 socket.on('socketId', (arg): void => {
   socketId = arg;
   console.log(`new mate connected with id ${socketId}`);
@@ -16,7 +17,6 @@ socket.on('socketId', (arg): void => {
 socket.on('roomJoined', (arg: string) => console.log(`you joined room ${arg}`));
 
 socket.on('currentPlayers', (payload) => {
-  console.log(payload);
   store.dispatch({
     type: 'CLASSMATES_GAME_POSITION',
     socketId,
@@ -25,7 +25,6 @@ socket.on('currentPlayers', (payload) => {
 });
 
 socket.on('newPlayers', (payload) => {
-  console.log(payload);
   store.dispatch({
     type: 'CLASSMATES_GAME_POSITION',
     socketId,
