@@ -1,5 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { Field, InputType, ObjectType } from 'type-graphql';
+import { Classroom } from '../models/classrooms-model';
+import { UserClassroom } from '../resolvers/validator/classroomInput';
 
 @InputType()
 export class AuthRegisterInput {
@@ -45,9 +47,12 @@ export class AuthRegisterResponse {
   @Field()
   role!: string;
 
-  @Field(() => [String])
-  classrooms!: string[];
+  @Field(() => [Classroom])
+  classrooms!: Classroom[];
 
   @Field()
   token!: string;
+
+  @Field()
+  createdClassroom?: Classroom;
 }

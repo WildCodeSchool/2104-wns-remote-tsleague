@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import { gql, useMutation } from '@apollo/client';
-import Cookies from 'js-cookie';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 
 import { StyledBox, ErrorMsg } from '../styles/Authentication';
@@ -23,7 +22,6 @@ const USER_REGISTER = gql`
   mutation Register($body: AuthRegisterInput!) {
     register(body: $body) {
       id
-      token
     }
   }
 `;
@@ -41,7 +39,7 @@ function RegistrationForm(): JSX.Element {
   const register = async (formData: FormData): Promise<void> => {
     const { firstname, lastname, mail, password, classroom } = formData;
     try {
-      const { data } = await registerMutation({
+      await registerMutation({
         variables: {
           body: {
             lastname,
@@ -53,7 +51,6 @@ function RegistrationForm(): JSX.Element {
           },
         },
       });
-      Cookies.set('token', data.register.token);
       history.push('/');
     } catch (error: any) {
       setRequestError(error.message);

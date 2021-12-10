@@ -8,6 +8,7 @@ export type Player = {
   position: Position;
   direction: string;
   connected: boolean;
+  classroom: string;
 };
 
 export type StudentPlayerMoves = {

@@ -1,25 +1,11 @@
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import { Player, StudentPlayerMoves } from './helpers/types';
-
-const updatePlayersPosition = async (
-  players: Player[],
-  socketId: string,
-  payload: StudentPlayerMoves,
-): Promise<Player[]> => players.map((player: Player) => {
-  if (player.socketId === socketId) {
-    return {
-      ...player,
-      position: {
-        positionX: payload.positionX,
-        positionY: payload.positionY,
-      },
-      direction: payload.direction,
-    };
-  }
-
-  return player;
-});
+import {
+  filterPlayersByRoom,
+  playerAlreadyExist,
+  updatePlayersPosition,
+} from './utils/playersUtils';
 
 export default function startSocket(): void {
   const httpServer = createServer();
@@ -31,43 +17,57 @@ export default function startSocket(): void {
   }).listen(httpServer);
 
   let players: Player[] = [];
-
-  io.on('connection', (socket: Socket): void => {
+  io.on('connection', async (socket: Socket): Promise<void> => {
     console.log(`connected with id ${socket.id}`);
 
-    socket.emit('currentPlayers', players);
-
-    socket.emit('socketId', socket.id);
-
-    socket.on('disconnect', () => {
-      console.log(`${socket.id} disconnected`);
-      players = players.filter((player) => player.socketId !== socket.id);
-
-      socket.broadcast.emit('logout', socket.id);
-    });
-
-    socket.on('studentPlayer', async (payload: StudentPlayerMoves) => {
-      const playerAlreadyExist = players.some(
-        (player) => player.socketId === socket.id,
-      );
-      if (!playerAlreadyExist) {
+    socket.on('createRoom', async (classroomId: string) => {
+      const alreadyExist = await playerAlreadyExist(players, socket.id);
+      if (!alreadyExist) {
         players.push({
           socketId: socket.id,
           position: {
-            positionX: payload.positionX,
-            positionY: payload.positionY,
+            positionX: '',
+            positionY: '',
           },
-          direction: payload.direction,
+          direction: '',
           connected: true,
+          classroom: classroomId,
         });
       }
+      socket.join(classroomId);
+      socket.emit('roomJoined', classroomId);
+      console.log(socket.rooms);
 
-      players = await updatePlayersPosition(players, socket.id, payload);
+      socket.emit('socketId', socket.id);
 
-      socket.broadcast.emit('newPlayers', players);
+      // FILTRER SUR LA CLASSROOM ID POUR ENVOYER A LA BONNE ROOM
+      const currentPlayersFilteredByRoom = await filterPlayersByRoom(
+        players,
+        classroomId,
+      );
+      socket.emit('currentPlayers', currentPlayersFilteredByRoom);
+
+      socket.on('studentPlayer', async (payload: StudentPlayerMoves) => {
+        players = await updatePlayersPosition(players, socket.id, payload);
+
+        // FILTRER SUR LA CLASSROOM ID POUR ENVOYER A LA BONNE ROOM
+        const newPlayersFilteredByRoom = await filterPlayersByRoom(
+          players,
+          classroomId,
+        );
+        io.to(classroomId).emit('newPlayers', newPlayersFilteredByRoom);
+      });
+
+      socket.on('disconnect', () => {
+        console.log(`${socket.id} disconnected`);
+        players = players.filter((player) => player.socketId !== socket.id);
+
+        socket.to(classroomId).emit('logout', socket.id);
+      });
     });
   });
-  const port = 6000;
+
+  const port = 4000;
   console.log(`Socket server started at port ${port}`);
   httpServer.listen(port);
 }

@@ -1,20 +1,22 @@
 import nodemailer from 'nodemailer';
-import { InputForgotPasswordTemplate } from './templates/forgot-password';
-import { InputTeacherRegisterTemplate } from './templates/teacher-register';
-import { InputStudentRegisterTemplate } from './templates/student-register';
 
 import * as templates from './templates';
 
 type SendInput = {
-  templateName: 'teacherRegister' | 'studentRegister' | 'forgotPassword';
-  data:
-    | InputTeacherRegisterTemplate
-    | InputStudentRegisterTemplate
-    | InputForgotPasswordTemplate;
+  templateName: 'teacherRegister';
+  mail: string;
+  firstname?: string;
+  lastname?: string;
+  additionalParameters?: Object;
 };
 
-async function send({ templateName, data }: SendInput): Promise<void> {
-  const { mail } = data;
+async function send({
+  templateName,
+  mail,
+  firstname = '',
+  lastname = '',
+  additionalParameters = {},
+}: SendInput): Promise<void> {
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     host: 'smtp.laposte.net',
@@ -25,7 +27,12 @@ async function send({ templateName, data }: SendInput): Promise<void> {
     },
   });
 
-  const { subject, html } = templates[templateName](data);
+  const { subject, html } = templates[templateName]({
+    firstname,
+    lastname,
+    mail,
+    ...additionalParameters,
+  });
 
   const info = await transporter.sendMail({
     from: '"Pixelearn 🏫" <pixelearn@laposte.net>',
@@ -33,6 +40,8 @@ async function send({ templateName, data }: SendInput): Promise<void> {
     subject,
     html,
   });
+
+  console.log('html:', html);
 
   console.log('Message sent: %s', info.messageId);
   console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
