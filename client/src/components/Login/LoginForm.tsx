@@ -4,6 +4,7 @@ import { Formik, Form } from 'formik';
 import { gql, useMutation } from '@apollo/client';
 import Cookies from 'js-cookie';
 
+import { useDispatch } from 'react-redux';
 import { StyledBox, ErrorMsg } from '../styles/Authentication';
 import { validationSchemaLogin } from '../../form/validationSchema';
 import Button from '../common/Button';
@@ -13,12 +14,19 @@ const USER_LOGIN = gql`
   mutation Login($body: AuthLoginInput!) {
     login(body: $body) {
       id
+      firstname
+      lastname
+      classrooms {
+        id
+      }
+      role
       token
     }
   }
 `;
 
 function LoginForm(): JSX.Element {
+  const dispatch = useDispatch();
   const [loginMutation] = useMutation(USER_LOGIN);
   const [requestError, setRequestError] = useState('');
   const history = useHistory();
@@ -40,6 +48,8 @@ function LoginForm(): JSX.Element {
         },
       });
       Cookies.set('token', data.login.token);
+      delete data.login.token;
+      dispatch({ type: 'USER_FETCH_DATA', payload: data.login });
       history.push('/game');
     } catch (error: any) {
       setRequestError(error.message);

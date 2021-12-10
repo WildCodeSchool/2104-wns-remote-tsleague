@@ -3,17 +3,18 @@ import { io } from 'socket.io-client';
 import store from './redux/store';
 
 const socket =
-  process.env.NODE_ENV === 'development' ? io('http://localhost:6000') : io();
-
-socket.on('connect', () => {
-  console.log(`log to socket server with id ${socket.id}`);
-});
+  process.env.NODE_ENV === 'development'
+    ? io('http://localhost:4000', { autoConnect: false })
+    : io({ autoConnect: false });
 
 let socketId: string;
+
 socket.on('socketId', (arg): void => {
   socketId = arg;
   console.log(`new mate connected with id ${socketId}`);
 });
+
+socket.on('roomJoined', (arg: string) => console.log(`you joined room ${arg}`));
 
 socket.on('currentPlayers', (payload) => {
   store.dispatch({
