@@ -37,7 +37,11 @@ class UserResolver {
       process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
       { expiresIn: '1h' },
     );
-    await sendMail({ templateName: 'forgotPassword', data: { mail, token } });
+    await sendMail({
+      templateName: 'forgotPassword',
+      mail,
+      additionalParameters: { token },
+    });
   }
 
   @Mutation(() => User)
