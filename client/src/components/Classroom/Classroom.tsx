@@ -1,36 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
+import { getClassroomModal } from '../../redux/modal/modal.reducers';
 import { StyledClassroom, StyledSection } from '../styles/Classroom';
 import ClassroomItem from './ClassroomItem';
+import ClassroomForm from './ClassroomForm';
 
-import { students, teachers } from './mock';
+import { students } from './mock';
+import ClassroomAddStudent from './ClassroomAddStudent';
 
 function Classroom(): JSX.Element {
-  let role;
-  role = 'studnt';
+  const classroomModal = useSelector(getClassroomModal);
+  const [handleClassroom, setHandleClassroom] = useState(classroomModal);
+  console.log(classroomModal);
+
+  useEffect(() => {}, [classroomModal]);
+
+  if (handleClassroom) {
+    return <></>;
+  }
 
   return (
     <StyledClassroom>
-      <button onClick={() => (role = 'teacher')}>teacher</button>
-      {role === 'student' && (
-        <StyledSection>
-          <h3>CLASSES</h3>
-          <div>
-            {teachers.map((elt) => (
-              <ClassroomItem
-                key={elt.id}
-                fullName={elt.fullName}
-                role={elt.role}
-                picture={elt.picture}
-              />
-            ))}
-          </div>
-        </StyledSection>
-      )}
-
       <StyledSection>
         <h3>ÉLÈVES</h3>
         <div>
+          <ClassroomAddStudent />
           {students.map((elt) => (
             <ClassroomItem
               key={elt.id}
@@ -39,6 +34,10 @@ function Classroom(): JSX.Element {
             />
           ))}
         </div>
+      </StyledSection>
+
+      <StyledSection>
+        <ClassroomForm />
       </StyledSection>
     </StyledClassroom>
   );
