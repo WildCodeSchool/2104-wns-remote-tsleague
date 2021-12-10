@@ -7,6 +7,8 @@ services:
     server:
         build: ./server
         command: sh -c "SERVER_STAGE=${SERVER_STAGE} npm run start:prod"
+        environment:
+            - DOTENVENC_KEY=${DOTENVENC_KEY}
     mongodb:
         image: mongo:4.4.9
     nginx:
