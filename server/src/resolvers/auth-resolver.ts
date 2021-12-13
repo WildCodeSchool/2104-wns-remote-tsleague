@@ -55,10 +55,11 @@ class AuthResolver {
           data: { lastname, firstname, mail },
         });
         break;
+        
       case 'student':
         await ClassroomModel.findOneAndUpdate(
-           { classroom },
-           { students: user },
+           { name: classroom },
+           { $push: { students: user } },
             {
              new: true,
             },
