@@ -1,16 +1,10 @@
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import {
-  Resolver,
-  Query,
-  Arg,
-  Mutation,
-} from 'type-graphql';
+import { Resolver, Query, Arg, Mutation } from 'type-graphql';
 import { UserModel, User } from '../models/users-model';
-import { UserInput, ResetPasswordInput } from './validator/userInput';
+import { UserInput, ResetPasswordInput } from '../types/userInput';
 import sendMail from '../utils/mailing/send';
-import { first_name } from 'casual';
 
 // TODO => Handle error
 @Resolver(User)
@@ -43,7 +37,11 @@ class UserResolver {
       process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
       { expiresIn: '1h' },
     );
-    await sendMail({ templateName: 'forgotPassword', data: { mail, token } });
+    await sendMail({
+      templateName: 'forgotPassword',
+      mail,
+      additionalParameters: { token },
+    });
   }
 
   @Mutation(() => User)

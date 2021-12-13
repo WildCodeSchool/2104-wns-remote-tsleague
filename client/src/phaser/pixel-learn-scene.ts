@@ -1,5 +1,6 @@
 import { Scene } from 'phaser';
-import { ClassMate } from '../redux/game/game.reducer';
+import { ClassMate } from '../redux/game/game.types';
+import { State } from '../redux/root-reducer';
 import store from '../redux/store';
 
 const getRandomPosition = (min: number, max: number): number => {
@@ -29,8 +30,8 @@ export default class PixeLearnScene extends Scene {
     this.otherPlayers.push(otherPlayer);
   };
 
-  selectClassMateState = (state: any): ClassMate[] => {
-    return state.gameToggle.classMates;
+  selectClassMateState = (state: State): ClassMate[] => {
+    return state.game.classMates;
   };
 
   preload = (): void => {

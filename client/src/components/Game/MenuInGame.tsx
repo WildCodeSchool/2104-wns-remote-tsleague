@@ -10,7 +10,7 @@ type PropsType = {
   };
 };
 type State = {
-  gameToggle: PropsType;
+  game: PropsType;
 };
 
 function MenuInGame({ studentGamePosition }: PropsType): JSX.Element {
@@ -37,7 +37,7 @@ function MenuInGame({ studentGamePosition }: PropsType): JSX.Element {
 }
 
 const mapStateToProps = (state: State) => ({
-  studentGamePosition: state.gameToggle.studentGamePosition,
+  studentGamePosition: state.game.studentGamePosition,
 });
 
 export default connect(mapStateToProps)(MenuInGame);

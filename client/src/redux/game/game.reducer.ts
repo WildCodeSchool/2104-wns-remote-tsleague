@@ -1,4 +1,4 @@
-import type { Action } from './game.actions';
+import { ClassMate, GameAction, GameState } from './game.types';
 
 const initialGameState = {
   studentModal: false,
@@ -7,27 +7,10 @@ const initialGameState = {
   logoutClassMates: [],
 };
 
-export type ClassMate = {
-  position: {
-    positionX: string;
-    positionY: string;
-  };
-  socketId: string;
-  direction: string;
-  connected: boolean;
-};
-
-export type State = {
-  studentModal: boolean;
-  studentGamePosition?: {
-    positionX: string;
-    positionY: string;
-  };
-  classMates: ClassMate[];
-  logoutClassMates: string[];
-};
-
-const gameReducer = (state = initialGameState, action: Action): State => {
+const gameReducer = (
+  state = initialGameState,
+  action: GameAction
+): GameState => {
   switch (action.type) {
     case 'STUDENT_MODAL_TOGGLE': {
       return { ...state, studentModal: !state.studentModal };

@@ -17,7 +17,9 @@ import store from './redux/store';
 
 import 'normalize.css';
 
-const httpLink = createHttpLink({ uri: 'http://localhost:5050/graphql' });
+const httpLink = createHttpLink({
+  uri: `/graphql`,
+});
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from cookies if it exists

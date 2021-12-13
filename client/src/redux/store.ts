@@ -1,7 +1,7 @@
 // REDUX
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import socketMiddleware from './middleware/socket-middleware';
+import socketMiddleware from './_middleware/socket-middleware';
 // eslint-disable-next-line import/no-cycle
 import socket from '../socket';
 
