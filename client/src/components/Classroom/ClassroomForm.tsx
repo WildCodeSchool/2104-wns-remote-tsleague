@@ -58,7 +58,7 @@ function ClassroomForm(): JSX.Element {
       validationSchema={validationSchemaLogin}
       onSubmit={(data: FormData) => login(data)}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, handleReset }) => (
         <Form>
           <Input
             name="lastname"
@@ -101,12 +101,13 @@ function ClassroomForm(): JSX.Element {
             fullWidth
           />
           {requestError ? <ErrorMsg>{requestError}</ErrorMsg> : ''}
+          <Button text="Ajouter un élève" type="submit" buttonStyle="submit" />
           <Button
-            text="sauvegarder modification"
-            type="submit"
-            buttonStyle="submit"
+            text="annuler"
+            type="button"
+            buttonStyle="reverse"
+            handleClick={handleReset}
           />
-          <Button text="annuler" type="button" buttonStyle="reverse" />
         </Form>
       )}
     </Formik>

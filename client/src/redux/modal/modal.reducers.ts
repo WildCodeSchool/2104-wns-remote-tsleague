@@ -1,17 +1,13 @@
-import MODAL_ACTIONS from './modal.types';
+import MODAL_ACTIONS, { ModalState } from './modal.types';
 import { Action } from './modal.actions';
 
 const { CLASSROOM_MODAL_TOGGLE } = MODAL_ACTIONS;
-
-type State = {
-  classroomModal: boolean;
-};
 
 const initialGameState = {
   classroomModal: false,
 };
 
-const modalReducer = (state = initialGameState, action: Action): State => {
+export default (state = initialGameState, action: Action): ModalState => {
   switch (action.type) {
     case CLASSROOM_MODAL_TOGGLE:
       return { ...state, classroomModal: !state.classroomModal };
@@ -19,9 +15,3 @@ const modalReducer = (state = initialGameState, action: Action): State => {
       return state;
   }
 };
-
-// export const getModals = (state: State) => {
-//   return state.modals;
-// };
-
-export default modalReducer;

@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { getClassroomModal } from '../../redux/modal/modal.reducers';
 import { StyledClassroom, StyledSection } from '../styles/Classroom';
 import ClassroomItem from './ClassroomItem';
 import ClassroomForm from './ClassroomForm';
-
 import { students } from './mock';
 import ClassroomAddStudent from './ClassroomAddStudent';
+import { State } from '../../redux/root-reducer';
 
 function Classroom(): JSX.Element {
-  const classroomModal = useSelector(getClassroomModal);
-  const [handleClassroom, setHandleClassroom] = useState(classroomModal);
-  console.log(classroomModal);
+  const classroomModal = useSelector(
+    (state: State) => state.modals.classroomModal
+  );
 
-  useEffect(() => {}, [classroomModal]);
-
-  if (handleClassroom) {
+  if (classroomModal) {
     return <></>;
   }
 
