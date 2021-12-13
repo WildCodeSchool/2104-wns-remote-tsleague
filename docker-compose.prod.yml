@@ -1,7 +1,7 @@
 services:
     client:
         build: ./client
-        command: sh -c "npm run build"
+        command: sh -c "REACT_APP_GATEWAY_PORT=${GATEWAY_PORT} npm run build"
         volumes:
             - web-client-build:/app/build
     server:
