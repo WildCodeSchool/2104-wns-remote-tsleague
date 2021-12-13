@@ -11,8 +11,9 @@ import {
   AuthLoginInput,
 } from '../types/authentication';
 import { UserModel } from '../models/users-model';
-import { ClassroomModel } from '../models/classrooms-model';
+import { Classroom, ClassroomModel } from '../models/classrooms-model';
 import sendMail from '../utils/mailing/send';
+import ClassroomResolver from './classrooms-resolver';
 
 @Resolver()
 class AuthResolver {
