@@ -6,9 +6,7 @@ services:
             - web-client-build:/app/build
     server:
         build: ./server
-        command: sh -c "SERVER_STAGE=${SERVER_STAGE} npm run start:prod"
-        environment:
-            - DOTENVENC_KEY=${DOTENVENC_KEY}
+        command: sh -c "DOTENVENC_KEY=${DOTENVENC_KEY} SERVER_STAGE=${SERVER_STAGE} npm run start:prod"
     mongodb:
         image: mongo:4.4.9
     nginx:
