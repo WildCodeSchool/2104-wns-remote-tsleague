@@ -18,7 +18,7 @@ import store from './redux/store';
 import 'normalize.css';
 
 const httpLink = createHttpLink({
-  uri: `http://localhost:${process.env.REACT_APP_GATEWAY_PORT}/graphql`,
+  uri: `/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
