@@ -1,12 +1,14 @@
 services:
     client:
         build: ./client
-        command: sh -c "npm run build"
+        command: sh -c "REACT_APP_GATEWAY_PORT=${GATEWAY_PORT} npm run build"
         volumes:
             - web-client-build:/app/build
     server:
         build: ./server
-        command: sh -c "SERVER_STAGE=${SERVER_STAGE} npm run prod"
+        command: sh -c "SERVER_STAGE=${SERVER_STAGE} npm run start:prod"
+        environment:
+            - DOTENVENC_KEY=${DOTENVENC_KEY}
     mongodb:
         image: mongo:4.4.9
     nginx:
