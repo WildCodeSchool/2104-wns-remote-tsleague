@@ -10,15 +10,21 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import Cookies from 'js-cookie';
+import { PersistGate } from 'redux-persist/integration/react';
 import Router from './components/Router';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import store from './redux/store';
+import { store, persistor } from './redux/store';
 
 import 'normalize.css';
 
+const URI =
+  process.env.NODE_ENV === 'production'
+    ? '/graphql'
+    : 'http://localhost:5000/graphql';
+
 const httpLink = createHttpLink({
-  uri: `/graphql`,
+  uri: URI,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -42,9 +48,11 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+        </PersistGate>
       </Provider>
     </ApolloProvider>
   </React.StrictMode>,

@@ -22,7 +22,7 @@ export default {
       useFindAndModify: false,
     },
     uri: 'mongodb://mongodb:27017/pixelearn-dev',
-    apolloPort: 5050,
+    apolloPort: 5000,
     autoListen: false,
     verbose: true,
     urlFront: 'http://localhost:8080/',
