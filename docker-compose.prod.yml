@@ -14,7 +14,7 @@ services:
         depends_on:
             - server
             - client
-        restart: always
+        restart: unless-stopped
         ports:
             - ${GATEWAY_PORT}:80
         volumes:
