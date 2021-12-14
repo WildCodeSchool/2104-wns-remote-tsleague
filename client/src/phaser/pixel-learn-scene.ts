@@ -1,7 +1,7 @@
 import { Scene } from 'phaser';
 import { ClassMate } from '../redux/game/game.types';
 import { State } from '../redux/root-reducer';
-import store from '../redux/store';
+import { store } from '../redux/store';
 
 const getRandomPosition = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min) + min);
@@ -173,7 +173,7 @@ export default class PixeLearnScene extends Scene {
 
       this.player.anims.play('turn');
     }
-    if (this.time.now - this.tick > 100) {
+    if (this.time.now - this.tick > 30) {
       store.dispatch({
         type: 'STUDENT_GAME_POSITION',
         payload: {
