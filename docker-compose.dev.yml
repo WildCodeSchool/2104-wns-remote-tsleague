@@ -8,7 +8,7 @@ services:
   server:
     build: ./server
     ports:
-      - 5050:5000
+      - 5000:5000
       - 4000:4000
     command: yarn start:dev
     volumes:
