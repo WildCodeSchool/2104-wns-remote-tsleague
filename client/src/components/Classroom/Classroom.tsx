@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { StyledClassroom, StyledSection } from '../styles/Classroom';
@@ -12,6 +12,7 @@ function Classroom(): JSX.Element {
   const classroomModal = useSelector(
     (state: State) => state.modals.classroomModal
   );
+  const [handleClassroomForm, setHandleClassroomForm] = useState(false);
 
   if (classroomModal) {
     return <></>;
@@ -22,7 +23,9 @@ function Classroom(): JSX.Element {
       <StyledSection>
         <h3>ÉLÈVES</h3>
         <div>
-          <ClassroomAddStudent />
+          <ClassroomAddStudent
+            onClick={() => setHandleClassroomForm(!handleClassroomForm)}
+          />
           {students.map((elt) => (
             <ClassroomItem
               key={elt.id}
@@ -33,9 +36,13 @@ function Classroom(): JSX.Element {
         </div>
       </StyledSection>
 
-      <StyledSection>
-        <ClassroomForm />
-      </StyledSection>
+      {handleClassroomForm ? (
+        <StyledSection>
+          <ClassroomForm />
+        </StyledSection>
+      ) : (
+        ''
+      )}
     </StyledClassroom>
   );
 }

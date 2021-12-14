@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { colors } from './globals';
 
+interface StyledItemProps {
+  hover?: boolean;
+}
+
 export const StyledClassroom = styled.div`
   position: absolute;
   left: 20%;
@@ -26,7 +30,7 @@ export const StyledSection = styled.div`
   }
 `;
 
-export const StyledItem = styled.div`
+export const StyledItem = styled.div<StyledItemProps>`
   width: 95%;
   background: #ffffff;
   border-radius: 11px;
@@ -36,6 +40,10 @@ export const StyledItem = styled.div`
 
   display: flex;
   align-items: center;
+
+  &:hover {
+    cursor: ${(props) => (props.hover ? 'pointer' : 'default')};
+  }
 
   img,
   span {
