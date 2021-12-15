@@ -1,4 +1,8 @@
 export type ClassMate = {
+  readonly id: string;
+  lastname: string;
+  firstname: string;
+  role: string;
   position: {
     positionX: string;
     positionY: string;
