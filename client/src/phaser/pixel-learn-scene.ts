@@ -7,6 +7,11 @@ const getRandomPosition = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
+type OtherPlayersInfo = {
+  id: string;
+  text: Phaser.GameObjects.Text;
+};
+
 export default class PixeLearnScene extends Scene {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -14,6 +19,8 @@ export default class PixeLearnScene extends Scene {
   tick = 0;
 
   otherPlayers: Phaser.GameObjects.Sprite[] = [];
+
+  otherPlayersInfos: OtherPlayersInfo[] = [];
 
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -32,6 +39,33 @@ export default class PixeLearnScene extends Scene {
 
   selectClassMateState = (state: State): ClassMate[] => {
     return state.game.classMates;
+  };
+
+  setPlayerInfos = (classMate: ClassMate): void => {
+    const playerInfo: OtherPlayersInfo = {
+      id: classMate.id,
+      text: this.add.text(
+        Number(classMate.position.positionX) - 90,
+        Number(classMate.position.positionY) - 50,
+        `${classMate.firstname} ${classMate.lastname}`
+      ),
+    };
+    this.otherPlayersInfos.push(playerInfo);
+  };
+
+  updatePlayersInfosPosition = (classMate: ClassMate): void => {
+    this.otherPlayersInfos.forEach((playerInfo: OtherPlayersInfo) => {
+      if (playerInfo.id === classMate.id) {
+        if (!classMate.connected) {
+          playerInfo.text.setActive(false);
+          playerInfo.text.setVisible(false);
+        }
+        playerInfo.text.setPosition(
+          Number(classMate.position.positionX) - 90,
+          Number(classMate.position.positionY) - 50
+        );
+      }
+    });
   };
 
   preload = (): void => {
@@ -93,6 +127,7 @@ export default class PixeLearnScene extends Scene {
 
         if (!playerAlreadyExist) {
           this.addOtherPlayer(classMate);
+          this.setPlayerInfos(classMate);
         }
       });
     });
@@ -200,6 +235,7 @@ export default class PixeLearnScene extends Scene {
             Number(classMate.position.positionY)
           );
           otherPlayer.anims.play(classMate.direction, true);
+          this.updatePlayersInfosPosition(classMate);
         }
       });
     });

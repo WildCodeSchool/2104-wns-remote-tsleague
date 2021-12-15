@@ -1,6 +1,6 @@
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
-import { Player, StudentPlayerMoves } from './helpers/types';
+import { Player, StudentPlayerMoves, UserData } from './helpers/types';
 import {
   filterPlayersByRoom,
   playerAlreadyExist,
@@ -20,10 +20,14 @@ export default function startSocket(): void {
   io.on('connection', async (socket: Socket): Promise<void> => {
     console.log(`connected with id ${socket.id}`);
 
-    socket.on('createRoom', async (classroomId: string) => {
+    socket.on('createRoom', async (userData: UserData) => {
       const alreadyExist = await playerAlreadyExist(players, socket.id);
       if (!alreadyExist) {
         players.push({
+          firstname: userData.firstname,
+          lastname: userData.lastname,
+          role: userData.role,
+          id: userData.id,
           socketId: socket.id,
           position: {
             positionX: '',
@@ -31,11 +35,11 @@ export default function startSocket(): void {
           },
           direction: '',
           connected: true,
-          classroom: classroomId,
+          classroom: userData.classrooms[0].id,
         });
       }
-      socket.join(classroomId);
-      socket.emit('roomJoined', classroomId);
+      socket.join(userData.classrooms[0].id);
+      socket.emit('roomJoined', userData.classrooms[0].id);
       console.log(socket.rooms);
 
       socket.emit('socketId', socket.id);
@@ -43,7 +47,7 @@ export default function startSocket(): void {
       // FILTRER SUR LA CLASSROOM ID POUR ENVOYER A LA BONNE ROOM
       const currentPlayersFilteredByRoom = await filterPlayersByRoom(
         players,
-        classroomId,
+        userData.classrooms[0].id,
       );
       socket.emit('currentPlayers', currentPlayersFilteredByRoom);
 
@@ -53,16 +57,16 @@ export default function startSocket(): void {
         // FILTRER SUR LA CLASSROOM ID POUR ENVOYER A LA BONNE ROOM
         const newPlayersFilteredByRoom = await filterPlayersByRoom(
           players,
-          classroomId,
+          userData.classrooms[0].id,
         );
-        io.to(classroomId).emit('newPlayers', newPlayersFilteredByRoom);
+        io.to(userData.classrooms[0].id).emit('newPlayers', newPlayersFilteredByRoom);
       });
 
       socket.on('disconnect', () => {
         console.log(`${socket.id} disconnected`);
         players = players.filter((player) => player.socketId !== socket.id);
 
-        socket.to(classroomId).emit('logout', socket.id);
+        socket.to(userData.classrooms[0].id).emit('logout', socket.id);
       });
     });
   });

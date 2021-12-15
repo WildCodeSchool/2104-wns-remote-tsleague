@@ -13,8 +13,7 @@ function Game(): JSX.Element {
   socket.connect();
 
   if (userData.id !== '') {
-    const classroomId = userData.classrooms[0].id;
-    socket.emit('createRoom', classroomId);
+    socket.emit('createRoom', userData);
   }
 
   return (
