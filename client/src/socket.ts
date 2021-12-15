@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 // eslint-disable-next-line import/no-cycle
-import store from './redux/store';
+import { store } from './redux/store';
 
 const socket =
   process.env.NODE_ENV === 'development'
