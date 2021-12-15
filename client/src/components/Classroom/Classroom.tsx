@@ -12,9 +12,10 @@ function Classroom(): JSX.Element {
   const classroomModal = useSelector(
     (state: State) => state.modals.classroomModal
   );
+  const userRole = useSelector((state: State) => state.user.userData.role);
   const [handleClassroomForm, setHandleClassroomForm] = useState(false);
 
-  if (classroomModal) {
+  if (!classroomModal) {
     return <></>;
   }
 
@@ -23,9 +24,13 @@ function Classroom(): JSX.Element {
       <StyledSection>
         <h3>ÉLÈVES</h3>
         <div>
-          <ClassroomAddStudent
-            onClick={() => setHandleClassroomForm(!handleClassroomForm)}
-          />
+          {userRole === 'teacher' ? (
+            <ClassroomAddStudent
+              onClick={() => setHandleClassroomForm(!handleClassroomForm)}
+            />
+          ) : (
+            ''
+          )}
           {students.map((elt) => (
             <ClassroomItem
               key={elt.id}
@@ -36,7 +41,7 @@ function Classroom(): JSX.Element {
         </div>
       </StyledSection>
 
-      {handleClassroomForm ? (
+      {handleClassroomForm && userRole === 'teacher' ? (
         <StyledSection>
           <ClassroomForm />
         </StyledSection>
