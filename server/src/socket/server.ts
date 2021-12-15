@@ -21,6 +21,7 @@ export default function startSocket(): void {
     console.log(`connected with id ${socket.id}`);
 
     socket.on('createRoom', async (userData: UserData) => {
+      const classroomId = userData.classrooms[0].id
       const alreadyExist = await playerAlreadyExist(players, socket.id);
       if (!alreadyExist) {
         players.push({
@@ -35,11 +36,11 @@ export default function startSocket(): void {
           },
           direction: '',
           connected: true,
-          classroom: userData.classrooms[0].id,
+          classroom: classroomId,
         });
       }
-      socket.join(userData.classrooms[0].id);
-      socket.emit('roomJoined', userData.classrooms[0].id);
+      socket.join(classroomId);
+      socket.emit('roomJoined', classroomId);
       console.log(socket.rooms);
 
       socket.emit('socketId', socket.id);
@@ -47,7 +48,7 @@ export default function startSocket(): void {
       // FILTRER SUR LA CLASSROOM ID POUR ENVOYER A LA BONNE ROOM
       const currentPlayersFilteredByRoom = await filterPlayersByRoom(
         players,
-        userData.classrooms[0].id,
+        classroomId,
       );
       socket.emit('currentPlayers', currentPlayersFilteredByRoom);
 
@@ -57,16 +58,16 @@ export default function startSocket(): void {
         // FILTRER SUR LA CLASSROOM ID POUR ENVOYER A LA BONNE ROOM
         const newPlayersFilteredByRoom = await filterPlayersByRoom(
           players,
-          userData.classrooms[0].id,
+          classroomId,
         );
-        io.to(userData.classrooms[0].id).emit('newPlayers', newPlayersFilteredByRoom);
+        io.to(classroomId).emit('newPlayers', newPlayersFilteredByRoom);
       });
 
       socket.on('disconnect', () => {
         console.log(`${socket.id} disconnected`);
         players = players.filter((player) => player.socketId !== socket.id);
 
-        socket.to(userData.classrooms[0].id).emit('logout', socket.id);
+        socket.to(classroomId).emit('logout', socket.id);
       });
     });
   });
