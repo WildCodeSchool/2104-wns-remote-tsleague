@@ -44,6 +44,23 @@ class UserResolver {
     });
   }
 
+  @Mutation(() => User, { nullable: true })
+  async sendEmailNewStudent(@Arg('email', () => String) mail: string,
+                            @Arg('classroom', () => String) classroom: string) {
+
+    // const token: string = jwt.sign(
+    //   { mail },
+    //   process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
+    //   { expiresIn: '1h' },
+    // );
+
+    await sendMail({
+      templateName: 'studentAdded',
+      mail,
+      additionalParameters: { classroom }
+    });
+  }
+
   @Mutation(() => User)
   public async updateUser(@Arg('input') userInput: UserInput) {
     const user = await UserModel.findOneAndUpdate(

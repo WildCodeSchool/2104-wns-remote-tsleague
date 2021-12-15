@@ -43,85 +43,106 @@ class AuthResolver {
 
     await user.save();
 
-    if (role === 'teacher') {
-      let newClassroom = new ClassroomModel({
-        name: classroom,
-        teachers: {
-          id: user._id,
-          firstname: user.firstname,
-          lastname: user.lastname,
-        },
-      });
-      await newClassroom.save();
+    switch (role) {
+      case 'teacher':
+        let newClassroom = new ClassroomModel({
+          name: classroom,
+          teachers: {
+            id: user._id,
+            firstname: user.firstname,
+            lastname: user.lastname,
+          },
+        });
+        await newClassroom.save();
 
-      user = await UserModel.findOneAndUpdate(
-        { _id: user._id },
-        { classrooms: [{ id: newClassroom._id, name: newClassroom.name }] },
-        {
-          new: true,
-        },
-      );
+        user = await UserModel.findOneAndUpdate(
+          { _id: user._id },
+          { classrooms: [{ id: newClassroom._id, name: newClassroom.name }] },
+          {
+            new: true,
+          },
+        );
 
-      await user.save();
+        await user.save();
 
-      // ONLY FOR ROOM TESTING
-      const studentUserId1: string = await uuid.generate();
-      const studentUserId2: string = await uuid.generate();
+        // ONLY FOR ROOM TESTING
+        const studentUserId1: string = await uuid.generate();
+        const studentUserId2: string = await uuid.generate();
 
-      const studentUser1 = new UserModel({
-        lastname: studentUserId1,
-        firstname: 'user',
-        mail: `user.${studentUserId1}@gmail.com`,
-        password: hashedPassword,
-        classrooms: [{ id: newClassroom._id, name: newClassroom.name }],
-        role: 'student',
-      });
+        const studentUser1 = new UserModel({
+          lastname: studentUserId1,
+          firstname: 'user',
+          mail: `user.${studentUserId1}@gmail.com`,
+          password: hashedPassword,
+          classrooms: [{ id: newClassroom._id, name: newClassroom.name }],
+          role: 'student',
+        });
 
-      const studentUser2 = new UserModel({
-        lastname: studentUserId2,
-        firstname: 'user',
-        mail: `user.${studentUserId2}@gmail.com`,
-        password: hashedPassword,
-        classrooms: [{ id: newClassroom._id, name: newClassroom.name }],
-        role: 'student',
-      });
+        const studentUser2 = new UserModel({
+          lastname: studentUserId2,
+          firstname: 'user',
+          mail: `user.${studentUserId2}@gmail.com`,
+          password: hashedPassword,
+          classrooms: [{ id: newClassroom._id, name: newClassroom.name }],
+          role: 'student',
+        });
 
-      await studentUser1.save();
-      await studentUser2.save();
+        await studentUser1.save();
+        await studentUser2.save();
 
-      newClassroom = await ClassroomModel.findOneAndUpdate(
-        { _id: newClassroom._id },
-        {
-          students: [
-            {
-              id: studentUser1._id,
-              firstname: studentUser1.firstname,
-              lastname: studentUser1.lastname,
-            },
-            {
-              id: studentUser2._id,
-              firstname: studentUser2.firstname,
-              lastname: studentUser2.lastname,
-            },
-          ],
-        },
-        {
-          new: true,
-        },
-      );
-      // END FOR ROOM TESTING
+        newClassroom = await ClassroomModel.findOneAndUpdate(
+          { _id: newClassroom._id },
+          {
+            students: [
+              {
+                id: studentUser1._id,
+                firstname: studentUser1.firstname,
+                lastname: studentUser1.lastname,
+              },
+              {
+                id: studentUser2._id,
+                firstname: studentUser2.firstname,
+                lastname: studentUser2.lastname,
+              },
+            ],
+          },
+          {
+            new: true,
+          },
+        );
+        // END FOR ROOM TESTING
 
-      await sendMail({
-        templateName: 'teacherRegister',
-        mail,
-        firstname,
-        lastname,
-        additionalParameters: {
-          studentUser1: `user.${studentUserId1}@gmail.com`,
-          studentUser2: `user.${studentUserId2}@gmail.com`,
-        },
-      });
-      return { id: user._id, ...user._doc, createdClassroom: newClassroom };
+        await sendMail({
+          templateName: 'teacherRegister',
+          mail,
+          firstname,
+          lastname,
+          additionalParameters: {
+            studentUser1: `user.${studentUserId1}@gmail.com`,
+            studentUser2: `user.${studentUserId2}@gmail.com`,
+          },
+        });
+
+        return { id: user._id, ...user._doc, createdClassroom: newClassroom };
+        break;
+      case 'student':
+        await ClassroomModel.findOneAndUpdate(
+          { name: classroom },
+          { $push: { students: user } },
+          {
+            new: true,
+          },
+        );
+
+        await sendMail({
+          templateName: 'studentRegister',
+          mail,
+          firstname,
+          lastname,
+        });
+        break;
+      default:
+        throw new Error("L'utilisateur n'a pas de rôle identifiable");
     }
 
     return { id: user._id, ...user._doc };
