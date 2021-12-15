@@ -7,7 +7,7 @@ import Button from '../common/Button';
 export type ClassroomItemProps = {
   fullName: string;
   role?: string;
-  picture: string;
+  picture: string | undefined;
 };
 
 function ClassroomItem({ fullName, picture }: ClassroomItemProps): JSX.Element {
