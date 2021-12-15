@@ -20,7 +20,7 @@ export default function startSocket(): void {
   io.on('connection', async (socket: Socket): Promise<void> => {
     console.log(`connected with id ${socket.id}`);
 
-    socket.on('createRoom', async (classroomId: string) => {
+    socket.on('createRoom', async ({ classroomId, userData }) => {
       const alreadyExist = await playerAlreadyExist(players, socket.id);
       if (!alreadyExist) {
         players.push({
@@ -58,11 +58,33 @@ export default function startSocket(): void {
         io.to(classroomId).emit('newPlayers', newPlayersFilteredByRoom);
       });
 
+      //CHAT
+      socket
+        .in(classroomId)
+        .emit(
+          'newChatMessage',
+          `${userData.firstname} ${userData.lastname} vient de rejoindre la classe`,
+        );
+      socket.on('sendChatMessage', ({ newMessage, classroomId }) => {
+        console.log(
+          'new message received from %s; message is: %s ',
+          socket,
+          newMessage,
+        );
+        socket.in(classroomId).emit('newChatMessage', newMessage);
+      });
+
       socket.on('disconnect', () => {
         console.log(`${socket.id} disconnected`);
         players = players.filter((player) => player.socketId !== socket.id);
 
         socket.to(classroomId).emit('logout', socket.id);
+        socket
+        .in(classroomId)
+        .emit(
+          'newChatMessage',
+          `${userData.firstname} ${userData.lastname} est sauvagement parti`,
+        );
       });
     });
   });

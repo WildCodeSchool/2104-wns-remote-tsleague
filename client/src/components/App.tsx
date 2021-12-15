@@ -15,12 +15,10 @@ function App(): JSX.Element {
       {handleSidebar ? (
         <Sidebar handleSidebar={() => setHandleSidebar(!handleSidebar)} />
       ) : (
-        <div>
-          <StyledIconLeft
-            data-testid="sidebar-icon-left"
-            onClick={() => setHandleSidebar(!handleSidebar)}
-          />
-        </div>
+        <StyledIconLeft
+          data-testid="sidebar-icon-left"
+          onClick={() => setHandleSidebar(!handleSidebar)}
+        />
       )}
       <Chat />
       <Game />
