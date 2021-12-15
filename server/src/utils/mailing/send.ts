@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 import * as templates from './templates';
 
 type SendInput = {
-  templateName: 'teacherRegister' | 'forgotPassword';
+  templateName: 'teacherRegister' | 'forgotPassword' | 'studentRegister' | 'studentAdded';
   mail: string;
   firstname?: string;
   lastname?: string;
