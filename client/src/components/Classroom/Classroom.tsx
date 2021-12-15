@@ -43,7 +43,9 @@ function Classroom(): JSX.Element {
 
       {handleClassroomForm && userRole === 'teacher' ? (
         <StyledSection>
-          <ClassroomForm />
+          <ClassroomForm
+            handleModalForm={() => setHandleClassroomForm(!handleClassroomForm)}
+          />
         </StyledSection>
       ) : (
         ''

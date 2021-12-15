@@ -1,46 +1,44 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Formik, Form } from 'formik';
-// import { gql, useMutation } from '@apollo/client';
-// import Cookies from 'js-cookie';
+import { gql, useMutation } from '@apollo/client';
 
 import { ErrorMsg } from '../styles/Authentication';
-import { validationSchemaLogin } from '../../form/validationSchema';
+import { validationSchemaAddStudent } from '../../form/validationSchema';
 import Button from '../common/Button';
 import Input from '../common/Input';
+import { State } from '../../redux/root-reducer';
 
-interface FormData {
-  lastname: string;
-  firstname: string;
-  mail: string;
-  phone: string;
-  birthday: string;
+interface ClassroomFormProps {
+  handleModalForm: () => void;
 }
 
-// const USER_LOGIN = gql`
-//   mutation Login($body: AuthLoginInput!) {
-//     login(body: $body) {
-//       id
-//       token
-//     }
-//   }
-// `;
+interface FormData {
+  mail: string;
+  classroom: string | undefined;
+}
 
-function ClassroomForm(): JSX.Element {
-  // const [loginMutation] = useMutation(USER_LOGIN);
+const ADD_STUDENT = gql`
+  mutation SendEmailNewStudent($classroom: String!, $email: String!) {
+    sendEmailNewStudent(classroom: $classroom, email: $email) {
+      id
+    }
+  }
+`;
+
+function ClassroomForm({ handleModalForm }: ClassroomFormProps): JSX.Element {
+  const classroomsName = useSelector(
+    (state: State) => state.user.userData.classrooms[0].name
+  );
+  const [addStudentMutation] = useMutation(ADD_STUDENT);
   const [requestError, setRequestError] = useState('');
-  // const history = useHistory();
 
-  const login = async (formData: FormData): Promise<void> => {
+  const addStudent = async ({ mail, classroom }: FormData): Promise<void> => {
     try {
-      // const { data } = await loginMutation({
-      //   variables: {
-      //     body: {
-      //       mail: mail,
-      //       firstname,
-      //     },
-      //   },
-      // });
-      // Cookies.set('token', data.login.token);
+      await addStudentMutation({
+        variables: { email: mail, classroom },
+      });
+      handleModalForm();
     } catch (error: any) {
       setRequestError(error.message);
     }
@@ -49,33 +47,14 @@ function ClassroomForm(): JSX.Element {
   return (
     <Formik
       initialValues={{
-        firstname: '',
-        lastname: '',
         mail: '',
-        phone: '',
-        birthday: '',
+        classroom: classroomsName,
       }}
-      validationSchema={validationSchemaLogin}
-      onSubmit={(data: FormData) => login(data)}
+      validationSchema={validationSchemaAddStudent}
+      onSubmit={(data: FormData) => addStudent(data)}
     >
       {({ errors, touched, handleReset }) => (
         <Form>
-          <Input
-            name="lastname"
-            type="lastname"
-            errors={errors.lastname}
-            touched={touched.lastname}
-            placeholder="Nom"
-            fullWidth
-          />
-          <Input
-            name="firstname"
-            type="firstname"
-            errors={errors.firstname}
-            touched={touched.firstname}
-            placeholder="Prénom"
-            fullWidth
-          />
           <Input
             name="mail"
             type="mail"
@@ -84,29 +63,20 @@ function ClassroomForm(): JSX.Element {
             placeholder="E-mail"
             fullWidth
           />
-          <Input
-            name="phone"
-            type="phone"
-            errors={errors.phone}
-            touched={touched.phone}
-            placeholder="N° téléphone"
-            fullWidth
-          />
-          <Input
-            name="birthday"
-            type="birthday"
-            errors={errors.birthday}
-            touched={touched.birthday}
-            placeholder="Date de naissance"
-            fullWidth
-          />
-          {requestError ? <ErrorMsg>{requestError}</ErrorMsg> : ''}
+          {requestError || errors.classroom ? (
+            <ErrorMsg>{requestError || errors.classroom}</ErrorMsg>
+          ) : (
+            ''
+          )}
           <Button text="Ajouter un élève" type="submit" buttonStyle="submit" />
           <Button
             text="annuler"
             type="button"
             buttonStyle="reverse"
-            handleClick={handleReset}
+            handleClick={() => {
+              handleReset();
+              handleModalForm();
+            }}
           />
         </Form>
       )}
