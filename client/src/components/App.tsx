@@ -5,6 +5,7 @@ import './App.css';
 import { StyledIconLeft } from './styles/Sidebar';
 import Sidebar from './layout/Sidebar';
 import Game from './Game/Game';
+import Chat from './Chat/Chat';
 
 function App(): JSX.Element {
   const [handleSidebar, setHandleSidebar] = useState(false);
@@ -21,6 +22,7 @@ function App(): JSX.Element {
           />
         </div>
       )}
+      <Chat />
       <Game />
     </div>
   );
