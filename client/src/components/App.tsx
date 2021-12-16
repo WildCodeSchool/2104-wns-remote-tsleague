@@ -1,8 +1,5 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 
-import { StyledIconLeft } from './styles/Sidebar';
 import Sidebar from './layout/Sidebar';
 import Game from './Game/Game';
 import Chat from './Chat/Chat';
@@ -22,6 +19,8 @@ function App(): JSX.Element {
           alt="burger menu icon"
           className="burger-menu"
           onClick={() => setHandleSidebar(!handleSidebar)}
+          onKeyPress={() => {}}
+          role="presentation"
         />
       )}
       <Chat />
