@@ -127,7 +127,7 @@ class AuthResolver {
         break;
       case 'student':
         const classroomUpdate = await ClassroomModel.findOneAndUpdate(
-          { name: classroom },
+          { _id: classroom },
           {
             $push: {
               students: {

@@ -27,8 +27,8 @@ const ADD_STUDENT = gql`
 `;
 
 function ClassroomForm({ handleModalForm }: ClassroomFormProps): JSX.Element {
-  const classroomsName = useSelector(
-    (state: State) => state.user.userData.classrooms[0].name
+  const classroomsId = useSelector(
+    (state: State) => state.user.userData.classrooms[0].id
   );
   const [addStudentMutation] = useMutation(ADD_STUDENT);
   const [requestError, setRequestError] = useState('');
@@ -48,7 +48,7 @@ function ClassroomForm({ handleModalForm }: ClassroomFormProps): JSX.Element {
     <Formik
       initialValues={{
         mail: '',
-        classroom: classroomsName,
+        classroom: classroomsId,
       }}
       validationSchema={validationSchemaAddStudent}
       onSubmit={(data: FormData) => addStudent(data)}
