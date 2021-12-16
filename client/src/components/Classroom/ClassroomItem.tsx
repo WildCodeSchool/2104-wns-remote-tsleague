@@ -7,7 +7,7 @@ import { StyledItem } from '../styles/Classroom';
 export type ClassroomItemProps = {
   fullName: string;
   role?: string;
-  picture?: string | undefined;
+  picture?: string;
 };
 
 function ClassroomItem({ fullName, picture }: ClassroomItemProps): JSX.Element {

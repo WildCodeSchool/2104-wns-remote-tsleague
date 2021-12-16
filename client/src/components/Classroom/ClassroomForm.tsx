@@ -15,7 +15,7 @@ interface ClassroomFormProps {
 
 interface FormData {
   mail: string;
-  classroom: string | undefined;
+  classroom?: string;
 }
 
 const ADD_STUDENT = gql`

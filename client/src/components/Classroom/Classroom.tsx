@@ -12,7 +12,7 @@ interface ClassroomStudents {
   id: string;
   firstname: string;
   lastname: string;
-  picture: string | undefined;
+  picture?: string;
 }
 
 const GET_CLASSROOM = gql`
