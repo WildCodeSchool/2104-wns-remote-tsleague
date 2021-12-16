@@ -37,6 +37,12 @@ export const StyledSidebar = styled.div`
     display: flex;
     justify-content: end;
   }
+
+  .sidebar-btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const StyledSidebarNotificationFeed = styled.div`
@@ -48,7 +54,7 @@ export const StyledSidebarNotificationFeed = styled.div`
   color: ${colors.white};
 
   .notification-feed {
-    height 450px;
+    height 400px;
     display: flex;
     align-items: center;
     justify-content: center;

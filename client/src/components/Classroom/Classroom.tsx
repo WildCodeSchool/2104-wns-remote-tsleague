@@ -28,9 +28,6 @@ const GET_CLASSROOM = gql`
 `;
 
 function Classroom(): JSX.Element {
-  const classroomModal = useSelector(
-    (state: State) => state.modals.classroomModal
-  );
   const userRole = useSelector((state: State) => state.user.userData.role);
   const classroomId = useSelector(
     (state: State) => state.user.userData.classrooms[0].id
@@ -39,10 +36,6 @@ function Classroom(): JSX.Element {
     variables: { getClassroomByIdId: classroomId },
   });
   const [handleClassroomForm, setHandleClassroomForm] = useState(false);
-
-  if (!classroomModal) {
-    return <></>;
-  }
 
   if (loading) {
     return <p>loading...</p>;

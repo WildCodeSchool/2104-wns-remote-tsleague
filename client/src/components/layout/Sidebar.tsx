@@ -18,6 +18,11 @@ export type NotificationsProps = {
   message: string;
 };
 
+type SidebarProps = {
+  handleSidebar: () => void;
+  handleClassroom: () => void;
+};
+
 export type User = {
   firstName: string;
   lastName: string;
@@ -27,9 +32,8 @@ export type User = {
 
 function Sidebar({
   handleSidebar,
-}: {
-  handleSidebar: () => void;
-}): JSX.Element {
+  handleClassroom,
+}: SidebarProps): JSX.Element {
   const userData = useSelector((state: State) => state.user.userData);
   const history = useHistory();
 
@@ -59,15 +63,22 @@ function Sidebar({
         <StyledSidebarNotificationFeed>
           <div className="notification-feed" />
         </StyledSidebarNotificationFeed>
-        <Button
-          data-testid="sidebar-btn-disconnection"
-          text="Déconnexion"
-          handleClick={async () => {
-            Cookies.remove('token');
-            socket.disconnect();
-            history.push('/');
-          }}
-        />
+        <div className="sidebar-btn-group">
+          <Button
+            text="Classe"
+            handleClick={handleClassroom}
+            buttonStyle="reverse"
+          />
+          <Button
+            data-testid="sidebar-btn-disconnection"
+            text="Déconnexion"
+            handleClick={async () => {
+              Cookies.remove('token');
+              socket.disconnect();
+              history.push('/');
+            }}
+          />
+        </div>
       </div>
     </StyledSidebar>
   );

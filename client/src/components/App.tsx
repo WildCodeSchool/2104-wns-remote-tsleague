@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
-import modalAction from '../redux/modal/modal.actions';
 import Classroom from './Classroom/Classroom';
 import Sidebar from './layout/Sidebar';
 import Game from './Game/Game';
@@ -11,18 +9,15 @@ import './App.css';
 
 function App(): JSX.Element {
   const [handleSidebar, setHandleSidebar] = useState(false);
-  const dispatch = useDispatch();
+  const [handleClassroom, setHandleClassroom] = useState(false);
 
   return (
     <div data-testid="app">
-      <button
-        type="button"
-        onClick={() => dispatch(modalAction.classroomModalToggle())}
-      >
-        modal classe
-      </button>
       {handleSidebar ? (
-        <Sidebar handleSidebar={() => setHandleSidebar(!handleSidebar)} />
+        <Sidebar
+          handleSidebar={() => setHandleSidebar(!handleSidebar)}
+          handleClassroom={() => setHandleClassroom(!handleClassroom)}
+        />
       ) : (
         <img
           src={`${window.location.origin}/burger-menu.png`}
@@ -33,7 +28,7 @@ function App(): JSX.Element {
           role="presentation"
         />
       )}
-      <Classroom />
+      {handleClassroom ? <Classroom /> : ''}
       <Chat />
       <Game />
     </div>
