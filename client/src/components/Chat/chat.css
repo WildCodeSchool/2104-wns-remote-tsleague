@@ -1,0 +1,7 @@
+:root {
+  --purple: #8982ff;
+}
+
+.rcw-conversation-container > .rcw-header, .rcw-widget-container > .rcw-launcher {
+  background-color: var(--purple);
+}

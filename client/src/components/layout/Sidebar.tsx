@@ -1,18 +1,17 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { useSelector } from 'react-redux';
+import { State } from '../../redux/root-reducer';
 
-import Notification from './Notification';
+import Button from '../common/Button';
+import socket from '../../socket';
 
 import {
   StyledSidebar,
   StyledSidebarNotificationFeed,
   StyledIconRight,
 } from '../styles/Sidebar';
-import Button from '../common/Button';
-
-import userData from '../../mocks/user';
-import notificationsData from '../../mocks/notifications';
 
 export type NotificationsProps = {
   id: string;
@@ -31,8 +30,7 @@ function Sidebar({
 }: {
   handleSidebar: () => void;
 }): JSX.Element {
-  const user: User = userData;
-  const notifications: NotificationsProps[] = notificationsData;
+  const userData = useSelector((state: State) => state.user.userData);
   const history = useHistory();
 
   return (
@@ -45,32 +43,28 @@ function Sidebar({
           />
         </div>
         <div>
-          <h2 data-testid="sidebar-title">PIXELEARN</h2>
+          <h2 data-testid="sidebar-title">PixeLearn</h2>
           <img
-            src={user.picture}
+            src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
             alt="profile"
             data-testid="sidebar-user-picture"
           />
           <h3 data-testid="sidebar-user-name">
-            {user.firstName} {user.lastName}
+            {userData.firstname} {userData.lastname}
           </h3>
-          <h3 data-testid="sidebar-user-classroom">{user.classroom}</h3>
+          <h3 data-testid="sidebar-user-classroom">
+            {userData.classrooms[0].name}
+          </h3>
         </div>
         <StyledSidebarNotificationFeed>
-          <h3>FLUX DE NOTIFICATION</h3>
-          <div className="notification-feed">
-            <div>
-              {notifications.map((elt: NotificationsProps) => (
-                <Notification key={elt.id} message={elt.message} />
-              ))}
-            </div>
-          </div>
+          <div className="notification-feed" />
         </StyledSidebarNotificationFeed>
         <Button
           data-testid="sidebar-btn-disconnection"
           text="Déconnexion"
-          handleClick={() => {
+          handleClick={async () => {
             Cookies.remove('token');
+            socket.disconnect();
             history.push('/');
           }}
         />

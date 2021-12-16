@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import './App.css';
-
 import modalAction from '../redux/modal/modal.actions';
-import { StyledIconLeft } from './styles/Sidebar';
+import Classroom from './Classroom/Classroom';
 import Sidebar from './layout/Sidebar';
 import Game from './Game/Game';
-import Classroom from './Classroom/Classroom';
+import Chat from './Chat/Chat';
+
+import './App.css';
 
 function App(): JSX.Element {
   const [handleSidebar, setHandleSidebar] = useState(false);
@@ -24,14 +24,17 @@ function App(): JSX.Element {
       {handleSidebar ? (
         <Sidebar handleSidebar={() => setHandleSidebar(!handleSidebar)} />
       ) : (
-        <div>
-          <StyledIconLeft
-            data-testid="sidebar-icon-left"
-            onClick={() => setHandleSidebar(!handleSidebar)}
-          />
-        </div>
+        <img
+          src={`${window.location.origin}/burger-menu.png`}
+          alt="burger menu icon"
+          className="burger-menu"
+          onClick={() => setHandleSidebar(!handleSidebar)}
+          onKeyPress={() => {}}
+          role="presentation"
+        />
       )}
       <Classroom />
+      <Chat />
       <Game />
     </div>
   );
