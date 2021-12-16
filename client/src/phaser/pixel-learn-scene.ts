@@ -7,6 +7,38 @@ const getRandomPosition = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
+const getRandomSkin = (): string => {
+  const temp = Math.floor(Math.random() * 12) + 1; // Would be better to choose a skin using the total number of active players
+
+  switch (temp) {
+    case 1:
+      return 'assets/characters/Adam_run_48x48.png';
+    case 2:
+      return 'assets/characters/Ash_run_48x48.png';
+    case 3:
+      return 'assets/characters/Bob_run_48x48.png';
+    case 4:
+      return 'assets/characters/Bouncer_run_48x48.png';
+    case 5:
+      return 'assets/characters/Bruce_run_48x48.png';
+    case 6:
+      return 'assets/characters/Butcher_run_48x48.png';
+    case 7:
+      return 'assets/characters/Conference_run_48x48.png';
+    case 8:
+      return 'assets/characters/Dan_run_48x48.png';
+    case 9:
+      return 'assets/characters/Old_man_run_48x48.png';
+    case 10:
+      return 'assets/characters/Rob_run_48x48.png';
+    case 11:
+      return 'assets/characters/Roki_run_48x48.png';
+    case 12:
+      return 'assets/characters/Samuel_run_48x48.png';
+    default:
+      return 'assets/characters/Bruce_run_48x48.png';
+  }
+};
 export default class PixeLearnScene extends Scene {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -48,7 +80,7 @@ export default class PixeLearnScene extends Scene {
       'assets/interiors/Room_Builder_48x48.png'
     );
 
-    this.load.spritesheet('dude', 'assets/characters/Bruce_run_48x48.png', {
+    this.load.spritesheet('dude', getRandomSkin(), {
       frameWidth: 48,
       frameHeight: 96,
     });
