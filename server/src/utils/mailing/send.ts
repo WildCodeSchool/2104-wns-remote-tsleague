@@ -1,9 +1,12 @@
 import nodemailer from 'nodemailer';
+import { InputForgotPasswordTemplate } from './templates/forgot-password';
+import { InputTeacherRegisterTemplate } from './templates/teacher-register';
+import { InputStudentRegisterTemplate } from './templates/student-register';
 
 import * as templates from './templates';
 
 type SendInput = {
-  templateName: 'teacherRegister' | 'forgotPassword';
+  templateName: 'teacherRegister' | 'forgotPassword' | 'studentRegister' | 'studentAdded';
   mail: string;
   firstname?: string;
   lastname?: string;
@@ -42,7 +45,6 @@ async function send({
   });
 
   console.log('html:', html);
-
   console.log('Message sent: %s', info.messageId);
   console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 }

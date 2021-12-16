@@ -7,12 +7,10 @@ interface StyledButtonProps {
 
 const StyledButton = styled.button<StyledButtonProps>`
   text-transform: uppercase;
+  font-weight: bold;
   margin: 10px 0;
   cursor: pointer;
-  padding: 11px;
-  font-size: 15px;
-  font-weight: 600;
-  border: none;
+  padding: 10px;
   border-radius: 100px;
   white-space: nowrap;
   transition: all, 240ms ease-in-out;
@@ -25,8 +23,6 @@ const StyledButton = styled.button<StyledButtonProps>`
 
   /* Rounded border */
   border: none;
-  height: 50px;
-  width: 200px;
 
   &:hover {
     filter: brightness(1.1);

@@ -16,7 +16,7 @@ export class Classroom {
   @Field(() => ID)
   readonly id!: string;
 
-  @Property({ required: true })
+  @Property({ required: true , unique: true})
   @Field()
   name!: string;
 
