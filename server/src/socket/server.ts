@@ -63,11 +63,30 @@ export default function startSocket(): void {
         io.to(classroomId).emit('newPlayers', newPlayersFilteredByRoom);
       });
 
+      //CHAT
+      socket.in(classroomId).emit('newChatMessage', {
+        newMessage: `${userData.firstname} ${userData.lastname} vient de rejoindre la classe`,
+      });
+      socket.on('sendChatMessage', ({ newMessage, classroomId }) => {
+        console.log(
+          'new message received from %s; message is: %s ',
+          socket,
+          newMessage,
+        );
+        socket.in(classroomId).emit('newChatMessage', { newMessage, senderUser: userData });
+      });
+
       socket.on('disconnect', () => {
         console.log(`${socket.id} disconnected`);
         players = players.filter((player) => player.socketId !== socket.id);
 
         socket.to(classroomId).emit('logout', socket.id);
+        socket
+          .in(classroomId)
+          .emit(
+            'newChatMessage',
+            `${userData.firstname} ${userData.lastname} est sauvagement parti`,
+          );
       });
     });
   });
