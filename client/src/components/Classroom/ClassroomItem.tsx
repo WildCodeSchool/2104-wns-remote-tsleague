@@ -2,18 +2,18 @@ import React from 'react';
 
 import { StyledItem } from '../styles/Classroom';
 
-import Button from '../common/Button';
+// import Button from '../common/Button';
 
 export type ClassroomItemProps = {
   fullName: string;
   role?: string;
-  picture: string | undefined;
+  picture?: string | undefined;
 };
 
 function ClassroomItem({ fullName, picture }: ClassroomItemProps): JSX.Element {
   return (
     <StyledItem>
-      <img src={picture} alt="profile" />
+      <img src={picture} alt="avatar" />
       <p>{fullName}</p>
       {/* <Button text="Modifier" handleClick={() => console.log('modifier')} />
       <Button

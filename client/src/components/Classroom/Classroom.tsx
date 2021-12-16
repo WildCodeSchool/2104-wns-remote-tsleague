@@ -35,7 +35,7 @@ function Classroom(): JSX.Element {
   const classroomId = useSelector(
     (state: State) => state.user.userData.classrooms[0].id
   );
-  const { loading, data } = useQuery(GET_CLASSROOM, {
+  const { loading, error, data } = useQuery(GET_CLASSROOM, {
     variables: { getClassroomByIdId: classroomId },
   });
   const [handleClassroomForm, setHandleClassroomForm] = useState(false);
@@ -46,6 +46,9 @@ function Classroom(): JSX.Element {
 
   if (loading) {
     return <p>loading...</p>;
+  }
+  if (error) {
+    return <p>{error}</p>;
   }
 
   return (

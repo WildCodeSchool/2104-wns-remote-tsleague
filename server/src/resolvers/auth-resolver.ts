@@ -126,13 +126,37 @@ class AuthResolver {
         return { id: user._id, ...user._doc, createdClassroom: newClassroom };
         break;
       case 'student':
-        await ClassroomModel.findOneAndUpdate(
+        const classroomUpdate = await ClassroomModel.findOneAndUpdate(
           { name: classroom },
-          { $push: { students: user } },
+          {
+            $push: {
+              students: {
+                id: user._id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+              },
+            },
+          },
           {
             new: true,
           },
         );
+
+        await classroomUpdate.save();
+
+        user = await UserModel.findOneAndUpdate(
+          { _id: user._id },
+          {
+            classrooms: [
+              { id: classroomUpdate._id, name: classroomUpdate.name },
+            ],
+          },
+          {
+            new: true,
+          },
+        );
+
+        await user.save();
 
         await sendMail({
           templateName: 'studentRegister',
