@@ -14,9 +14,8 @@ function Game(): JSX.Element {
   useEffect(() => {
     socket.connect();
     let socketId: string;
-    const classroomId = userData.classrooms[0].id;
 
-    socket.emit('createRoom', { classroomId, userData });
+    socket.emit('createRoom', userData);
 
     socket.on('socketId', (arg): void => {
       socketId = arg;

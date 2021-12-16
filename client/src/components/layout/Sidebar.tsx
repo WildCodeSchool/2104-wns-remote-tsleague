@@ -45,7 +45,7 @@ function Sidebar({
         <div>
           <h2 data-testid="sidebar-title">PixeLearn</h2>
           <img
-            src="https://uxwing.com/wp-content/themes/uxwing/download/12-peoples-avatars/avatar.png"
+            src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
             alt="profile"
             data-testid="sidebar-user-picture"
           />

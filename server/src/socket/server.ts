@@ -1,6 +1,6 @@
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
-import { Player, StudentPlayerMoves } from './helpers/types';
+import { Player, StudentPlayerMoves, UserData } from './helpers/types';
 import {
   filterPlayersByRoom,
   playerAlreadyExist,
@@ -20,11 +20,15 @@ export default function startSocket(): void {
   io.on('connection', async (socket: Socket): Promise<void> => {
     console.log(`connected with id ${socket.id}`);
 
-    socket.on('createRoom', async ({ classroomId, userData }) => {
-      console.log('userData', userData);
+    socket.on('createRoom', async (userData: UserData) => {
+      const classroomId = userData.classrooms[0].id
       const alreadyExist = await playerAlreadyExist(players, socket.id);
       if (!alreadyExist) {
         players.push({
+          firstname: userData.firstname,
+          lastname: userData.lastname,
+          role: userData.role,
+          id: userData.id,
           socketId: socket.id,
           position: {
             positionX: '',

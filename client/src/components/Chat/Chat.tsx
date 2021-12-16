@@ -41,8 +41,6 @@ function Chat(): JSX.Element {
     });
   };
 
-  console.log('avatar', senderUserData.avatar);
-
   return (
     <Widget
       handleNewUserMessage={handleNewUserMessage}
