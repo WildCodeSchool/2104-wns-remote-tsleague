@@ -64,7 +64,6 @@ function Sidebar({
           text="Déconnexion"
           handleClick={async () => {
             Cookies.remove('token');
-            socket.disconnect();
             history.push('/');
           }}
         />

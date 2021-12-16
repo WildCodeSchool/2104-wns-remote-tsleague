@@ -48,7 +48,11 @@ function Game(): JSX.Element {
         socketId: arg,
       });
     });
-  });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [userData, dispatch]);
 
   return (
     <>
