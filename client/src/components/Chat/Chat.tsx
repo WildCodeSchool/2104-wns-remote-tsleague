@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Widget, addResponseMessage } from 'react-chat-widget';
 import { useSelector } from 'react-redux';
 import socket from '../../socket';
@@ -15,21 +15,12 @@ type UserData = {
 
 function Chat(): JSX.Element {
   const userData = useSelector((state: State) => state.user.userData);
-  const [senderUserData, setSenderUserData] = useState<UserData>({
-    firstname: '',
-    lastname: '',
-    avatar: '',
-  });
 
   useEffect(() => {
     socket.on('newChatMessage', ({ newMessage = '', senderUser }) => {
-      if (newMessage !== '') addResponseMessage(newMessage);
-      setSenderUserData({
-        ...senderUser,
-        avatar: senderUser?.firstname
-          ? `https://eu.ui-avatars.com/api/?background=random&name=${senderUser?.firstname}+${senderUser?.lastname}`
-          : '',
-      });
+      const headerMessage = `${senderUser?.firstname} ${senderUser?.lastname}\n\n`;
+      if (newMessage !== '')
+        addResponseMessage(`${senderUser ? headerMessage : ''}${newMessage}`);
     });
   }, []);
 
@@ -47,7 +38,7 @@ function Chat(): JSX.Element {
       title="Chat de la classe"
       subtitle={userData.classrooms[0].name}
       senderPlaceHolder="Ecrire un message..."
-      profileAvatar={senderUserData.avatar}
+      // profileAvatar={senderUserData.avatar}
       emojis
     />
   );
