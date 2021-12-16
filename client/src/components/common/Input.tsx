@@ -9,6 +9,7 @@ export type InputProps = {
   errors: string | undefined;
   touched: boolean | undefined;
   placeholder?: string;
+  fullWidth?: boolean;
 };
 
 function Input({
@@ -17,9 +18,10 @@ function Input({
   errors,
   touched,
   placeholder,
+  fullWidth,
 }: InputProps): JSX.Element {
   return (
-    <StyledInput>
+    <StyledInput fullWidth={fullWidth}>
       <Field name={name} type={type} placeholder={placeholder} />
       {errors && touched ? <div>{errors}</div> : null}
     </StyledInput>

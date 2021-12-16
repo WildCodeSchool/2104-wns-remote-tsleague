@@ -45,19 +45,14 @@ class UserResolver {
   }
 
   @Mutation(() => User, { nullable: true })
-  async sendEmailNewStudent(@Arg('email', () => String) mail: string,
-                            @Arg('classroom', () => String) classroom: string) {
-
-    // const token: string = jwt.sign(
-    //   { mail },
-    //   process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
-    //   { expiresIn: '1h' },
-    // );
-
+  async sendEmailNewStudent(
+    @Arg('email', () => String) mail: string,
+    @Arg('classroom', () => String) classroom: string,
+  ) {
     await sendMail({
       templateName: 'studentAdded',
       mail,
-      additionalParameters: { classroom }
+      additionalParameters: { classroom },
     });
   }
 

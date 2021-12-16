@@ -11,8 +11,9 @@ import {
   AuthLoginInput,
 } from '../types/authentication';
 import { UserModel } from '../models/users-model';
-import { ClassroomModel } from '../models/classrooms-model';
+import { Classroom, ClassroomModel } from '../models/classrooms-model';
 import sendMail from '../utils/mailing/send';
+import ClassroomResolver from './classrooms-resolver';
 
 @Resolver()
 class AuthResolver {
@@ -125,13 +126,37 @@ class AuthResolver {
         return { id: user._id, ...user._doc, createdClassroom: newClassroom };
         break;
       case 'student':
-        await ClassroomModel.findOneAndUpdate(
-          { name: classroom },
-          { $push: { students: user } },
+        const classroomUpdate = await ClassroomModel.findOneAndUpdate(
+          { _id: classroom },
+          {
+            $push: {
+              students: {
+                id: user._id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+              },
+            },
+          },
           {
             new: true,
           },
         );
+
+        await classroomUpdate.save();
+
+        user = await UserModel.findOneAndUpdate(
+          { _id: user._id },
+          {
+            classrooms: [
+              { id: classroomUpdate._id, name: classroomUpdate.name },
+            ],
+          },
+          {
+            new: true,
+          },
+        );
+
+        await user.save();
 
         await sendMail({
           templateName: 'studentRegister',

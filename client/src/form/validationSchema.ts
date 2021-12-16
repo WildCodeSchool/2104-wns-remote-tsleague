@@ -30,3 +30,8 @@ export const validationSchemaResetPassword = Yup.object().shape({
   email: EMAIL,
   password: PASSWORD,
 });
+
+export const validationSchemaAddStudent = Yup.object().shape({
+  mail: EMAIL,
+  classroom: CLASSROOM,
+});

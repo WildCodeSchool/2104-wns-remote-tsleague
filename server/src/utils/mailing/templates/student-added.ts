@@ -7,9 +7,7 @@ export type InputStudentAddedTemplate = {
   classroom?: string;
 };
 
-function studentAdded({
-  classroom,
-}: InputStudentAddedTemplate): {
+function studentAdded({ classroom }: InputStudentAddedTemplate): {
   subject: string;
   html: string;
 } {

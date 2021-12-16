@@ -37,6 +37,12 @@ export const StyledSidebar = styled.div`
     display: flex;
     justify-content: end;
   }
+
+  .sidebar-btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const StyledSidebarNotificationFeed = styled.div`
@@ -48,7 +54,7 @@ export const StyledSidebarNotificationFeed = styled.div`
   color: ${colors.white};
 
   .notification-feed {
-    padding-bottom: 20px;
+    height 400px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,6 +91,7 @@ export const StyledNotificationItem = styled.span`
 `;
 
 export const StyledIconRight = styled.span`
+  cursor: pointer;
   display: block;
   width: 0;
   height: 0;
@@ -95,11 +102,12 @@ export const StyledIconRight = styled.span`
 `;
 
 export const StyledIconLeft = styled.span`
-  display: block;
+  cursor: pointer;
+  position: fixed;
   width: 0;
   height: 0;
-  border-top: 10px solid transparent;
-  border-left: 15px solid black;
-  border-bottom: 10px solid transparent;
-  margin: 5px;
+  border-top: 35px solid transparent;
+  border-bottom: 36px solid transparent;
+  border-right: 50px solid #8982ff;
+  margin: 10px;
 `;
