@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { useSelector } from 'react-redux';
 import { State } from '../../redux/root-reducer';
 
+import Button from '../common/Button';
 import socket from '../../socket';
 
 import {
@@ -11,7 +12,6 @@ import {
   StyledSidebarNotificationFeed,
   StyledIconRight,
 } from '../styles/Sidebar';
-import Button from '../common/Button';
 
 export type NotificationsProps = {
   id: string;
@@ -53,7 +53,7 @@ function Sidebar({
             {userData.firstname} {userData.lastname}
           </h3>
           <h3 data-testid="sidebar-user-classroom">
-            {userData.classrooms[0].id}
+            {userData.classrooms[0].name}
           </h3>
         </div>
         <StyledSidebarNotificationFeed>

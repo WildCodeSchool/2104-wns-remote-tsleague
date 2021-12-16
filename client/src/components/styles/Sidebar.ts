@@ -103,6 +103,5 @@ export const StyledIconLeft = styled.span`
   border-top: 35px solid transparent;
   border-bottom: 36px solid transparent;
   border-right: 50px solid #8982ff;
-  border-radius: 24px;
   margin: 10px;
 `;

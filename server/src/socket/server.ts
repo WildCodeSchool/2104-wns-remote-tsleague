@@ -21,6 +21,7 @@ export default function startSocket(): void {
     console.log(`connected with id ${socket.id}`);
 
     socket.on('createRoom', async ({ classroomId, userData }) => {
+      console.log('userData', userData);
       const alreadyExist = await playerAlreadyExist(players, socket.id);
       if (!alreadyExist) {
         players.push({
@@ -59,19 +60,16 @@ export default function startSocket(): void {
       });
 
       //CHAT
-      socket
-        .in(classroomId)
-        .emit(
-          'newChatMessage',
-          `${userData.firstname} ${userData.lastname} vient de rejoindre la classe`,
-        );
+      socket.in(classroomId).emit('newChatMessage', {
+        newMessage: `${userData.firstname} ${userData.lastname} vient de rejoindre la classe`,
+      });
       socket.on('sendChatMessage', ({ newMessage, classroomId }) => {
         console.log(
           'new message received from %s; message is: %s ',
           socket,
           newMessage,
         );
-        socket.in(classroomId).emit('newChatMessage', newMessage);
+        socket.in(classroomId).emit('newChatMessage', { newMessage, senderUser: userData });
       });
 
       socket.on('disconnect', () => {
@@ -80,11 +78,11 @@ export default function startSocket(): void {
 
         socket.to(classroomId).emit('logout', socket.id);
         socket
-        .in(classroomId)
-        .emit(
-          'newChatMessage',
-          `${userData.firstname} ${userData.lastname} est sauvagement parti`,
-        );
+          .in(classroomId)
+          .emit(
+            'newChatMessage',
+            `${userData.firstname} ${userData.lastname} est sauvagement parti`,
+          );
       });
     });
   });
