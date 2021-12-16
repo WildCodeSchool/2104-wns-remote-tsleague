@@ -49,12 +49,6 @@ class UserResolver {
     @Arg('email', () => String) mail: string,
     @Arg('classroom', () => String) classroom: string,
   ) {
-    // const token: string = jwt.sign(
-    //   { mail },
-    //   process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
-    //   { expiresIn: '1h' },
-    // );
-
     await sendMail({
       templateName: 'studentAdded',
       mail,
