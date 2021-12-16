@@ -13,6 +13,17 @@ type LoginFunction = (userCredentials: FormValues) => Promise<void>;
 
 type UseLogin = { login: LoginFunction; requestError: string };
 
+type Classroom = { id: string };
+
+type Login = {
+  id: string;
+  firstname: string;
+  lastname: string;
+  classrooms: Classroom;
+  role: string;
+  token: string;
+};
+
 const USER_LOGIN = gql`
   mutation Login($body: AuthLoginInput!) {
     login(body: $body) {
@@ -44,9 +55,9 @@ const useLogin = (): UseLogin => {
           },
         },
       });
-      Cookies.set('token', data.login.token);
-      delete data.login.token;
-      dispatch({ type: 'USER_FETCH_DATA', payload: data.login });
+      const { token, ...loginPayload }: Login = data.login;
+      Cookies.set('token', token);
+      dispatch({ type: 'USER_FETCH_DATA', payload: loginPayload });
       history.push('/game');
     } catch (error: any) {
       setRequestError(error.message);
