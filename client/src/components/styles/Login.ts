@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { colors } from './globals';
 
+interface StyledInputProps {
+  fullWidth?: boolean;
+}
+
 export const StyledBox = styled.div`
   width: 100%;
   display: flex;
@@ -17,13 +21,13 @@ export const StyledForm = styled.form`
   box-shadow: 0px 0px 2.5px rgba(15, 15, 15, 0.19);
 `;
 
-export const StyledInput = styled.div`
+export const StyledInput = styled.div<StyledInputProps>`
   input {
-    width: 300px;
+    width: ${(props) => (props.fullWidth ? '100%' : '300px')};
     height: 52px;
     outline: none;
     border: none;
-    margin: 14px;
+    margin: 10px 0;
     border-bottom: 1.4px solid transparent;
     transition: all 200ms ease-in-out;
     font-size: 14px;

@@ -44,6 +44,18 @@ class UserResolver {
     });
   }
 
+  @Mutation(() => User, { nullable: true })
+  async sendEmailNewStudent(
+    @Arg('email', () => String) mail: string,
+    @Arg('classroom', () => String) classroom: string,
+  ) {
+    await sendMail({
+      templateName: 'studentAdded',
+      mail,
+      additionalParameters: { classroom },
+    });
+  }
+
   @Mutation(() => User)
   public async updateUser(@Arg('input') userInput: UserInput) {
     const user = await UserModel.findOneAndUpdate(

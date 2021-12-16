@@ -1,38 +1,25 @@
-import serverConfig from '../../../config/server-config';
-
-const { SERVER_STAGE } = process.env;
-
 export type InputStudentRegisterTemplate = {
   mail: string;
-  firstname?: string;
-  lastname?: string;
-  classroom?: string;
+  firstname: string;
+  lastname: string;
 };
 
 function studentRegister({
   firstname = '',
-  lastname = '',
-  classroom,
+  lastname = ''
 }: InputStudentRegisterTemplate): {
-  subject: string;
-  html: string;
-} {
-  if (!SERVER_STAGE) {
-    throw new Error('SERVER_STAGE must be defined');
-  }
-
-  const registerUrl = `${serverConfig[SERVER_STAGE].urlFront}register-student?classroom=${classroom}`;
+    subject: string;
+    html: string; } {
 
   return {
     subject: 'Bienvenue sur Pixelearn 🏫',
     html: `
-    <p>Hello ${firstname} ${lastname} 🧑‍🎓</p>
+    <p>Hello ${firstname} ${lastname}</p>
     <p>Bienvenue sur Pixelearn !</p>
-    <p>Visiblement ton professeur t'as ajouté à sa classe !</p>
-    <p>Ne perd pas de temps, viens t'inscrire dès maintenant en allant sur cette url: ${registerUrl} !</p>
+    <p>Nous sommes absolument ravis de vous avoir à bord !</p>
+    <p>Ne perdez plus un instant, et mettez vous au travail !</p>
     <p>Pixelearn</p>
     `,
   };
 }
-
 export default studentRegister;
