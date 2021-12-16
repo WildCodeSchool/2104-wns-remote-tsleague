@@ -1,61 +1,14 @@
-import React, { useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import { gql, useMutation } from '@apollo/client';
-import Cookies from 'js-cookie';
-
-import { useDispatch } from 'react-redux';
 import { StyledBox, ErrorMsg } from '../styles/Authentication';
 import { validationSchemaLogin } from '../../form/validationSchema';
 import Button from '../common/Button';
 import Input from '../common/Input';
-
-const USER_LOGIN = gql`
-  mutation Login($body: AuthLoginInput!) {
-    login(body: $body) {
-      id
-      firstname
-      lastname
-      classrooms {
-        id
-      }
-      role
-      token
-    }
-  }
-`;
+import useLogin from './useLogin';
 
 function LoginForm(): JSX.Element {
-  const dispatch = useDispatch();
-  const [loginMutation] = useMutation(USER_LOGIN);
-  const [requestError, setRequestError] = useState('');
-  const history = useHistory();
-
-  const login = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }): Promise<void> => {
-    try {
-      const { data } = await loginMutation({
-        variables: {
-          body: {
-            mail: email,
-            password,
-          },
-        },
-      });
-      Cookies.set('token', data.login.token);
-      delete data.login.token;
-      dispatch({ type: 'USER_FETCH_DATA', payload: data.login });
-      history.push('/game');
-    } catch (error: any) {
-      setRequestError(error.message);
-    }
-  };
-
+  const { login, requestError } = useLogin();
   return (
     <StyledBox>
       <Formik
