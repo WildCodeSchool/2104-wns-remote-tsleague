@@ -7,38 +7,61 @@ const getRandomPosition = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-const getRandomSkin = (): string => {
-  const temp = Math.floor(Math.random() * 12) + 1;
+const skins = [
+  {
+    name: 'adam',
+    path: 'assets/characters/Adam_run_48x48.png',
+  },
+  {
+    name: 'ash',
+    path: 'assets/characters/Ash_run_48x48.png',
+  },
+  {
+    name: 'bob',
+    path: 'assets/characters/Bob_run_48x48.png',
+  },
+  {
+    name: 'bouncer',
+    path: 'assets/characters/Bouncer_run_48x48.png',
+  },
+  {
+    name: 'bruce',
+    path: 'assets/characters/Bruce_run_48x48.png',
+  },
+  {
+    name: 'butcher',
+    path: 'assets/characters/Butcher_run_48x48.png',
+  },
+  {
+    name: 'conf',
+    path: 'assets/characters/Conference_run_48x48.png',
+  },
+  {
+    name: 'dan',
+    path: 'assets/characters/Dan_run_48x48.png',
+  },
+  {
+    name: 'oldman',
+    path: 'assets/characters/Old_man_run_48x48.png',
+  },
+  {
+    name: 'rob',
+    path: 'assets/characters/Rob_run_48x48.png',
+  },
+  {
+    name: 'roki',
+    path: 'assets/characters/Roki_run_48x48.png',
+  },
+  {
+    name: 'samuel',
+    path: 'assets/characters/Samuel_run_48x48.png',
+  },
+];
 
-  switch (temp) {
-    case 1:
-      return 'assets/characters/Adam_run_48x48.png';
-    case 2:
-      return 'assets/characters/Ash_run_48x48.png';
-    case 3:
-      return 'assets/characters/Bob_run_48x48.png';
-    case 4:
-      return 'assets/characters/Bouncer_run_48x48.png';
-    case 5:
-      return 'assets/characters/Bruce_run_48x48.png';
-    case 6:
-      return 'assets/characters/Butcher_run_48x48.png';
-    case 7:
-      return 'assets/characters/Conference_run_48x48.png';
-    case 8:
-      return 'assets/characters/Dan_run_48x48.png';
-    case 9:
-      return 'assets/characters/Old_man_run_48x48.png';
-    case 10:
-      return 'assets/characters/Rob_run_48x48.png';
-    case 11:
-      return 'assets/characters/Roki_run_48x48.png';
-    case 12:
-      return 'assets/characters/Samuel_run_48x48.png';
-    default:
-      return 'assets/characters/Bruce_run_48x48.png';
-  }
+const getRandomIndex = (): number => {
+  return Math.floor(Math.random() * 12);
 };
+
 type OtherPlayersInfo = {
   id: string;
   text: Phaser.GameObjects.Text;
@@ -57,12 +80,14 @@ export default class PixeLearnScene extends Scene {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
+  skin!: string;
+
   addOtherPlayer = (classMate: ClassMate): void => {
     const otherPlayer = this.add
       .sprite(
         Number(classMate.position.positionX),
         Number(classMate.position.positionY),
-        'dude'
+        classMate.skin
       )
       .setData('playerId', classMate.socketId);
 
@@ -114,10 +139,17 @@ export default class PixeLearnScene extends Scene {
       'assets/interiors/Room_Builder_48x48.png'
     );
 
-    this.load.spritesheet('dude', getRandomSkin(), {
-      frameWidth: 48,
-      frameHeight: 96,
+    skins.forEach((skin) => {
+      this.load.spritesheet(skin.name, skin.path, {
+        frameWidth: 48,
+        frameHeight: 96,
+      });
     });
+
+    // this.load.spritesheet('dude', getRandomSkin(), {
+    //   frameWidth: 48,
+    //   frameHeight: 96,
+    // });
   };
 
   create = (): void => {
@@ -137,8 +169,14 @@ export default class PixeLearnScene extends Scene {
     furnitureLayer.setCollisionByProperty({ isSolid: true });
     wallsLayer.setCollisionByProperty({ isSolid: true });
 
+    this.skin = skins[getRandomIndex()].name;
+
     this.player = this.physics.add
-      .sprite(getRandomPosition(50, 1000), getRandomPosition(100, 500), 'dude')
+      .sprite(
+        getRandomPosition(50, 1000),
+        getRandomPosition(100, 500),
+        this.skin
+      )
       .setInteractive({ useHandCursor: true })
       .setSize(20, 50);
     this.player.setOffset(15, 35);
@@ -163,38 +201,51 @@ export default class PixeLearnScene extends Scene {
         }
       });
     });
+    skins.forEach((skin) => {
+      this.anims.create({
+        key: `${skin.name}left`,
+        frames: this.anims.generateFrameNumbers(skin.name, {
+          start: 12,
+          end: 17,
+        }),
+        frameRate: 10,
+        repeat: -1,
+      });
 
-    this.anims.create({
-      key: 'left',
-      frames: this.anims.generateFrameNumbers('dude', { start: 12, end: 17 }),
-      frameRate: 10,
-      repeat: -1,
-    });
+      this.anims.create({
+        key: `${skin.name}right`,
+        frames: this.anims.generateFrameNumbers(skin.name, {
+          start: 0,
+          end: 5,
+        }),
+        frameRate: 10,
+        repeat: -1,
+      });
 
-    this.anims.create({
-      key: 'right',
-      frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 5 }),
-      frameRate: 10,
-      repeat: -1,
-    });
+      this.anims.create({
+        key: `${skin.name}up`,
+        frames: this.anims.generateFrameNumbers(skin.name, {
+          start: 6,
+          end: 11,
+        }),
+        frameRate: 10,
+        repeat: -1,
+      });
 
-    this.anims.create({
-      key: 'up',
-      frames: this.anims.generateFrameNumbers('dude', { start: 6, end: 11 }),
-      frameRate: 10,
-      repeat: -1,
-    });
+      this.anims.create({
+        key: `${skin.name}down`,
+        frames: this.anims.generateFrameNumbers(skin.name, {
+          start: 18,
+          end: 23,
+        }),
+        frameRate: 10,
+        repeat: -1,
+      });
 
-    this.anims.create({
-      key: 'down',
-      frames: this.anims.generateFrameNumbers('dude', { start: 18, end: 23 }),
-      frameRate: 10,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: 'turn',
-      frames: [{ key: 'dude', frame: 14 }],
+      this.anims.create({
+        key: `${skin.name}turn`,
+        frames: [{ key: skin.name, frame: 14 }],
+      });
     });
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -217,28 +268,28 @@ export default class PixeLearnScene extends Scene {
       this.player.setVelocityX(-160);
       this.player.setVelocityY(0); // Prevents unintentional diagonal movement
 
-      this.player.anims.play('left', true);
+      this.player.anims.play(`${this.skin}left`, true);
     } else if (this.cursors.right.isDown) {
       direction = 'right';
       this.player.setVelocityX(160);
       this.player.setVelocityY(0); // Prevents unintentional diagonal movement
 
-      this.player.anims.play('right', true);
+      this.player.anims.play(`${this.skin}right`, true);
     } else if (this.cursors.up.isDown) {
       direction = 'up';
       this.player.setVelocityY(-160);
       this.player.setVelocityX(0); // Prevents unintentional diagonal movement
-      this.player.anims.play('up', true);
+      this.player.anims.play(`${this.skin}up`, true);
     } else if (this.cursors.down.isDown) {
       direction = 'down';
       this.player.setVelocityY(160);
       this.player.setVelocityX(0); // Prevents unintentional diagonal movement
-      this.player.anims.play('down', true);
+      this.player.anims.play(`${this.skin}down`, true);
     } else {
       this.player.setVelocityX(0);
       this.player.setVelocityY(0);
 
-      this.player.anims.play('turn');
+      this.player.anims.play(`${this.skin}turn`);
     }
     if (this.time.now - this.tick > 30) {
       store.dispatch({
@@ -247,6 +298,7 @@ export default class PixeLearnScene extends Scene {
           positionX: this.player.x.toString(),
           positionY: this.player.y.toString(),
           direction,
+          skin: this.skin,
         },
       });
       this.tick = this.time.now;
@@ -266,7 +318,7 @@ export default class PixeLearnScene extends Scene {
             Number(classMate.position.positionX),
             Number(classMate.position.positionY)
           );
-          otherPlayer.anims.play(classMate.direction, true);
+          otherPlayer.anims.play(classMate.skin + classMate.direction, true);
           this.updatePlayersInfosPosition(classMate);
         }
       });
