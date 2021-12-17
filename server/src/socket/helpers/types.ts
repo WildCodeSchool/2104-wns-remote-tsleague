@@ -11,6 +11,7 @@ export type Player = {
   socketId: string;
   position: Position;
   direction: string;
+  skin: string;
   connected: boolean;
   classroom: string;
 };
@@ -19,6 +20,7 @@ export type StudentPlayerMoves = {
   positionX: string;
   positionY: string;
   direction: string;
+  skin: string;
 };
 
 export type UserClassRoom = {
