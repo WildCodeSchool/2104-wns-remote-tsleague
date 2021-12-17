@@ -9,6 +9,7 @@ export type ClassMate = {
   };
   socketId: string;
   direction: string;
+  skin: string;
   connected: boolean;
   classroom: string;
 };
